@@ -3,6 +3,7 @@ import Link from "next/link";
 import MobileDrawer from "@/components/app/MobileDrawer";
 
 import { ThemeSwitcher } from "@/components/app/ThemeSwitcher";
+// import Image from "next/image";
 
 function Navbar() {
   return (
@@ -10,12 +11,18 @@ function Navbar() {
       <div className="mx-auto flex w-[1300px] dark:text-darkText text-text max-w-full items-center justify-between">
         <MobileDrawer />
 
-        <div className="flex items-center gap-10">
+        <div className="flex justify-center gap-10">
           <Link
             className="text-4xl w-[172px] m900:w-[unset] font-heading m500:text-xl"
             href={"/"}
           >
-            LNVPN
+            {/* <Image
+              src="LNVPN-Mask-Logo.svg"
+              alt="LNVPN Logo"
+              width={172}
+              height={40}
+            /> */}
+            LN VPN
           </Link>
         </div>
 
@@ -38,7 +45,7 @@ function Navbar() {
         <div className="flex w-[172px] items-center justify-end gap-5 m800:w-[unset] m400:gap-3">
           <a
             target="_blank"
-            href="https://github.com/ekmas/neobrutalism-components"
+            href="https://github.com/lnvpn"
             className="m800:hidden flex items-center justify-center rounded-base border-2 border-border shadow-nav dark:shadow-navDark dark:border-darkBorder p-2 transition-all hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-none dark:hover:shadow-none"
           >
             <svg
@@ -54,7 +61,7 @@ function Navbar() {
           </a>
           <a
             target="_blank"
-            href="https://twitter.com/samuelbreznjak"
+            href="https://twitter.com/ln_vpn"
             className="m800:hidden flex items-center justify-center rounded-base border-2 border-border shadow-nav dark:shadow-navDark dark:border-darkBorder p-2 transition-all hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-none dark:hover:shadow-none"
           >
             <svg
