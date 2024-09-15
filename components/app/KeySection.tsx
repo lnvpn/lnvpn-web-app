@@ -15,9 +15,16 @@ import {
 } from "@/components/ui/collapsible";
 import { KeyInput } from "@/components/ui/KeyInput";
 
-export interface IAppProps {}
+interface KeySectionProps {
+  keys: {
+    publicKey: string;
+    privateKey: string;
+    presharedKey: string;
+  } | null;
+  regenerateKeys: () => void;
+}
 
-export default function KeySection() {
+const KeySection: React.FC<KeySectionProps> = ({ keys, regenerateKeys }) => {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <div className="w-full">
@@ -52,8 +59,13 @@ export default function KeySection() {
               <KeyInput
                 className="flex h-full w-full rounded-l-none   text-text  font-base selection:bg-main selection:text-black border-border dark:border-darkBorder bg-white  px-3 py-2 text-sm ring-offset-white   focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 rounded-r-none"
                 type="text"
+                value={keys?.privateKey}
               />{" "}
-              <GenerateKeyButton variant={"noShadow"} className="h-full">
+              <GenerateKeyButton
+                variant={"noShadow"}
+                className="h-full"
+                onClick={regenerateKeys}
+              >
                 <IoIosRefresh color="black" title="Renew keys" className="" />
               </GenerateKeyButton>
             </div>
@@ -67,6 +79,7 @@ export default function KeySection() {
               <KeyInput
                 className="flex h-full w-full rounded-l-none  text-text  font-base selection:bg-main selection:text-black border-border dark:border-darkBorder bg-white  px-3 py-2 text-sm ring-offset-white   focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 "
                 type="text"
+                value={keys?.publicKey}
               />
             </div>
           </div>
@@ -79,6 +92,7 @@ export default function KeySection() {
               <KeyInput
                 className="flex h-full w-full rounded-l-none   text-text  font-base selection:bg-main selection:text-black border-border dark:border-darkBorder bg-white  px-3 py-2 text-sm ring-offset-white   focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 "
                 type="text"
+                value={keys?.presharedKey}
               />
             </div>
           </div>
@@ -86,4 +100,5 @@ export default function KeySection() {
       </Collapsible>
     </div>
   );
-}
+};
+export default KeySection;

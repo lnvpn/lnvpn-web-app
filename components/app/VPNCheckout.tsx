@@ -1,3 +1,4 @@
+// components/VPNCheckout.tsx
 "use client";
 import * as React from "react";
 import { Button } from "../ui/button";
@@ -6,13 +7,30 @@ import DurationSelector from "./DurationSelector";
 import VPNAppCollapsible from "./VPNAppCollapsible";
 import KeySection from "./KeySection";
 import PriceDisplay from "./PriceDisplay";
+import { generateKeypair } from "@/utils/wireguard";
 
 export default function VPNCheckout() {
   const [selectedDuration, setSelectedDuration] =
     React.useState<string>("hour");
 
+  // Manage keys state here
+  const [keys, setKeys] = React.useState<{
+    publicKey: string;
+    privateKey: string;
+    presharedKey: string;
+  } | null>(null);
+
+  const regenerateKeys = React.useCallback(() => {
+    const newKeys = generateKeypair();
+    setKeys(newKeys);
+  }, []);
+
+  React.useEffect(() => {
+    regenerateKeys();
+  }, [regenerateKeys]);
+
   return (
-    <div className="w-full mx-auto mt-10 max-w-xl px-4 md:px-20 sm:px-6 lg:px-8 bg-main text-black rounded-base shadow-light dark:shadow-dark font-bold border-2 border-border dark:border-darkBorder p-4 ">
+    <div className="w-full mx-auto mt-10 max-w-screen-md px-4 md:px-20 sm:px-6 lg:px-8 bg-main text-black rounded-base shadow-light dark:shadow-dark font-bold border-2 border-border dark:border-darkBorder p-4 ">
       <div className="flex w-full flex-col text-lg gap-5">
         <div className="flex w-full items-center">
           <VPNAppCollapsible />
@@ -31,7 +49,7 @@ export default function VPNCheckout() {
         </div>
 
         <div className="flex w-full items-center">
-          <KeySection />
+          <KeySection keys={keys} regenerateKeys={regenerateKeys} />
         </div>
 
         <div className="flex justify-center w-full">
