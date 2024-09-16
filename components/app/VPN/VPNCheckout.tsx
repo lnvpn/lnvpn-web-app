@@ -1,7 +1,7 @@
 // components/VPNCheckout.tsx
 "use client";
 import * as React from "react";
-import { Button } from "../ui/button";
+import { Button } from "../../ui/button";
 import CountrySelector from "./CountrySelector";
 import DurationSelector from "./DurationSelector";
 import VPNAppCollapsible from "./VPNAppCollapsible";

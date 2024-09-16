@@ -5,7 +5,7 @@ import * as React from "react";
 import { useState } from "react";
 import { IoIosRefresh } from "react-icons/io";
 
-import { GenerateKeyButton } from "@/components/ui/GenerateKeyButton";
+import { GenerateKeyButton } from "@/components/ui/VPN/GenerateKeyButton";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -13,7 +13,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
-import { KeyInput } from "@/components/ui/KeyInput";
+import { KeyInput } from "@/components/ui/VPN/KeyInput";
 
 interface KeySectionProps {
   keys: {
@@ -57,6 +57,7 @@ const KeySection: React.FC<KeySectionProps> = ({ keys, regenerateKeys }) => {
                 Private Key
               </span>
               <KeyInput
+                readOnly
                 className="flex h-full w-full rounded-l-none   text-text  font-base selection:bg-main selection:text-black border-border dark:border-darkBorder bg-white  px-3 py-2 text-sm ring-offset-white   focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 rounded-r-none"
                 type="text"
                 value={keys?.privateKey}
@@ -77,6 +78,7 @@ const KeySection: React.FC<KeySectionProps> = ({ keys, regenerateKeys }) => {
                 Public Key
               </span>
               <KeyInput
+                readOnly
                 className="flex h-full w-full rounded-l-none  text-text  font-base selection:bg-main selection:text-black border-border dark:border-darkBorder bg-white  px-3 py-2 text-sm ring-offset-white   focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 "
                 type="text"
                 value={keys?.publicKey}
@@ -90,6 +92,7 @@ const KeySection: React.FC<KeySectionProps> = ({ keys, regenerateKeys }) => {
                 Preshared Key
               </span>
               <KeyInput
+                readOnly
                 className="flex h-full w-full rounded-l-none   text-text  font-base selection:bg-main selection:text-black border-border dark:border-darkBorder bg-white  px-3 py-2 text-sm ring-offset-white   focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 "
                 type="text"
                 value={keys?.presharedKey}

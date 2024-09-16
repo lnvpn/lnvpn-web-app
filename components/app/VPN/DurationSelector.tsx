@@ -4,7 +4,7 @@ import {
   Menubar,
   MenubarMenu,
   MenubarTrigger,
-} from "@/components/ui/DurationToggle";
+} from "@/components/ui/VPN/DurationToggle";
 import clsx from "clsx";
 
 interface DurationSelectorProps {
