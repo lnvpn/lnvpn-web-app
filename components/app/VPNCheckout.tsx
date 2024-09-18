@@ -1,12 +1,12 @@
 // components/VPNCheckout.tsx
 "use client";
 import * as React from "react";
-import { Button } from "../../ui/button";
-import CountrySelector from "./CountrySelector";
-import DurationSelector from "./DurationSelector";
-import VPNAppCollapsible from "./VPNAppCollapsible";
-import KeySection from "./KeySection";
-import PriceDisplay from "./PriceDisplay";
+import { Button } from "../ui/button";
+import CountrySelector from "./VPN/CountrySelector";
+import DurationSelector from "./VPN/DurationSelector";
+import VPNAppCollapsible from "./VPN/VPNAppCollapsible";
+import KeySection from "./VPN/KeySection";
+import PriceDisplay from "./VPN/PriceDisplay";
 import { generateKeypair } from "@/utils/wireguard";
 
 export default function VPNCheckout() {

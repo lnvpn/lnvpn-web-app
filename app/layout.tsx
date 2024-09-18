@@ -20,8 +20,12 @@ export const metadata: Metadata = {
     "VPN service",
     "Bitcoin payments",
     "privacy",
+    "disposable phone numbers",
+    "SMS verification",
+    "Bitcoin payments",
     "VPN",
     "Bitcoin",
+    "lightning network",
   ],
   authors: [{ name: "LNVPN", url: "https://github.com/lnvpn" }],
   openGraph: {
@@ -32,7 +36,7 @@ export const metadata: Metadata = {
     url: "https://lnvpn.net/",
     title: "LNVPN - Privacy by Design",
   },
-  metadataBase: new URL("https://www.neobrutalism.dev/"),
+  metadataBase: new URL("https://lnvpn.net"),
   twitter: {
     card: "summary_large_image",
     title: "LNVPN - Privacy by Design",
