@@ -49,7 +49,8 @@ export default function PhoneNumbers() {
         LN SMS
       </h1>
 
-      <Alert
+      <SMSCheckout />
+      {/* <Alert
         variant={"destructive"}
         className="w-full mx-auto mt-10 max-w-screen-md"
       >
@@ -59,9 +60,7 @@ export default function PhoneNumbers() {
           phone number to receive activation codes. Select the country and
           service you need, and pay with Bitcoin.
         </AlertDescription>
-      </Alert>
-
-      <SMSCheckout />
+      </Alert> */}
     </main>
   );
 }

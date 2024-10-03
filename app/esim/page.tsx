@@ -8,6 +8,8 @@ export default function eSIM() {
       <h1 className="text-6xl font-bold text-text dark:text-darkText">
         LN eSIM
       </h1>
+
+      <h2 className="my-10 text-4xl">Coming soon...</h2>
     </main>
   );
 }

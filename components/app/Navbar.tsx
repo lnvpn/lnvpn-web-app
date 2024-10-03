@@ -15,7 +15,7 @@ function Navbar() {
 
         <div className="flex justify-center gap-10">
           <Link
-            className="text-4xl w-[172px] m900:w-[unset] font-heading m500:text-xl"
+            className="text-4xl w-[172px] m900:w-6/12 font-heading m500:w-4/12 m500:text-xl"
             href={"/"}
           >
             <Logo />

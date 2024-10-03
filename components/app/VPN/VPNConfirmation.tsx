@@ -174,6 +174,15 @@ export default function VPNConfirmation({
 
       <p>Your VPN is now ready. Below are your configuration details:</p>
       <div className="flex gap-2 justify-center flex-wrap w-full my-2 text-text font-base bg-white rounded-base shadow-light dark:shadow-dark border-2 border-border dark:border-darkBorder p-4">
+        <div className="rounded-base border-2 border-border dark:border-darkBorder px-4 py-3 font-mono text-sm flex items-center gap-3 hover:bg-hover cursor-pointer">
+          <h3 className="font-bold">Selected Country</h3>
+          <p>{countryName}</p>
+        </div>
+        <div className="rounded-base border-2 border-border dark:border-darkBorder  px-4 py-3 font-mono text-sm flex items-center gap-3 hover:bg-hover cursor-pointer">
+          <h3 className="font-bold">Valid Until</h3>
+          <p>{expiryDateString}</p>
+        </div>
+
         {config && (
           <QRCodeSVG value={config} size={256} className="bg-white p-4" />
         )}
@@ -183,22 +192,12 @@ export default function VPNConfirmation({
         </p>
 
         <div className="flex gap-2 mt-2 flex-wrap w-full justify-center">
-          <Button variant="noShadow" size={"lg"} onClick={downloadConfigFile}>
+          <Button variant="default" size={"lg"} onClick={downloadConfigFile}>
             Download Config File
           </Button>
-          <Button variant="noShadow" size={"lg"} onClick={handleSendEmail}>
+          <Button variant="default" size={"lg"} onClick={handleSendEmail}>
             Send via Email
           </Button>
-        </div>
-      </div>
-      <div className="flex gap-2 justify-center flex-wrap w-full my-2 text-text font-base bg-white rounded-base shadow-light dark:shadow-dark border-2 border-border dark:border-darkBorder p-4">
-        <div className="rounded-base border-2 border-border dark:border-darkBorder bg-main px-4 py-3 font-mono text-sm flex items-center gap-3 hover:bg-hover cursor-pointer">
-          <h3 className="font-bold">Selected Country</h3>
-          <p>{countryName}</p>
-        </div>
-        <div className="rounded-base border-2 border-border dark:border-darkBorder bg-main px-4 py-3 font-mono text-sm flex items-center gap-3 hover:bg-hover cursor-pointer">
-          <h3 className="font-bold">Valid Until</h3>
-          <p>{expiryDateString}</p>
         </div>
       </div>
 
