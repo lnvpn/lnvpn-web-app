@@ -1,4 +1,4 @@
-import SMSCheckout from "@/components/app/SMSCheckout";
+import SMSCheckout from "@/components/app/PhoneNumbers/SMSCheckout";
 import { Metadata } from "next";
 import * as React from "react";
 

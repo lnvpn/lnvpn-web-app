@@ -3,6 +3,8 @@ import Link from "next/link";
 import MobileDrawer from "@/components/app/MobileDrawer";
 
 import { ThemeSwitcher } from "@/components/app/ThemeSwitcher";
+
+import { Logo } from "./Logo";
 // import Image from "next/image";
 
 function Navbar() {
@@ -16,13 +18,7 @@ function Navbar() {
             className="text-4xl w-[172px] m900:w-[unset] font-heading m500:text-xl"
             href={"/"}
           >
-            {/* <Image
-              src="LNVPN-Mask-Logo.svg"
-              alt="LNVPN Logo"
-              width={172}
-              height={40}
-            /> */}
-            LN VPN
+            <Logo />
           </Link>
         </div>
 

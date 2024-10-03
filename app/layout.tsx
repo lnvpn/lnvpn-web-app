@@ -60,6 +60,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
             <Header />
             {children}
             <div id="drawer"></div>
+            <div id="modal"></div>
           </ThemeProvider>
         </body>
       </html>

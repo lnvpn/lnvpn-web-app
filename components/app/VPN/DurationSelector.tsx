@@ -8,8 +8,8 @@ import {
 import clsx from "clsx";
 
 interface DurationSelectorProps {
-  selectedDuration: string;
-  setSelectedDuration: React.Dispatch<React.SetStateAction<string>>;
+  selectedDuration: number;
+  setSelectedDuration: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export default function DurationSelector({
@@ -17,11 +17,11 @@ export default function DurationSelector({
   setSelectedDuration,
 }: DurationSelectorProps) {
   const durations = [
-    { value: "hour", label: "1 hour" },
-    { value: "day", label: "1 day" },
-    { value: "week", label: "1 week" },
-    { value: "month", label: "1 month" },
-    { value: "quarter", label: "1 quarter" },
+    { value: 0.1, label: "1 hour" },
+    { value: 0.5, label: "1 day" },
+    { value: 1.5, label: "1 week" },
+    { value: 4, label: "1 month" },
+    { value: 9, label: "1 quarter" },
   ];
 
   return (

@@ -189,3 +189,28 @@ export function generateKeypair(): {
     presharedKey: keyToBase64(presharedKey),
   };
 }
+
+// VPNConfirmation.tsx or a frontend utility file
+export function buildConfigFile(
+  keyPair: { publicKey: string; privateKey: string; presharedKey: string },
+  serverResponse: any,
+  timestamp: string,
+  location: string
+): string {
+  const configArray = [
+    "[Interface]",
+    "PrivateKey = " + keyPair.privateKey,
+    "Address = " + serverResponse.ipv4Address,
+    "DNS = " + serverResponse.dns,
+    " ",
+    "# Valid until: " + timestamp,
+    "# Location: " + location,
+    " ",
+    "[Peer]",
+    "PublicKey = " + serverResponse.publicKey,
+    "PresharedKey = " + keyPair.presharedKey,
+    "Endpoint = " + serverResponse.ipAddress + ":" + serverResponse.listenPort,
+    "AllowedIPs = " + serverResponse.allowedIPs,
+  ];
+  return configArray.join("\n");
+}

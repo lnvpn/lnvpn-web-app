@@ -11,12 +11,18 @@ import {
 
 import { vpnendpoints } from "@/data/vpnendpoints";
 
-export interface IAppProps {}
+interface CountrySelectorProps {
+  selectedCountry: string | undefined;
+  setSelectedCountry: (country: string) => void;
+}
 
-export default function CountrySelector() {
+export default function CountrySelector({
+  setSelectedCountry,
+  selectedCountry,
+}: CountrySelectorProps) {
   return (
     <div className="flex w-full justify-between">
-      <Select>
+      <Select value={selectedCountry} onValueChange={setSelectedCountry}>
         <SelectTrigger className="w-full">
           <SelectValue placeholder="2. Select a Country" />
         </SelectTrigger>

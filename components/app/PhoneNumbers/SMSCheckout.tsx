@@ -1,10 +1,10 @@
 "use client";
 import * as React from "react";
 
-import ServiceSelector from "./PhoneNumbers/ServiceSelector";
+import ServiceSelector from "./ServiceSelector";
 
-import { SMSCountrySelector } from "./PhoneNumbers/SMSCountrySelector";
-import { Button } from "../ui/button";
+import { SMSCountrySelector } from "./SMSCountrySelector";
+import { Button } from "../../ui/button";
 
 interface Country {
   cc: number;
@@ -20,10 +20,6 @@ interface Service {
     avatar: boolean;
     src: string;
   };
-}
-interface Order {
-  orderId: string;
-  // Add other properties as needed
 }
 
 export default function SMSCheckout() {
