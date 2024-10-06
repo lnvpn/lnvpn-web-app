@@ -7,8 +7,13 @@ import { KeyInput } from "@/components/ui/VPN/KeyInput";
 import { IoCopyOutline } from "react-icons/io5";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { FaInfoCircle } from "react-icons/fa";
-import { FaSpinner } from "react-icons/fa6";
-import { Label } from "@radix-ui/react-select";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import Price from "../Price";
 
 interface Order {
   orderId: string;
@@ -81,17 +86,26 @@ export default function OrderStatus({
               readOnly
               className="w-full mr-2"
             />
-            <Button
-              variant={"noShadow"}
-              className="h-full border-none flex justify-center items-center"
-              onClick={handleCopyPayreq}
-            >
-              <IoCopyOutline
-                color="black"
-                title="Copy Invoice"
-                className="h-full w-6"
-              />
-            </Button>
+            <TooltipProvider>
+              <Tooltip open={copiedPayreq}>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant={"noShadow"}
+                    className="h-full border-none flex justify-center items-center"
+                    onClick={handleCopyPayreq}
+                  >
+                    <IoCopyOutline
+                      color="black"
+                      title="Copy Invoice"
+                      className="h-full w-6"
+                    />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent side="top">
+                  <p>Copied</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </div>
           <div className="flex justify-center mb-4">
             <QRCodeSVG
@@ -100,6 +114,7 @@ export default function OrderStatus({
               className="p-4 bg-white"
             />
           </div>
+          <Price usd={false} value={1500} />
           <div className="flex justify-center mt-4">
             <Button variant="neutral" onClick={cancelOrder}>
               Cancel Order
@@ -127,36 +142,70 @@ export default function OrderStatus({
             <p>Service: {orderStatus.service}</p>
             <div className="flex items-center gap-2">
               <div>Phone Number:</div>
-              <div className="flex items-center  rounded border-border dark:border-darkBorder border-2 ">
+              <div className="flex items-center rounded border-border dark:border-darkBorder border-2">
                 <KeyInput
                   type="text"
                   value={orderStatus.number}
                   readOnly
                   className="w-full text-xl text-center"
                 />
-                <Button
-                  variant={"noShadow"}
-                  className="h-full border-none flex justify-center items-center"
-                  onClick={handleCopyNumber}
-                >
-                  <IoCopyOutline
-                    color="black"
-                    title="Copy Number"
-                    className=" w-6"
-                  />
-                </Button>
+                <TooltipProvider>
+                  <Tooltip open={copiedNumber}>
+                    <TooltipTrigger asChild>
+                      <Button
+                        variant={"noShadow"}
+                        className="h-full border-none flex justify-center items-center"
+                        onClick={handleCopyNumber}
+                      >
+                        <IoCopyOutline
+                          color="black"
+                          title="Copy Number"
+                          className="w-6"
+                        />
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent side="top">
+                      <p>Copied</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
               </div>
             </div>
             {orderStatus.code ? (
-              <div className="flex items-center">
-                <p className="mr-2">Activation Code: {orderStatus.code}</p>
-                <Button variant="neutral" onClick={handleCopyCode}>
-                  {copiedCode ? "Copied" : "Copy"}
-                </Button>
+              <div className="flex items-center gap-2 mt-4">
+                <div>Activation Code:</div>
+                <div className="flex items-center rounded border-border dark:border-darkBorder border-2">
+                  <KeyInput
+                    type="text"
+                    value={orderStatus.code}
+                    readOnly
+                    className="w-full text-xl text-center"
+                  />
+                  <TooltipProvider>
+                    <Tooltip open={copiedCode}>
+                      <TooltipTrigger asChild>
+                        <Button
+                          variant={"noShadow"}
+                          className="h-full border-none flex justify-center items-center"
+                          onClick={handleCopyCode}
+                        >
+                          <IoCopyOutline
+                            color="black"
+                            title="Copy Code"
+                            className="w-6"
+                          />
+                        </Button>
+                      </TooltipTrigger>
+                      <TooltipContent side="top">
+                        <p>Copied</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </div>
               </div>
             ) : (
               <p className="flex gap-2 text-xl my-4">
-                Waiting for activation code...{" "}
+                Waiting for activation code...
               </p>
             )}
           </div>

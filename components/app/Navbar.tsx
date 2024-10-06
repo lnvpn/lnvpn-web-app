@@ -36,6 +36,9 @@ function Navbar() {
           <Link className="text-xl font-base" href="/faq">
             FAQ
           </Link>
+          <Link className="text-xl font-base" href="/partners">
+            Affiliates
+          </Link>
         </div>
 
         <div className="flex w-[172px] items-center justify-end gap-5 m800:w-[unset] m400:gap-3">

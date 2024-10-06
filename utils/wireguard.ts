@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // utils/wireguard.ts
 
 function gf(init?: number[]): Float64Array {
@@ -190,7 +191,6 @@ export function generateKeypair(): {
   };
 }
 
-// VPNConfirmation.tsx or a frontend utility file
 export function buildConfigFile(
   keyPair: { publicKey: string; privateKey: string; presharedKey: string },
   serverResponse: any,

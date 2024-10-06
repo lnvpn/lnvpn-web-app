@@ -1,4 +1,3 @@
-// PaymentModal.tsx
 "use client";
 
 import React, { useEffect, useState } from "react";
@@ -9,9 +8,14 @@ import { FaSpinner } from "react-icons/fa6";
 import { FcCheckmark } from "react-icons/fc";
 import { KeyInput } from "../ui/VPN/KeyInput";
 import { IoCopyOutline } from "react-icons/io5";
-
 import { BsLightningChargeFill } from "react-icons/bs";
 import { Button } from "../ui/button";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 interface PaymentModalProps {
   active: boolean;
@@ -37,6 +41,7 @@ export default function PaymentModal({
   const [invoice, setInvoice] = useState<InvoiceResponse | null>(null);
   const [isPaid, setIsPaid] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [copiedInvoice, setCopiedInvoice] = useState(false);
 
   useEffect(() => {
     let isMounted = true;
@@ -64,13 +69,13 @@ export default function PaymentModal({
       setInvoice(null);
       setIsPaid(false);
       setError(null);
+      setCopiedInvoice(false);
     };
   }, [active, amount, memo]);
 
   useEffect(() => {
     if (!invoice || isPaid || !active) return;
 
-    // eslint-disable-next-line prefer-const
     let intervalId: NodeJS.Timeout;
 
     const checkPaymentStatus = async () => {
@@ -103,6 +108,14 @@ export default function PaymentModal({
     };
   }, [invoice, isPaid, active, onPaymentSuccess, setActive]);
 
+  const handleCopyInvoice = () => {
+    if (invoice) {
+      navigator.clipboard.writeText(invoice.payment_request);
+      setCopiedInvoice(true);
+      setTimeout(() => setCopiedInvoice(false), 2000);
+    }
+  };
+
   return (
     <Modal active={active} setActive={setActive}>
       <div className="p-4">
@@ -131,21 +144,31 @@ export default function PaymentModal({
                 className="bg-white p-4"
               />
             </div>
-            <div className="flex items-strech w-full  rounded border-border dark:border-darkBorder  border-2">
-              <span className=" px-3 py-2 whitespace-nowrap bg-main text-sm">
+            <div className="flex items-stretch w-full rounded border-border dark:border-darkBorder border-2">
+              <span className="px-3 py-2 whitespace-nowrap bg-main text-sm">
                 <BsLightningChargeFill className="h-6 w-6" />
               </span>
               <KeyInput value={invoice.payment_request} />
-              <Button
-                variant={"noShadow"}
-                className="h-full border-none flex justify-center items-center"
-              >
-                <IoCopyOutline
-                  color="black"
-                  title="Renew keys"
-                  className="h-full w-6"
-                />
-              </Button>
+              <TooltipProvider>
+                <Tooltip open={copiedInvoice}>
+                  <TooltipTrigger asChild>
+                    <Button
+                      variant={"noShadow"}
+                      className="h-full border-none flex justify-center items-center"
+                      onClick={handleCopyInvoice}
+                    >
+                      <IoCopyOutline
+                        color="black"
+                        title="Copy Invoice"
+                        className="h-full w-6"
+                      />
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent side="top">
+                    <p>Copied</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
             </div>
           </div>
         )}

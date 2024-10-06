@@ -6,6 +6,7 @@ export interface IAppProps {}
 import { FaInfoCircle } from "react-icons/fa";
 
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: {
@@ -50,7 +51,7 @@ export default function PhoneNumbers() {
       </h1>
 
       <SMSCheckout />
-      {/* <Alert
+      <Alert
         variant={"destructive"}
         className="w-full mx-auto mt-10 max-w-screen-md"
       >
@@ -58,9 +59,13 @@ export default function PhoneNumbers() {
         <AlertDescription>
           This is a service that gives you 20 minutes access to a disposable
           phone number to receive activation codes. Select the country and
-          service you need, and pay with Bitcoin.
+          service you need, and pay with Bitcoin. Check out our{" "}
+          <Link className="text-main" href={"/faq"}>
+            FAQ
+          </Link>{" "}
+          if you have any questions.
         </AlertDescription>
-      </Alert> */}
+      </Alert>
     </main>
   );
 }
