@@ -39,7 +39,7 @@ export default function Modal({ active, setActive, children }: Props) {
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="relative flex flex-col items-center justify-center w-11/12 sm:w-3/4 md:w-1/2 lg:w-1/3 xl:w-1/4 rounded-base border-2 border-border bg-main p-10 pt-12 font-base shadow-light transition-all duration-300"
+        className="relative flex text-black flex-col items-center justify-center w-11/12 sm:w-3/4 md:w-1/2 lg:w-1/3 xl:w-1/4 rounded-base border-2 border-border bg-main p-10 pt-12 font-base shadow-light transition-all duration-300"
       >
         <button onClick={closeModal}>
           <X className="absolute right-3 top-3 h-6 w-6" />

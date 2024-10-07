@@ -134,9 +134,7 @@ export default function PaymentModal({
               This QR-Code is a Bitcoin Lightning invoice. You can pay with any
               Lightning wallet or Cash-App.
             </p>
-            <p className="text-xl font-bold">
-              {invoice.payment_amount_msat} Sats
-            </p>
+
             <div className="my-4 flex justify-center">
               <QRCodeSVG
                 value={invoice.payment_request}
@@ -144,6 +142,9 @@ export default function PaymentModal({
                 className="bg-white p-4"
               />
             </div>
+            <p className="text-xl font-bold mb-4">
+              {invoice.payment_amount_msat} Sats
+            </p>
             <div className="flex items-stretch w-full rounded border-border dark:border-darkBorder border-2">
               <span className="px-3 py-2 whitespace-nowrap bg-main text-sm">
                 <BsLightningChargeFill className="h-6 w-6" />

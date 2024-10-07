@@ -204,10 +204,14 @@ export default function PartnerForm() {
       ) : (
         <>
           <h2 className="text-xl font-bold mb-4">Partner Registration</h2>
-          <div className="p-4 m-2 rounded-base  font-bold border-2 border-border ">
+          <div
+            className={`p-4 m-2 rounded-base font-bold border-2 border-border ${
+              successMessage ? "block" : "hidden"
+            }`}
+          >
             {/* Display the success message */}
             {successMessage && (
-              <p className="text-green-500 mb-4">{successMessage}</p>
+              <p className="text-green-500 text-lg mb-4">{successMessage}</p>
             )}
 
             {/* Display the affiliate link and copy button */}

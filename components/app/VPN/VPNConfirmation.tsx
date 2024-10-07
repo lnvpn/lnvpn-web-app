@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { useEffect, useState, useTransition, useRef } from "react";
+import { useEffect, useState, useTransition, useRef, useContext } from "react";
 import { Button } from "@/components/ui/button";
 import { FaSpinner } from "react-icons/fa6";
 import { fetchVPNCredentials } from "./vpnActions";
@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/collapsible";
 import { QRCodeSVG } from "qrcode.react"; // Ensure this library is installed
 import { buildConfigFile } from "@/utils/wireguard";
+import { RefContext } from "@/app/context/RefProvider";
 
 interface VPNCredentials {
   allowedIPs: string;
@@ -25,6 +26,7 @@ interface VPNCredentials {
   listenPort: string;
   publicKey: string;
   response: string;
+  refCode: string;
 }
 
 interface VPNConfirmationProps {
@@ -59,6 +61,8 @@ export default function VPNConfirmation({
   const [expiryDateString, setExpiryDateString] = useState<string>(""); // Added state variable
   const effectRan = useRef(false);
 
+  const { ref } = useContext(RefContext);
+
   // Get country name for display and filename
   const countryName =
     vpnendpoints.find((endpoint) => endpoint.cc === selectedCountry)?.country ||
@@ -86,6 +90,7 @@ export default function VPNConfirmation({
           country: selectedCountry,
           duration: selectedDuration,
           priceDollar,
+          refCode: ref || "",
         });
 
         // Calculate the expiry date based on the selected duration
@@ -128,20 +133,24 @@ export default function VPNConfirmation({
     const shortCountryName = countryName.split(" ")[0]; // Use first word of country name
     const filename = `LNVPN-${shortCountryName}-${expiryDate}.conf`;
 
-    const blob = new Blob([config], { type: "text/plain" });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = filename;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    if (config) {
+      const blob = new Blob([config], { type: "text/plain" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } else {
+      console.error("Config is undefined");
+    }
   };
 
-  const handleSendEmail = () => {
-    // Placeholder function for sending email
-    alert("Send via email functionality will be implemented later.");
-  };
+  // const handleSendEmail = () => {
+  //   Placeholder function for sending email
+  //
+  // };
 
   if (isLoading || isPending) {
     return (
@@ -188,16 +197,16 @@ export default function VPNConfirmation({
         )}
         <p>
           Scan the QR-Code via your Wireguard-App on your phone or download the
-          config file.
+          config file and import it to your Wireguard-App.
         </p>
 
         <div className="flex gap-2 mt-2 flex-wrap w-full justify-center">
           <Button variant="default" size={"lg"} onClick={downloadConfigFile}>
             Download Config File
           </Button>
-          <Button variant="default" size={"lg"} onClick={handleSendEmail}>
+          {/* <Button variant="default" size={"lg"} onClick={handleSendEmail}>
             Send via Email
-          </Button>
+          </Button> */}
         </div>
       </div>
 
@@ -230,6 +239,10 @@ export default function VPNConfirmation({
           </CollapsibleContent>
         )}
       </Collapsible>
+      <p>
+        Make sure to save your config file before closing. Otherwise, it is
+        lost.
+      </p>
 
       <Button
         variant="neutral"

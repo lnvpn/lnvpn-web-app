@@ -1,5 +1,6 @@
 import { ThemeProvider } from "@/components/app/ThemeProvider";
 import Header from "../components/app/Navbar";
+import RefProviderWrapper from "./context/RefProviderWrapper";
 import type { Metadata } from "next";
 
 interface RootLayoutProps {
@@ -58,7 +59,8 @@ export default function RootLayout({ children }: RootLayoutProps) {
             disableTransitionOnChange
           >
             <Header />
-            {children}
+            <RefProviderWrapper>{children}</RefProviderWrapper>
+
             <div id="drawer"></div>
             <div id="modal"></div>
           </ThemeProvider>

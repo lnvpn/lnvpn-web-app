@@ -123,7 +123,7 @@ export async function checkInvoice(hash: string): Promise<InvoiceData | false> {
   }
 }
 
-async function getPrice(): Promise<number | null> {
+export async function getPrice(): Promise<number | null> {
   try {
     const apiUrl = process.env.URL_PRICE_API;
     if (!apiUrl) {

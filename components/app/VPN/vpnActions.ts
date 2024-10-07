@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // app/actions/vpnActions.ts
 
 "use server";
@@ -7,6 +8,10 @@ import {
   mapCountryToServerUrl,
   getExpiryDate,
 } from "@/utils/vpnUtils";
+
+import { getPrice } from "@/utils/lightning";
+import Order from "@/models/order";
+import { connectToDatabase } from "@/utils/mongodb";
 
 interface VPNCredentials {
   config: string;
@@ -19,12 +24,14 @@ interface VPNCredentialsRequest {
   country: string; // This is the country code, e.g., "13"
   duration: number;
   priceDollar: number;
+  refCode?: string | null;
 }
 
 export async function fetchVPNCredentials(
   request: VPNCredentialsRequest
 ): Promise<VPNCredentials> {
-  const { publicKey, presharedKey, country, duration, priceDollar } = request;
+  const { publicKey, presharedKey, country, duration, priceDollar, refCode } =
+    request;
 
   const authToken = process.env.VPN_API_AUTH;
   if (!authToken) {
@@ -74,6 +81,26 @@ export async function fetchVPNCredentials(
 
     const data = await response.json();
     console.log("VPN credentials fetched successfully:", data);
+
+    // If refCode exists, calculate `paidSatoshis` and save to database
+    if (refCode) {
+      await connectToDatabase();
+
+      const satsPerDollar = await getPrice();
+      if (satsPerDollar === null) {
+        throw new Error("Failed to fetch the Bitcoin price.");
+      }
+
+      const paidSatoshis = Math.round(priceDollar * satsPerDollar);
+
+      const newOrder = new Order({
+        partnerCode: refCode,
+        paidSatoshis,
+      });
+
+      await newOrder.save();
+      // console.log("Order saved successfully:", newOrder);
+    }
     return data as VPNCredentials;
   } catch (error: any) {
     console.error("Error fetching VPN credentials:", error);
