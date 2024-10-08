@@ -80,7 +80,7 @@ export async function fetchVPNCredentials(
     }
 
     const data = await response.json();
-    console.log("VPN credentials fetched successfully:", data);
+    // console.log("VPN credentials fetched successfully:", data);
 
     // If refCode exists, calculate `paidSatoshis` and save to database
     if (refCode) {

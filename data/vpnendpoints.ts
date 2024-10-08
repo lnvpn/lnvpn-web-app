@@ -8,10 +8,10 @@ export const vpnendpoints = [
     cc: "4",
     country: "🇬🇧 United Kingdom",
   },
-  {
-    cc: "5",
-    country: "🇨🇦 Canada",
-  },
+  // {
+  //   cc: "5",
+  //   country: "🇨🇦 Canada",
+  // },
   {
     cc: "6",
     country: "🇮🇳 India",

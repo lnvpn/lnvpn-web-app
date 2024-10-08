@@ -1,14 +1,9 @@
 import mongoose from "mongoose";
 
 const MONGODB_URI = process.env.MONGODB_URI!;
-const MONGODB_DB = process.env.MONGODB_DB!;
 
 if (!MONGODB_URI) {
   throw new Error("Please define the MONGODB_URI environment variable");
-}
-
-if (!MONGODB_DB) {
-  throw new Error("Please define the MONGODB_DB environment variable");
 }
 
 // Check if Mongoose is already connected
@@ -20,7 +15,7 @@ export async function connectToDatabase() {
     }
 
     console.log("Connecting to the database...");
-    const connection = await mongoose.connect(`${MONGODB_URI}/${MONGODB_DB}`, {
+    const connection = await mongoose.connect(MONGODB_URI, {
       bufferCommands: false,
     });
 

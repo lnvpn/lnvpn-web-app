@@ -35,9 +35,11 @@ export async function getInvoice(
   const amountInSatoshis = Math.round(satoshisPerUsd * amount);
 
   // Ensure the API access token is available
-  const accessToken = process.env.API_ACCESS_TOKEN;
+  const accessToken = process.env.NEXT_PUBLIC_API_ACCESS_TOKEN;
   if (!accessToken) {
-    throw new Error("Environment variable API_ACCESS_TOKEN is not defined.");
+    throw new Error(
+      "Environment variable NEXT_PUBLIC_API_ACCESS_TOKEN is not defined."
+    );
   }
 
   try {
@@ -83,9 +85,11 @@ interface InvoiceData {
 }
 
 export async function checkInvoice(hash: string): Promise<InvoiceData | false> {
-  const accessToken = process.env.API_ACCESS_TOKEN;
+  const accessToken = process.env.NEXT_PUBLIC_API_ACCESS_TOKEN;
   if (!accessToken) {
-    throw new Error("Environment variable API_ACCESS_TOKEN is not defined.");
+    throw new Error(
+      "Environment variable NEXT_PUBLIC_API_ACCESS_TOKEN is not defined."
+    );
   }
 
   try {
@@ -125,9 +129,11 @@ export async function checkInvoice(hash: string): Promise<InvoiceData | false> {
 
 export async function getPrice(): Promise<number | null> {
   try {
-    const apiUrl = process.env.URL_PRICE_API;
+    const apiUrl = process.env.NEXT_PUBLIC_PRICE_API;
     if (!apiUrl) {
-      throw new Error("Environment variable URL_PRICE_API is not defined.");
+      throw new Error(
+        "Environment variable NEXT_PUBLIC_PRICE_API is not defined."
+      );
     }
 
     const response = await fetch(apiUrl);
