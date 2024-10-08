@@ -92,7 +92,7 @@ export default function PaymentModal({
     return () => {
       clearInterval(intervalId);
     };
-  }, [invoice, active, onPaymentSuccess]);
+  }, [invoice, active, onPaymentSuccess, isPaid]);
 
   // New useEffect for handling modal close after payment
   useEffect(() => {
