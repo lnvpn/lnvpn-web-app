@@ -10,7 +10,7 @@ export default function VPNCheckout() {
   const [selectedDuration, setSelectedDuration] = useState<number>(0.1);
   const [isModalActive, setIsModalActive] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState<string | undefined>(
-    undefined
+    ""
   );
   const [isAlertOpen, setIsAlertOpen] = useState(false);
   const [isPaymentSuccessful, setIsPaymentSuccessful] = useState(false);

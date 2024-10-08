@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
@@ -17,16 +18,7 @@ import { buildConfigFile } from "@/utils/wireguard";
 import { RefContext } from "@/app/context/RefProvider";
 
 interface VPNCredentials {
-  allowedIPs: string;
-  dns: string;
-  ipAddress: string;
-  ipv4Address: string;
-  ipv6Address: string;
-  keyID: string;
-  listenPort: string;
-  publicKey: string;
-  response: string;
-  refCode: string;
+  config: string;
 }
 
 interface VPNConfirmationProps {
@@ -35,7 +27,7 @@ interface VPNConfirmationProps {
     privateKey: string;
     presharedKey: string;
   };
-  selectedCountry: string;
+  selectedCountry: string | "" | undefined;
   selectedDuration: number;
   setCurrentStep: React.Dispatch<React.SetStateAction<number>>;
   setIsPaymentSuccessful: React.Dispatch<React.SetStateAction<boolean>>;
@@ -103,7 +95,7 @@ export default function VPNConfirmation({
           keys,
           vpnCredentials,
           timestamp,
-          countryName
+          countryName || ""
         );
 
         // Set the expiry date string in state
@@ -119,7 +111,7 @@ export default function VPNConfirmation({
         setIsLoading(false);
       }
     });
-  }, []);
+  });
 
   const handleNewPurchase = () => {
     setCurrentStep(1);
@@ -130,7 +122,7 @@ export default function VPNConfirmation({
 
   const downloadConfigFile = () => {
     const expiryDate = new Date().toISOString().split("T")[0]; // Format: YYYY-MM-DD
-    const shortCountryName = countryName.split(" ")[0]; // Use first word of country name
+    const shortCountryName = (countryName || "Unknown").split(" ")[0]; // Use first word of country name
     const filename = `LNVPN-${shortCountryName}-${expiryDate}.conf`;
 
     if (config) {

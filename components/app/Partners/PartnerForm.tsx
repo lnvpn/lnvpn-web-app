@@ -28,7 +28,6 @@ import {
   TooltipContent,
 } from "@/components/ui/tooltip";
 import { IoCopyOutline } from "react-icons/io5"; // Import the correct icon
-import { set } from "mongoose";
 
 // Zod schemas
 const registrationSchema = z.object({

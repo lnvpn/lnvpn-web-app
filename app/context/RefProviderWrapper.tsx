@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { Suspense } from "react";
 import { RefProvider } from "./RefProvider";
 
 export default function RefProviderWrapper({
@@ -8,5 +8,9 @@ export default function RefProviderWrapper({
 }: {
   children: React.ReactNode;
 }) {
-  return <RefProvider>{children}</RefProvider>;
+  return (
+    <Suspense fallback={null}>
+      <RefProvider>{children}</RefProvider>
+    </Suspense>
+  );
 }

@@ -76,7 +76,7 @@ export default function PaymentModal({
   useEffect(() => {
     if (!invoice || isPaid || !active) return;
 
-    let intervalId: NodeJS.Timeout;
+    let timeoutId: NodeJS.Timeout;
 
     const checkPaymentStatus = async () => {
       try {
@@ -86,25 +86,23 @@ export default function PaymentModal({
           setIsPaid(true);
           onPaymentSuccess?.();
 
-          // Close the modal after 1 second
-          const timeoutId = setTimeout(() => {
+          // Close the modal after 2 seconds
+          timeoutId = setTimeout(() => {
             setActive(false);
           }, 2000);
-
-          // Cleanup the timeout if the component unmounts
-          return () => {
-            clearTimeout(timeoutId);
-          };
         }
       } catch (err) {
         console.error("Error checking payment status:", err);
       }
     };
 
-    intervalId = setInterval(checkPaymentStatus, 2000);
+    const intervalId = setInterval(checkPaymentStatus, 2000);
 
     return () => {
       clearInterval(intervalId);
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
     };
   }, [invoice, isPaid, active, onPaymentSuccess, setActive]);
 

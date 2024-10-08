@@ -39,14 +39,15 @@ export default function FAQ() {
                         Direct Communication with the VPN Endpoint:
                       </strong>{" "}
                       Your browser communicates directly with the VPN server to
-                      set up the connection. There's no middleman handling your
-                      keys or data.
+                      set up the connection. There&rsquo;s no middleman handling
+                      your keys or data.
                     </li>
                     <li>
                       <strong>Enhanced Privacy and Security:</strong> Since your
-                      private key never touches our backend servers, there's a
-                      much lower risk of it being intercepted or compromised.
-                      You have full control over your security credentials.
+                      private key never touches our backend servers,
+                      there&rsquo;s a much lower risk of it being intercepted or
+                      compromised. You have full control over your security
+                      credentials.
                     </li>
                   </ul>
                   <p>
