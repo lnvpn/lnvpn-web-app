@@ -1,5 +1,3 @@
-"use client";
-
 import React, { useEffect, useState } from "react";
 import Modal from "@/components/react/components/Modal";
 import { QRCodeSVG } from "qrcode.react";
@@ -74,9 +72,7 @@ export default function PaymentModal({
   }, [active, amount, memo]);
 
   useEffect(() => {
-    if (!invoice || isPaid || !active) return;
-
-    let timeoutId: NodeJS.Timeout;
+    if (!invoice || !active || isPaid) return;
 
     const checkPaymentStatus = async () => {
       try {
@@ -85,26 +81,31 @@ export default function PaymentModal({
           clearInterval(intervalId);
           setIsPaid(true);
           onPaymentSuccess?.();
-
-          // Close the modal after 2 seconds
-          timeoutId = setTimeout(() => {
-            setActive(false);
-          }, 2000);
         }
       } catch (err) {
         console.error("Error checking payment status:", err);
       }
     };
 
-    const intervalId = setInterval(checkPaymentStatus, 2000);
+    const intervalId = setInterval(checkPaymentStatus, 1500);
 
     return () => {
       clearInterval(intervalId);
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
     };
-  }, [invoice, isPaid, active, onPaymentSuccess, setActive]);
+  }, [invoice, active, onPaymentSuccess]);
+
+  // New useEffect for handling modal close after payment
+  useEffect(() => {
+    if (isPaid) {
+      const timeoutId = setTimeout(() => {
+        setActive(false);
+      }, 1000);
+
+      return () => {
+        clearTimeout(timeoutId);
+      };
+    }
+  }, [isPaid, setActive]);
 
   const handleCopyInvoice = () => {
     if (invoice) {
