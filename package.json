@@ -30,6 +30,7 @@
     "clsx": "^2.1.1",
     "cmdk": "1.0.0",
     "dayjs": "^1.11.13",
+    "decimal.js": "^10.4.3",
     "lucide-react": "^0.440.0",
     "mongodb": "^6.9.0",
     "mongoose": "^8.7.0",

@@ -6,6 +6,7 @@ import { z } from "zod";
 import { validate as validateBitcoinAddress } from "bitcoin-address-validation";
 import Partner from "@/models/partner";
 import Order from "@/models/order";
+import Decimal from "decimal.js";
 import { connectToDatabase } from "@/utils/mongodb";
 
 // Zod schemas
@@ -61,7 +62,9 @@ export async function registerPartner(formData: FormData) {
   return { success: true };
 }
 
-export async function fetchEarningsFromDB(btcAddress: string) {
+export async function fetchEarningsFromDB(
+  btcAddress: string
+): Promise<{ earnings: number; partnerNotFound: boolean }> {
   try {
     await connectToDatabase();
 
@@ -71,17 +74,27 @@ export async function fetchEarningsFromDB(btcAddress: string) {
       return { earnings: 0, partnerNotFound: true };
     }
 
-    // Fetch orders
-    const orders = await Order.find({ partnerCode: partnerData.custom_code });
+    // Calculate earnings using aggregation
+    const result = await Order.aggregate([
+      { $match: { partnerCode: partnerData.custom_code } },
+      {
+        $group: {
+          _id: null,
+          totalEarnings: { $sum: "$paidSatoshis" },
+        },
+      },
+    ]);
 
-    // Calculate earnings
-    const totalEarnings = orders.reduce((acc, order) => {
-      return acc + order.paidSatoshis * 0.15;
-    }, 0);
+    const totalSatoshisPaid = result.length ? result[0].totalEarnings : 0;
+    const totalEarnings = new Decimal(totalSatoshisPaid)
+      .times(0.15)
+      .floor()
+      .toNumber();
 
     return { earnings: totalEarnings, partnerNotFound: false };
   } catch (error: any) {
-    throw new Error(error.message);
+    console.error("Error fetching earnings:", error);
+    throw new Error("An error occurred while fetching earnings.");
   }
 }
 
