@@ -80,7 +80,7 @@ export async function fetchEarningsFromDB(
       {
         $group: {
           _id: null,
-          totalEarnings: { $sum: "$paidSatoshis" },
+          totalEarnings: { $sum: "$amount" },
         },
       },
     ]);

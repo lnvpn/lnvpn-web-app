@@ -1,9 +1,8 @@
-// models/order.ts
 import mongoose, { Document, Model } from "mongoose";
 
 interface IOrder extends Document {
   partnerCode: string;
-  paidSatoshis: number;
+  amount: number;
 }
 
 const orderSchema = new mongoose.Schema<IOrder>(
@@ -12,7 +11,7 @@ const orderSchema = new mongoose.Schema<IOrder>(
       type: String,
       required: true,
     },
-    paidSatoshis: {
+    amount: {
       type: Number,
       required: true,
     },
