@@ -44,7 +44,7 @@ export default function VPNAppCollapsible() {
           <p>Download and install your secure WireGuard client:</p>
           <div className="flex gap-2 flex-wrap">
             <Link
-              href="https://itunes.apple.com/us/app/wireguard/id1451685025?ls=1&mt=12"
+              href="https://apps.apple.com/us/app/wireguard/id1451685025"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -55,7 +55,7 @@ export default function VPNAppCollapsible() {
             </Link>
 
             <Link
-              href="https://itunes.apple.com/us/app/wireguard/id1441195209?ls=1&mt=8"
+              href="https://apps.apple.com/us/app/wireguard/id1441195209"
               target="_blank"
               rel="noopener noreferrer"
             >

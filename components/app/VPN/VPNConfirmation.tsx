@@ -52,7 +52,7 @@ export default function VPNConfirmation({
   const [error, setError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
   const [isOpen, setIsOpen] = useState(false);
-  const [expiryDateString, setExpiryDateString] = useState<string>(""); // Added state variable
+  const [expiryDateString, setExpiryDateString] = useState<string>("");
   const effectRan = useRef(false);
   const { ref } = useContext(RefContext);
 
@@ -69,6 +69,15 @@ export default function VPNConfirmation({
   const countryName =
     vpnendpoints.find((endpoint) => endpoint.cc === selectedCountry)?.country ||
     selectedCountry;
+
+  function formatExpiryDateForDisplay(date: Date): string {
+    const year = date.getUTCFullYear();
+    const month = String(date.getUTCMonth() + 1).padStart(2, "0"); // months are zero-based
+    const day = String(date.getUTCDate()).padStart(2, "0");
+    const hours = String(date.getUTCHours()).padStart(2, "0");
+    const minutes = String(date.getUTCMinutes()).padStart(2, "0");
+    return `${year}-${month}-${day} ${hours}:${minutes} UTC`;
+  }
 
   useEffect(() => {
     if (effectRan.current) {
@@ -107,9 +116,12 @@ export default function VPNConfirmation({
           timestamp,
           countryName || ""
         );
+        const formattedExpiryDate = formatExpiryDateForDisplay(expiryDate);
+
+        // Set the expiry date string in state for display
 
         // Set the expiry date string in state
-        setExpiryDateString(timestamp);
+        setExpiryDateString(formattedExpiryDate);
 
         // Set the config and credentials
         setConfig(configString);
@@ -132,7 +144,7 @@ export default function VPNConfirmation({
 
   const downloadConfigFile = () => {
     const expiryDate = new Date().toISOString().split("T")[0]; // Format: YYYY-MM-DD
-    const shortCountryName = (countryName || "Unknown").split(" ")[0]; // Use the Icon for the country
+    const shortCountryName = (countryName || "Unknown").split(" ")[1]; // Get the second word
     const filename = `LNVPN-${shortCountryName}-${expiryDate}.conf`;
 
     if (config) {

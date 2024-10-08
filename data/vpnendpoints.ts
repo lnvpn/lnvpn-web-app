@@ -1,12 +1,12 @@
 export const vpnendpoints = [
   {
     cc: "13",
-    country: "🇺🇸 United States",
+    country: "🇺🇸 United-States",
   },
 
   {
     cc: "4",
-    country: "🇬🇧 United Kingdom",
+    country: "🇬🇧 United-Kingdom",
   },
   // {
   //   cc: "5",
