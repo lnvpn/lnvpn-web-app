@@ -23,12 +23,12 @@ export default function Partners() {
       >
         <FaInfoCircle className="h-5 w-5 " />
         <AlertDescription>
-          Check out our{" "}
+          Generate your own affiliate link above. Promote and start earning
+          Bitcoin rewards! Check out our{" "}
           <Link className="text-main" href={"/faq"}>
             FAQ
           </Link>{" "}
-          if you have any questions. Generate your own affiliate link above.
-          Promote and start earning Bitcoin rewards!
+          if you have any questions.
         </AlertDescription>
       </Alert>
     </main>

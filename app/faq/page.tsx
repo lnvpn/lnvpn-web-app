@@ -24,6 +24,39 @@ export default function FAQ() {
               type="single"
               collapsible
             >
+              <AccordionItem className="lg:w-[500px] max-w-full" value="item-0">
+                <AccordionTrigger>Why is this VPN so special?</AccordionTrigger>
+                <AccordionContent>
+                  <ul className="list-decimal pl-4">
+                    <li>
+                      <strong>Keys Generated in Your Browser:</strong> You
+                      create your WireGuard connection keys directly in your web
+                      browser. This means your private key is generated on your
+                      device and never leaves it.
+                    </li>
+                    <li>
+                      <strong>
+                        Direct Communication with the VPN Endpoint:
+                      </strong>{" "}
+                      Your browser communicates directly with the VPN server to
+                      set up the connection. There's no middleman handling your
+                      keys or data.
+                    </li>
+                    <li>
+                      <strong>Enhanced Privacy and Security:</strong> Since your
+                      private key never touches our backend servers, there's a
+                      much lower risk of it being intercepted or compromised.
+                      You have full control over your security credentials.
+                    </li>
+                  </ul>
+                  <p>
+                    In simple terms, our VPN ensures that your sensitive
+                    information stays with you, giving you an extra layer of
+                    protection and peace of mind.
+                  </p>
+                </AccordionContent>
+              </AccordionItem>
+
               <AccordionItem className="lg:w-[500px] max-w-full" value="item-1">
                 <AccordionTrigger>Why should I use a VPN?</AccordionTrigger>
                 <AccordionContent>
@@ -129,19 +162,9 @@ export default function FAQ() {
                   you use?
                 </AccordionTrigger>
                 <AccordionContent>
-                  For this website, we use the service{" "}
-                  <a
-                    href="https://legend.lnbits.com/"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    LNBits
-                  </a>{" "}
-                  for lightning payments, Sendgrid for optionally sending
-                  WireGuard config files via email, React and socket.IO for
-                  WebSockets. On the VPN endpoints, we don’t use a commercial
-                  VPN service. We have our own servers in each country for each
-                  endpoint.
+                  We use LDK and getAlby for your Lightning integration. On the
+                  VPN endpoints, we don’t use a commercial VPN service. We have
+                  our own servers in each country for each endpoint.
                 </AccordionContent>
               </AccordionItem>
 
@@ -193,11 +216,11 @@ export default function FAQ() {
                 <AccordionContent>
                   <h6>Currently, we have four data plans:</h6>
                   <ul className="list-disc pl-4">
-                    <li>1 hour = 1GB</li>
-                    <li>1 day = 5GB</li>
-                    <li>1 week = 15GB</li>
-                    <li>1 month = 40GB</li>
-                    <li>3 months = 90GB</li>
+                    <li>1 hour = 5GB</li>
+                    <li>1 day = 25GB</li>
+                    <li>1 week = 75GB</li>
+                    <li>1 month = 200GB</li>
+                    <li>3 months = 450GB</li>
                   </ul>
                 </AccordionContent>
               </AccordionItem>
