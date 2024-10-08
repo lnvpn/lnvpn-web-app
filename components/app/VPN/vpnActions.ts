@@ -8,7 +8,7 @@ import {
   mapCountryToServerUrl,
   getExpiryDate,
 } from "@/utils/vpnUtils";
-
+import sgMail from "@sendgrid/mail";
 import { getPrice } from "@/utils/lightning";
 import Order from "@/models/order";
 import { connectToDatabase } from "@/utils/mongodb";
@@ -105,5 +105,44 @@ export async function fetchVPNCredentials(
   } catch (error: any) {
     console.error("Error fetching VPN credentials:", error);
     throw new Error(error.message || "Internal Server Error");
+  }
+}
+
+interface SendEmailRequest {
+  emailAddress: string;
+  configData: string;
+  expiryDate: string;
+}
+
+export async function sendEmail(request: SendEmailRequest): Promise<void> {
+  if (!process.env.EMAIL_TOKEN) {
+    console.error("SendGrid API key is missing in environment variables.");
+    throw new Error("Server configuration error.");
+  }
+
+  try {
+    sgMail.setApiKey(process.env.EMAIL_TOKEN);
+
+    const { emailAddress, configData, expiryDate } = request;
+
+    const msg = {
+      to: emailAddress,
+      from: "thanks@lnvpn.net",
+      subject: `Your LNVPN config file for Wireguard. Valid until: ${expiryDate}`,
+      text: `Thank you for using lnvpn.net. Find your personal config file attached. Don't lose it.\nYour subscription is valid until: ${expiryDate}`,
+      attachments: [
+        {
+          content: Buffer.from(configData).toString("base64"),
+          filename: `wireguard-${expiryDate}.conf`,
+          type: "text/plain",
+          disposition: "attachment",
+        },
+      ],
+    };
+
+    await sgMail.send(msg);
+  } catch (error: any) {
+    console.error("Error sending email:", error);
+    throw new Error(error.message || "Failed to send email");
   }
 }

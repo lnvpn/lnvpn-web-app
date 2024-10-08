@@ -5,7 +5,7 @@
 import { useEffect, useState, useTransition, useRef, useContext } from "react";
 import { Button } from "@/components/ui/button";
 import { FaSpinner } from "react-icons/fa6";
-import { fetchVPNCredentials } from "./vpnActions";
+import { fetchVPNCredentials, sendEmail } from "./vpnActions";
 import { vpnendpoints } from "@/data/vpnendpoints";
 import { ChevronDown } from "lucide-react";
 import {
@@ -16,6 +16,8 @@ import {
 import { QRCodeSVG } from "qrcode.react"; // Ensure this library is installed
 import { buildConfigFile } from "@/utils/wireguard";
 import { RefContext } from "@/app/context/RefProvider";
+import Modal from "@/components/react/components/Modal";
+import { Input } from "@/components/ui/input";
 
 interface VPNCredentials {
   config: string;
@@ -52,8 +54,16 @@ export default function VPNConfirmation({
   const [isOpen, setIsOpen] = useState(false);
   const [expiryDateString, setExpiryDateString] = useState<string>(""); // Added state variable
   const effectRan = useRef(false);
-
   const { ref } = useContext(RefContext);
+
+  // Email Modal state
+  const [isModalActive, setIsModalActive] = useState(false);
+  const [emailAddress, setEmailAddress] = useState("");
+  const [emailStatus, setEmailStatus] = useState<
+    "idle" | "loading" | "success" | "error"
+  >("idle");
+  const [emailError, setEmailError] = useState<string | null>(null);
+  const [isPendingEmail, startEmailTransition] = useTransition();
 
   // Get country name for display and filename
   const countryName =
@@ -122,7 +132,7 @@ export default function VPNConfirmation({
 
   const downloadConfigFile = () => {
     const expiryDate = new Date().toISOString().split("T")[0]; // Format: YYYY-MM-DD
-    const shortCountryName = (countryName || "Unknown").split(" ")[1]; // Use the name of the county  country: "🇳🇱 Netherlands",
+    const shortCountryName = (countryName || "Unknown").split(" ")[0]; // Use the Icon for the country
     const filename = `LNVPN-${shortCountryName}-${expiryDate}.conf`;
 
     if (config) {
@@ -142,10 +152,30 @@ export default function VPNConfirmation({
     }
   };
 
-  // const handleSendEmail = () => {
-  //   Placeholder function for sending email
-  //
-  // };
+  const handleSendEmail = () => {
+    setIsModalActive(true);
+  };
+
+  const handleEmailSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setEmailStatus("loading");
+    setEmailError(null);
+
+    startEmailTransition(async () => {
+      try {
+        await sendEmail({
+          emailAddress,
+          configData: config || "",
+          expiryDate: expiryDateString,
+        });
+        setEmailStatus("success");
+      } catch (error: any) {
+        console.error("Error sending email:", error);
+        setEmailError(error.message || "Failed to send email");
+        setEmailStatus("error");
+      }
+    });
+  };
 
   if (isLoading || isPending) {
     return (
@@ -199,9 +229,9 @@ export default function VPNConfirmation({
           <Button variant="default" size={"lg"} onClick={downloadConfigFile}>
             Download Config File
           </Button>
-          {/* <Button variant="default" size={"lg"} onClick={handleSendEmail}>
+          <Button variant="default" size={"lg"} onClick={handleSendEmail}>
             Send via Email
-          </Button> */}
+          </Button>
         </div>
       </div>
 
@@ -249,6 +279,50 @@ export default function VPNConfirmation({
       >
         Make Another Purchase
       </Button>
+      {/* Email modal--------------------------- */}
+      <Modal active={isModalActive} setActive={setIsModalActive}>
+        {emailStatus === "success" ? (
+          <div className="flex flex-col items-center gap-4">
+            <p>Email sent successfully!</p>
+            <Button
+              variant="noShadow"
+              size="lg"
+              onClick={() => {
+                setIsModalActive(false);
+                setEmailStatus("idle");
+                setEmailAddress("");
+              }}
+            >
+              Close
+            </Button>
+          </div>
+        ) : (
+          <form onSubmit={handleEmailSubmit} className="flex flex-col gap-4">
+            <Input
+              type="email"
+              id="emailAddress"
+              value={emailAddress}
+              onChange={(e) => setEmailAddress(e.target.value)}
+              required
+              placeholder="Enter your email address"
+              className="input-class" // Adjust this class to match your styling
+            />
+            {emailStatus === "error" && emailError && (
+              <p className="text-red-500">{emailError}</p>
+            )}
+            <Button
+              type="submit"
+              variant="neutral"
+              size="lg"
+              disabled={emailStatus === "loading" || isPendingEmail}
+            >
+              {emailStatus === "loading" || isPendingEmail
+                ? "Sending..."
+                : "Send Email"}
+            </Button>
+          </form>
+        )}
+      </Modal>
     </div>
   );
 }
