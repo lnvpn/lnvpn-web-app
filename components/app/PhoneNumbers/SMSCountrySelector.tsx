@@ -58,7 +58,7 @@ export function SMSCountrySelector({
       <PopoverContent className="w-full text-lg p-0">
         <Command>
           <CommandInput placeholder="Search for a country..." />
-          <CommandList>
+          <CommandList className="max-h-60 overflow-hidden">
             <CommandEmpty>No country found.</CommandEmpty>
             <CommandGroup>
               {sortedCountries.map((country) => (

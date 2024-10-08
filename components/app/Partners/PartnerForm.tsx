@@ -77,41 +77,39 @@ export default function PartnerForm() {
   // Registration submission
   function onRegister(values: z.infer<typeof registrationSchema>) {
     startTransition(async () => {
-      try {
-        const formData = new FormData();
-        formData.append("custom_code", values.custom_code);
-        formData.append("payoutAddress", values.payoutAddress);
+      const formData = new FormData();
+      formData.append("custom_code", values.custom_code);
+      formData.append("payoutAddress", values.payoutAddress);
 
-        await registerPartner(formData);
+      const result = await registerPartner(formData);
 
+      if (result.success) {
         // Success: Set the success message and affiliate link
         setSuccessMessage("Successfully registered as a partner!");
         setAffiliateLink(`https://lnvpn.net?ref=${values.custom_code}`);
 
         registrationForm.reset();
         setServerError("");
-      } catch (error: any) {
-        console.error("Error submitting form:", error);
-        setServerError(error.message || "An unexpected error occurred.");
+      } else {
+        setServerError(result.error || "An unexpected error occurred.");
         setSuccessMessage(""); // Clear success message on error
         setAffiliateLink(""); // Clear affiliate link on error
       }
     });
   }
 
-  // Earnings check submission
   function onCheckEarnings(values: z.infer<typeof checkEarningsSchema>) {
     startTransition(async () => {
-      try {
-        const formData = new FormData();
-        formData.append("payoutAddress", values.payoutAddress);
+      const formData = new FormData();
+      formData.append("payoutAddress", values.payoutAddress);
 
-        const result = await checkEarnings(formData);
-        setEarnings(result.earnings);
+      const result = await checkEarnings(formData);
+
+      if (result.success) {
+        setEarnings(result.earnings || 0);
         setServerError("");
-      } catch (error: any) {
-        console.error("Error checking earnings:", error);
-        setServerError(error.message || "An unexpected error occurred.");
+      } else {
+        setServerError(result.error || "An unexpected error occurred.");
         setEarnings(null);
       }
     });
@@ -180,7 +178,14 @@ export default function PartnerForm() {
                   Your current earnings: {earnings} Sats
                 </p>
               )}
-              <div className="flex items-center flex-row-reverse gap-2">
+              <div className="flex justify-end items-center flex-wrap gap-2">
+                <Button
+                  variant="default"
+                  size={"lg"}
+                  onClick={switchToRegistration}
+                >
+                  Go Back
+                </Button>
                 <Button
                   type="submit"
                   variant="neutral"
@@ -188,13 +193,6 @@ export default function PartnerForm() {
                   disabled={isPending}
                 >
                   {isPending ? "Checking..." : "Check Earnings"}
-                </Button>
-                <Button
-                  variant="default"
-                  size={"lg"}
-                  onClick={switchToRegistration}
-                >
-                  Go Back
                 </Button>
               </div>
             </form>
@@ -281,7 +279,14 @@ export default function PartnerForm() {
                 )}
               />
               {serverError && <p className="text-red-500">{serverError}</p>}
-              <div className="flex items-center flex-row-reverse gap-2">
+              <div className="flex justify-end flex-wrap items-center  gap-2">
+                <Button
+                  variant="default"
+                  size={"lg"}
+                  onClick={switchToEarnings}
+                >
+                  I am already a partner
+                </Button>
                 <Button
                   type="submit"
                   variant="neutral"
@@ -296,13 +301,6 @@ export default function PartnerForm() {
                   ) : (
                     "Submit"
                   )}
-                </Button>
-                <Button
-                  variant="default"
-                  size={"lg"}
-                  onClick={switchToEarnings}
-                >
-                  I am already a partner
                 </Button>
               </div>
             </form>

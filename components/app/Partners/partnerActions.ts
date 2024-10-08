@@ -40,7 +40,7 @@ export async function registerPartner(formData: FormData) {
 
   if (!parseResult.success) {
     const error = parseResult.error.errors[0].message;
-    throw new Error(error);
+    return { success: false, error };
   }
 
   await connectToDatabase();
@@ -49,7 +49,7 @@ export async function registerPartner(formData: FormData) {
   const existingPartner = await Partner.findOne({ custom_code });
 
   if (existingPartner) {
-    throw new Error("Referral code already exists.");
+    return { success: false, error: "Referral code already exists." };
   }
 
   // Save new partner
@@ -93,14 +93,17 @@ export async function checkEarnings(formData: FormData) {
 
   if (!parseResult.success) {
     const error = parseResult.error.errors[0].message;
-    throw new Error(error);
+    return { success: false, error };
   }
 
   const result = await fetchEarningsFromDB(payoutAddress);
 
   if (result.partnerNotFound) {
-    throw new Error("No partner found with this Bitcoin address.");
+    return {
+      success: false,
+      error: "No partner found with this Bitcoin address.",
+    };
   }
 
-  return { earnings: result.earnings };
+  return { success: true, earnings: result.earnings };
 }

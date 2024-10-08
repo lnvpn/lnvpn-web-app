@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "deploy": "bun run build && pm2 restart 'nextjs-bun-app' --update-env || pm2 start bun --name 'nextjs-bun-app' -- run start"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
