@@ -1,4 +1,4 @@
-# Simple VPN with Lightning
+# LNVPN - A Very Different VPN - Privacy by Design
 
 Select a country ➡️ Select duration ➡️ Pay with Lightning ➡️ Use your VPN
 
