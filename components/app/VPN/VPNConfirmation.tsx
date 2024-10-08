@@ -122,11 +122,14 @@ export default function VPNConfirmation({
 
   const downloadConfigFile = () => {
     const expiryDate = new Date().toISOString().split("T")[0]; // Format: YYYY-MM-DD
-    const shortCountryName = (countryName || "Unknown").split(" ")[0]; // Use first word of country name
+    const shortCountryName = (countryName || "Unknown").split(" ")[1]; // Use the name of the county  country: "🇳🇱 Netherlands",
     const filename = `LNVPN-${shortCountryName}-${expiryDate}.conf`;
 
     if (config) {
-      const blob = new Blob([config], { type: "text/plain" });
+      const blob = new Blob([config], {
+        type: "application/octet-stream",
+        endings: "native",
+      });
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = url;
@@ -225,7 +228,9 @@ export default function VPNConfirmation({
           <CollapsibleContent className="flex flex-col gap-2 my-2 text-text font-base bg-white rounded-base shadow-light dark:shadow-dark border-2 border-border dark:border-darkBorder p-4">
             {config && (
               <>
-                <pre className="text-sm whitespace-pre-wrap">{config}</pre>
+                <pre className="text-sm whitespace-pre-wrap break-all">
+                  {config}
+                </pre>
               </>
             )}
           </CollapsibleContent>

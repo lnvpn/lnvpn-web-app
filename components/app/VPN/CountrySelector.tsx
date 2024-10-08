@@ -26,7 +26,7 @@ export default function CountrySelector({
         <SelectTrigger className="w-full">
           <SelectValue placeholder="2. Select a Country" />
         </SelectTrigger>
-        <SelectContent>
+        <SelectContent className="max-h-60 overflow-auto sm:max-h-none sm:overflow-visible">
           <SelectGroup>
             <SelectLabel>Select a country</SelectLabel>
             {vpnendpoints.map((endpoint) => (
