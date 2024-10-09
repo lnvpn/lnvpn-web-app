@@ -5,7 +5,6 @@ import MobileDrawer from "@/components/app/MobileDrawer";
 import { ThemeSwitcher } from "@/components/app/ThemeSwitcher";
 
 import { Logo } from "./Logo";
-// import Image from "next/image";
 
 function Navbar() {
   return (
