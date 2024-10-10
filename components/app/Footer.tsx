@@ -3,7 +3,7 @@ import * as React from "react";
 
 export default function Footer() {
   return (
-    <div className="flex justify-center items-center bg-bg dark:bg-darkBg mt-10 py-4 text-lg">
+    <div className="flex justify-center items-center bg-bg dark:bg-darkBg pt-10 py-4 text-lg">
       {/* Telegram Icon */}
       <Link
         href="https://t.me/+x_j8zikjnqhiODIy"

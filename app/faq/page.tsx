@@ -16,7 +16,7 @@ export default function FAQ() {
         <h1 className="text-6xl font-bold text-text dark:text-darkText my-10">
           FAQ
         </h1>
-        <div className="grid my-5 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid  sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <div>
             <h2 className="text-2xl flex justify-center my-4 font-bold text-text dark:text-darkText">
               VPN

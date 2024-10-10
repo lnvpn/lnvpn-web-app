@@ -131,7 +131,7 @@ export default function SMSCheckout() {
   }, [order]);
 
   return (
-    <div className="w-full mx-auto mt-10 max-w-screen-md px-4 bg-main text-black rounded-base shadow-light font-bold border-2 border-border p-4">
+    <div className="w-full mx-auto max-w-screen-md px-4 bg-main text-black rounded-base shadow-light font-bold border-2 border-border p-4">
       <div className="flex flex-col gap-3">
         {order ? (
           // Render the order details and status

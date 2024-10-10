@@ -59,7 +59,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <>
       <html lang="en" className={inter.className}>
-        <body className="flex flex-col min-h-screen bg-bg dark:bg-darkBg">
+        <body className="flex flex-col min-h-screen ">
           <ThemeProvider
             attribute="class"
             defaultTheme="light"
@@ -67,7 +67,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
             disableTransitionOnChange
           >
             <Header />
-            <main className="flex-grow ">
+            <main className="flex-grow bg-bg dark:bg-darkBg">
               <RefProviderWrapper>{children}</RefProviderWrapper>
             </main>
             <div id="drawer"></div>
