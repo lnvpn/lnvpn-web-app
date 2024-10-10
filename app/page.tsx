@@ -7,8 +7,8 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <main className="relative flex min-h-[100svh] gap-4 flex-col items-center  bg-bg dark:bg-darkBg px-5 py-[150px]  font-bold">
-      <h1 className="text-6xl font-bold text-text dark:text-darkText">
+    <main className="relative flex flex-col gap-4 items-center bg-bg dark:bg-darkBg px-5 flex-grow font-bold">
+      <h1 className="text-6xl font-bold text-text dark:text-darkText my-10">
         LN VPN
       </h1>
 

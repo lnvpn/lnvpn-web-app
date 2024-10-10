@@ -15,6 +15,7 @@ interface RootLayoutProps {
 }
 
 import "./globals.css";
+import Footer from "@/components/app/Footer";
 
 export const metadata: Metadata = {
   title: {
@@ -58,7 +59,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <>
       <html lang="en" className={inter.className}>
-        <body>
+        <body className="flex flex-col min-h-screen bg-bg dark:bg-darkBg">
           <ThemeProvider
             attribute="class"
             defaultTheme="light"
@@ -66,11 +67,12 @@ export default function RootLayout({ children }: RootLayoutProps) {
             disableTransitionOnChange
           >
             <Header />
-            <RefProviderWrapper>{children}</RefProviderWrapper>
-
+            <main className="flex-grow ">
+              <RefProviderWrapper>{children}</RefProviderWrapper>
+            </main>
             <div id="drawer"></div>
             <div id="modal"></div>
-            {/* <Footer /> */}
+            <Footer />
           </ThemeProvider>
         </body>
       </html>

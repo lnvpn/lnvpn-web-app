@@ -12,8 +12,10 @@ export interface IAppProps {}
 export default function FAQ() {
   return (
     <div className="text-text dark:text-darkText">
-      <main className="relative flex min-h-[100svh] flex-col items-center  bg-bg dark:bg-darkBg px-5 py-[150px]  font-bold">
-        <h1 className="text-6xl font-bold text-text dark:text-darkText">FAQ</h1>
+      <main className="relative flex flex-col gap-4 items-center bg-bg dark:bg-darkBg px-5 flex-grow font-bold">
+        <h1 className="text-6xl font-bold text-text dark:text-darkText my-10">
+          FAQ
+        </h1>
         <div className="grid my-5 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           <div>
             <h2 className="text-2xl flex justify-center my-4 font-bold text-text dark:text-darkText">
