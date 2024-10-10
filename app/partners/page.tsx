@@ -12,7 +12,7 @@ export default function Partners() {
         Affiliates
       </h1>
 
-      <h2 className="text-xl my-4">
+      <h2 className="text-xl ">
         Join the LNVPN Affiliate Program and earn 15% from VPN referrals.
       </h2>
 

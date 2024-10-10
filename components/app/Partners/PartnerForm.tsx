@@ -147,7 +147,7 @@ export default function PartnerForm() {
   }
 
   return (
-    <div className="w-full mx-auto mt-10 max-w-screen-md px-4 bg-main text-lg text-black rounded-base shadow-light font-bold border-2 border-border p-4">
+    <div className="w-full mx-auto mt-5 max-w-screen-md px-4 bg-main text-lg text-black rounded-base shadow-light font-bold border-2 border-border p-4">
       {isCheckingEarnings ? (
         <>
           <h2 className="text-xl font-bold mb-4">Check Your Earnings</h2>

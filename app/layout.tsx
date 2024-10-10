@@ -3,6 +3,13 @@ import Header from "../components/app/Navbar";
 import RefProviderWrapper from "./context/RefProviderWrapper";
 import type { Metadata } from "next";
 
+import { Inter } from "next/font/google";
+
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+});
+
 interface RootLayoutProps {
   children: React.ReactNode;
 }
@@ -50,7 +57,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <>
-      <html lang="en">
+      <html lang="en" className={inter.className}>
         <body>
           <ThemeProvider
             attribute="class"
@@ -63,6 +70,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
 
             <div id="drawer"></div>
             <div id="modal"></div>
+            {/* <Footer /> */}
           </ThemeProvider>
         </body>
       </html>

@@ -232,6 +232,7 @@ export default function FAQ() {
                   Yes, we do! If you want to use LNVPN for your application to
                   provide VPN tunnels, please visit:{" "}
                   <a
+                    className="dark:text-main text-text underline"
                     href="https://lnvpn.net/api/documentation"
                     target="_blank"
                     rel="noreferrer"
