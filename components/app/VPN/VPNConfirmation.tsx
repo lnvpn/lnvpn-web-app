@@ -143,13 +143,14 @@ export default function VPNConfirmation({
   };
 
   const downloadConfigFile = () => {
-    const expiryDate = new Date().toISOString().split("T")[0]; // Format: YYYY-MM-DD
-    const shortCountryName = (countryName || "Unknown").split(" ")[1]; // Get the second word
-    const filename = `LNVPN-${shortCountryName}-${expiryDate}.conf`;
+    // const expiryDate = new Date().toISOString().split("T")[0]; // Format: YYYY-MM-DD
+    // const shortCountryName = (countryName || "Unknown").split(" ")[1]; // Get the second word
+    const filename = `LNVPN.conf`;
 
     if (config) {
       const blob = new Blob([config], {
-        type: "application/x-wireguard-profile",
+        type: "application/octet-stream",
+        endings: "native",
       });
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
