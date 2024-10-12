@@ -149,8 +149,7 @@ export default function VPNConfirmation({
 
     if (config) {
       const blob = new Blob([config], {
-        type: "application/octet-stream",
-        endings: "native",
+        type: "application/x-wireguard-profile",
       });
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
