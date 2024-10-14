@@ -95,7 +95,7 @@ export async function fetchVPNCredentials(
 
       const newOrder = new Order({
         partnerCode: refCode,
-        paidSatoshis,
+        amount: paidSatoshis,
       });
 
       await newOrder.save();
