@@ -6,6 +6,7 @@ import { useEffect, useState, useTransition, useRef, useContext } from "react";
 import { Button } from "@/components/ui/button";
 import { FaSpinner } from "react-icons/fa6";
 import { fetchVPNCredentials, sendEmail } from "./vpnActions";
+import { getExpiryDate } from "@/utils/vpnUtils";
 import { vpnendpoints } from "@/data/vpnendpoints";
 import { ChevronDown } from "lucide-react";
 import {
@@ -95,6 +96,11 @@ export default function VPNConfirmation({
       try {
         const priceDollar = selectedDuration; // Adjust pricing logic as needed
 
+        const expiryDateObj = getExpiryDate(selectedDuration);
+        const formattedExpiryDate = formatExpiryDateForDisplay(expiryDateObj);
+
+        setExpiryDateString(formattedExpiryDate);
+
         const vpnCredentials = await fetchVPNCredentials({
           publicKey: keys.publicKey,
           presharedKey: keys.presharedKey,
@@ -105,23 +111,14 @@ export default function VPNConfirmation({
         });
 
         // Calculate the expiry date based on the selected duration
-        const expiryDate = new Date();
-        expiryDate.setHours(expiryDate.getHours() + selectedDuration);
-        const timestamp = expiryDate.toLocaleString();
 
         // Build the config file here
         const configString = buildConfigFile(
           keys,
           vpnCredentials,
-          timestamp,
+          formattedExpiryDate,
           countryName || ""
         );
-        const formattedExpiryDate = formatExpiryDateForDisplay(expiryDate);
-
-        // Set the expiry date string in state for display
-
-        // Set the expiry date string in state
-        setExpiryDateString(formattedExpiryDate);
 
         // Set the config and credentials
         setConfig(configString);

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Modal from "@/components/react/components/Modal";
 import { QRCodeSVG } from "qrcode.react";
 import { getInvoice, checkInvoice } from "@/utils/lightning";
 import { FaSpinner } from "react-icons/fa6";
@@ -14,12 +13,13 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import PaymentModalTemplate from "../react/components/PaymentModalTemplate";
 
 interface PaymentModalProps {
   active: boolean;
   setActive: React.Dispatch<React.SetStateAction<boolean>>;
   amount: number;
-  memo: string;
+
   onPaymentSuccess?: () => void;
 }
 
@@ -33,7 +33,7 @@ export default function PaymentModal({
   active,
   setActive,
   amount,
-  memo,
+
   onPaymentSuccess,
 }: PaymentModalProps) {
   const [invoice, setInvoice] = useState<InvoiceResponse | null>(null);
@@ -46,7 +46,7 @@ export default function PaymentModal({
 
     const generateInvoice = async () => {
       try {
-        const data = await getInvoice(amount, memo);
+        const data = await getInvoice(amount, "LNVPN");
         if (isMounted) {
           setInvoice(data);
         }
@@ -69,7 +69,7 @@ export default function PaymentModal({
       setError(null);
       setCopiedInvoice(false);
     };
-  }, [active, amount, memo]);
+  }, [active, amount]);
 
   useEffect(() => {
     if (!invoice || !active || isPaid) return;
@@ -116,7 +116,7 @@ export default function PaymentModal({
   };
 
   return (
-    <Modal active={active} setActive={setActive}>
+    <PaymentModalTemplate active={active} setActive={setActive}>
       <div className="p-4">
         {error && <p className="text-red-500">{error}</p>}
 
@@ -148,7 +148,7 @@ export default function PaymentModal({
               <span className="px-3 py-2 whitespace-nowrap bg-main text-sm">
                 <BsLightningChargeFill className="h-6 w-6" />
               </span>
-              <KeyInput value={invoice.payment_request} />
+              <KeyInput value={invoice.payment_request} readOnly />
               <TooltipProvider>
                 <Tooltip open={copiedInvoice}>
                   <TooltipTrigger asChild>
@@ -180,6 +180,6 @@ export default function PaymentModal({
           </div>
         )}
       </div>
-    </Modal>
+    </PaymentModalTemplate>
   );
 }

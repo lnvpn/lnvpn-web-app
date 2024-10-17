@@ -17,11 +17,14 @@ export default function DurationSelector({
   setSelectedDuration,
 }: DurationSelectorProps) {
   const durations = [
-    { value: 0.1, label: "1 hour" },
-    { value: 0.5, label: "1 day" },
-    { value: 1.5, label: "1 week" },
-    { value: 4, label: "1 month" },
-    { value: 9, label: "1 quarter" },
+    { value: Number(process.env.NEXT_PUBLIC_price_hour), label: "1 hour" },
+    { value: Number(process.env.NEXT_PUBLIC_price_day), label: "1 day" },
+    { value: Number(process.env.NEXT_PUBLIC_price_week), label: "1 week" },
+    { value: Number(process.env.NEXT_PUBLIC_price_month), label: "1 month" },
+    {
+      value: Number(process.env.NEXT_PUBLIC_price_quarter),
+      label: "1 quarter",
+    },
   ];
 
   return (
