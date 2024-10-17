@@ -133,7 +133,7 @@ export async function sendEmail(request: SendEmailRequest): Promise<void> {
       attachments: [
         {
           content: Buffer.from(configData).toString("base64"),
-          filename: `wireguard-${expiryDate}.conf`,
+          filename: `LNVPN.conf`,
           type: "text/plain",
           disposition: "attachment",
         },
