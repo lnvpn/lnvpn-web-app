@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     type: "website",
     description:
       "A privacy-focused VPN service. Bitcoin only payments for maximum privacy.",
-    images: ["https://lnvpn.net/LNVPN-Mask-Logo.svg"],
+    images: [{ url: "/LNVPN-Mask-Logo.svg" }],
     url: "https://lnvpn.net/",
     title: "LNVPN - Privacy by Design",
   },
@@ -50,7 +50,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "LNVPN - Privacy by Design",
     description: "A privacy-focused VPN service.",
-    images: ["https://lnvpn.net/LNVPN-Mask-Logo.svg"],
+    images: ["/LNVPN-Mask-Logo.svg"],
     creator: "@ln_vpn",
   },
 };
@@ -59,6 +59,11 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <>
       <html lang="en" className={inter.className}>
+        <head>
+          <link rel="icon" href="/favicon.ico" sizes="any" />
+          <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+          <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        </head>
         <body className="flex flex-col min-h-screen ">
           <ThemeProvider
             attribute="class"
