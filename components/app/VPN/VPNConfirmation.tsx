@@ -66,10 +66,12 @@ export default function VPNConfirmation({
   const [emailError, setEmailError] = useState<string | null>(null);
   const [isPendingEmail, startEmailTransition] = useTransition();
 
-  // Get country name for display and filename
-  const countryName =
-    vpnendpoints.find((endpoint) => endpoint.cc === selectedCountry)?.country ||
-    selectedCountry;
+  // Get country name and ISO code for display and filename
+  const selectedEndpoint = vpnendpoints.find(
+    (endpoint) => endpoint.cc === selectedCountry
+  );
+  const countryName = selectedEndpoint?.country || selectedCountry;
+  const isoCode = selectedEndpoint?.isoCode || "XX";
 
   function formatExpiryDateForDisplay(date: Date): string {
     const year = date.getUTCFullYear();
@@ -140,9 +142,19 @@ export default function VPNConfirmation({
   };
 
   const downloadConfigFile = () => {
-    // const expiryDate = new Date().toISOString().split("T")[0]; // Format: YYYY-MM-DD
-    // const shortCountryName = (countryName || "Unknown").split(" ")[1]; // Get the second word
-    const filename = `LNVPN.conf`;
+    const now = new Date();
+    const month = String(now.getUTCMonth() + 1).padStart(2, "0"); // months are zero-based
+    const day = String(now.getUTCDate()).padStart(2, "0");
+    const dateStr = `${month}${day}`; // e.g., '1016' for October 16
+    const nonce = Math.random().toString(36).substring(2, 4).toUpperCase(); // 2 chars
+
+    // Construct base filename
+    let filenameBase = `LNVPN${isoCode}${dateStr}${nonce}`; // e.g., 'LNVPNUS1016A1'
+
+    // Ensure filename (excluding '.conf') doesn't exceed 15 characters
+    filenameBase = filenameBase.slice(0, 15 - ".conf".length);
+
+    const filename = `${filenameBase}.conf`;
 
     if (config) {
       const blob = new Blob([config], {

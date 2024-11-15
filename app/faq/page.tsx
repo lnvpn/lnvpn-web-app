@@ -251,6 +251,23 @@ export default function FAQ() {
                   Berlin Bitcoiners with Love ❤️.
                 </AccordionContent>
               </AccordionItem>
+              <AccordionItem
+                className="lg:w-[500px] max-w-full"
+                value="item-10"
+              >
+                <AccordionTrigger>Where do I get support?</AccordionTrigger>
+                <AccordionContent>
+                  We have a anonymous Telegram channel for support:{" "}
+                  <a
+                    className="dark:text-main text-text underline"
+                    href="https://t.me/+IKTR7ZYTuEJhZWEy"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Join via invite link
+                  </a>
+                </AccordionContent>
+              </AccordionItem>
             </Accordion>
           </div>
           <div>
