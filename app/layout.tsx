@@ -19,7 +19,7 @@ import Footer from "@/components/app/Footer";
 
 export const metadata: Metadata = {
   title: {
-    default: "LNVPN - Privacy by Design",
+    default: "LNVPN - The Bitcoin VPN",
     template: "%s | LNVPN",
   },
   description:
@@ -43,12 +43,12 @@ export const metadata: Metadata = {
       "A privacy-focused VPN service. Bitcoin only payments for maximum privacy.",
     images: [{ url: "/LNVPN-Mask-Logo.svg" }],
     url: "https://lnvpn.net/",
-    title: "LNVPN - Privacy by Design",
+    title: "LNVPN - The Bitcoin VPN",
   },
   metadataBase: new URL("https://lnvpn.net"),
   twitter: {
     card: "summary_large_image",
-    title: "LNVPN - Privacy by Design",
+    title: "LNVPN - The Bitcoin VPN",
     description: "A privacy-focused VPN service.",
     images: ["/LNVPN-Mask-Logo.svg"],
     creator: "@ln_vpn",
