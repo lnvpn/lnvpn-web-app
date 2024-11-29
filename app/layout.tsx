@@ -19,39 +19,40 @@ import Footer from "@/components/app/Footer";
 
 export const metadata: Metadata = {
   title: {
-    default: "LNVPN - The Bitcoin VPN",
+    default: "Bitcoin VPN Service | LNVPN - Privacy-Focused VPN",
     template: "%s | LNVPN",
   },
   description:
-    "A privacy-focused VPN service. Bitcoin only payments for maximum privacy.",
+    "LNVPN offers a secure, no-log VPN service accepting Bitcoin payments for ultimate anonymity. Enhance your online privacy with our Bitcoin-only VPN solution.",
   keywords: [
-    "privacy-focused VPN",
-    "VPN service",
-    "Bitcoin payments",
-    "privacy",
-    "disposable phone numbers",
-    "SMS verification",
-    "Bitcoin payments",
-    "VPN",
-    "Bitcoin",
-    "lightning network",
+    "Bitcoin VPN service",
+    "anonymous VPN",
+    "no-log VPN",
+    "VPN accepting Bitcoin",
+    "secure VPN",
+    "VPN for privacy",
+    "pay VPN with Bitcoin",
+    "Bitcoin-only VPN",
+    "best VPN for cryptocurrency",
+    "private VPN service",
   ],
   authors: [{ name: "LNVPN", url: "https://github.com/lnvpn" }],
   openGraph: {
     type: "website",
-    description:
-      "A privacy-focused VPN service. Bitcoin only payments for maximum privacy.",
-    images: [{ url: "/LNVPN-Mask-Logo.svg" }],
     url: "https://lnvpn.net/",
-    title: "LNVPN - The Bitcoin VPN",
+    title: "Bitcoin VPN Service | LNVPN - Privacy-Focused VPN",
+    description:
+      "LNVPN offers a secure, no-log VPN service accepting Bitcoin payments for ultimate anonymity. Enhance your online privacy with our Bitcoin VPN solution.",
+    images: [{ url: "/LNVPN-Mask-Logo.svg" }],
   },
   metadataBase: new URL("https://lnvpn.net"),
   twitter: {
     card: "summary_large_image",
-    title: "LNVPN - The Bitcoin VPN",
-    description: "A privacy-focused VPN service.",
-    images: ["/LNVPN-Mask-Logo.svg"],
     creator: "@ln_vpn",
+    title: "Bitcoin VPN Service | LNVPN - Privacy-Focused VPN",
+    description:
+      "LNVPN offers a secure, no-log VPN service accepting Bitcoin payments for ultimate anonymity. Enhance your online privacy with our Bitcoin VPN solution.",
+    images: ["/LNVPN-Mask-Logo.svg"],
   },
 };
 
