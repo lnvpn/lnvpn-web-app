@@ -47,6 +47,7 @@ export async function fetchVPNCredentials(
   // Map country code to server URL
   const serverUrl = mapCountryToServerUrl(country);
   if (!serverUrl) {
+    console.error(`Invalid country selected: ${country}`);
     throw new Error("Invalid country selected.");
   }
 
@@ -74,13 +75,16 @@ export async function fetchVPNCredentials(
 
     if (!response.ok) {
       const errorText = await response.text();
+      // Log error details, including server URL and country code
+      console.error(
+        `VPN server at ${serverUrl} responded with status ${response.status} for country ${country}: ${errorText}`
+      );
       throw new Error(
-        `VPN server responded with ${response.status}: ${errorText}`
+        `VPN server at ${serverUrl} responded with status ${response.status}: ${errorText}`
       );
     }
 
     const data = await response.json();
-    // console.log("VPN credentials fetched successfully:", data);
 
     // If refCode exists, calculate `paidSatoshis` and save to database
     if (refCode) {
@@ -99,11 +103,20 @@ export async function fetchVPNCredentials(
       });
 
       await newOrder.save();
-      // console.log("Order saved successfully:", newOrder);
     }
+
     return data as VPNCredentials;
   } catch (error: any) {
-    console.error("Error fetching VPN credentials:", error);
+    // Log error details, including server URL and country code
+    console.error(
+      `Error fetching VPN credentials from ${serverUrl} for country ${country}: ${error.message}`
+    );
+
+    // Optionally, log the error code or other relevant error properties
+    if (error.code) {
+      console.error(`Error code: ${error.code}`);
+    }
+
     throw new Error(error.message || "Internal Server Error");
   }
 }
