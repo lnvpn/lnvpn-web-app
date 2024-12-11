@@ -110,6 +110,17 @@ export default function FAQ() {
                   only 10 cents in US$ -- paid via ⚡!
                 </AccordionContent>
               </AccordionItem>
+              <AccordionItem
+                className="lg:w-[500px] max-w-full"
+                value="item-2121"
+              >
+                <AccordionTrigger>Are you a reseller?</AccordionTrigger>
+                <AccordionContent>
+                  No, we are not a reseller. We own and operate all our
+                  infrastructure in each country, ensuring full control and
+                  maximum privacy for our users.
+                </AccordionContent>
+              </AccordionItem>
 
               <AccordionItem className="lg:w-[500px] max-w-full" value="item-3">
                 <AccordionTrigger>How does it work?</AccordionTrigger>

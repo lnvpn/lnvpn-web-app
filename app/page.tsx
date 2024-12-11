@@ -2,7 +2,7 @@ import VPNCheckout from "@/components/app/VPN/VPNCheckout";
 
 import { FaInfoCircle } from "react-icons/fa";
 
-import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import Link from "next/link";
 
 export default function Home() {
@@ -17,16 +17,33 @@ export default function Home() {
         variant={"destructive"}
         className="w-full mx-auto mt-10 max-w-screen-md"
       >
-        <FaInfoCircle className="h-5 w-5 " />
-
+        <FaInfoCircle className="h-5 w-5 mr-2" aria-hidden="true" />
+        <AlertTitle>How does it work:</AlertTitle>
         <AlertDescription>
-          This is a privacy focused VPN service. Select the country and
-          duration, pay with Bitcoin. You communicate directly with the
-          endpoint. Keys are generated only within the browser. Check out our{" "}
-          <Link className="text-main" href={"/faq"}>
-            FAQ
-          </Link>{" "}
-          if you have any questions.
+          <ul className="list-disc ml-4 mt-2">
+            <li>
+              <strong>Step 1:</strong> Download and install the VPN app.
+            </li>
+            <li>
+              <strong>Step 2:</strong> Select your VPN exit country.
+            </li>
+            <li>
+              <strong>Step 3:</strong> Choose the duration of your subscription.
+            </li>
+          </ul>
+          <p className="mt-4">
+            This is a privacy-focused VPN service—no logging, ever! We are not a
+            reseller; we operate our own servers in each country. Keys are
+            generated exclusively within your browser, and all communication
+            happens directly with the endpoint.
+          </p>
+          <p className="mt-2">
+            Have questions?{" "}
+            <Link className="text-main underline" href={"/faq"}>
+              Visit our FAQ
+            </Link>{" "}
+            for more details.
+          </p>
         </AlertDescription>
       </Alert>
     </main>

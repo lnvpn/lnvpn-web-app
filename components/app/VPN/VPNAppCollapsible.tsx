@@ -16,7 +16,7 @@ import {
 export interface IAppProps {}
 
 export default function VPNAppCollapsible() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
   return (
     <div className="w-full">
       <Collapsible open={isOpen} onOpenChange={setIsOpen} className="">
