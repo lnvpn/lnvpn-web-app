@@ -10,11 +10,11 @@ import Link from "next/link";
 
 export const metadata: Metadata = {
   title: {
-    default: "LNSMS - Disposable Phone Numbers",
+    default: "LN-SMS - Bitcoin Disposable Phone Numbers",
     template: "%s | LNVPN",
   },
   description:
-    "Get disposable phone numbers for SMS verification. Pay with Bitcoin",
+    "Get disposable phone numbers for SMS verification. Pay with Bitcoin. 1 Dollar per number.",
   keywords: [
     "disposable phone numbers",
     "SMS verification",
