@@ -5,7 +5,7 @@ import { FaInfoCircle } from "react-icons/fa";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import Link from "next/link";
 
-export default function Home() {
+export default async function Home() {
   return (
     <main className="relative flex flex-col gap-4 items-center bg-bg dark:bg-darkBg px-5 flex-grow font-bold">
       <h1 className="text-6xl font-bold text-text dark:text-darkText my-10">

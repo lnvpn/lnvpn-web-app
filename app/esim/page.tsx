@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Metadata } from "next";
-export interface IAppProps {}
+import SIMCatalogue from "@/components/app/eSIM/SIMCatalogue";
 
 export const metadata: Metadata = {
   title: {
@@ -43,18 +43,17 @@ export const metadata: Metadata = {
   },
 };
 
-export default function SIM() {
+export default async function SIM() {
   return (
     <main className="relative flex flex-col gap-4 items-center bg-bg dark:bg-darkBg px-5 flex-grow font-bold">
       <h1 className="text-6xl font-bold text-text dark:text-darkText my-10">
         LN SIM
       </h1>
-      <div className="w-2/4">
-        <h2 className="my-10 text-4xl ">
-          Buy eSIM plans for global connectivity using Bitcoin. Privacy-focused,
-          secure, and convenient.
-        </h2>
-      </div>
+      <h2 className="text-center mb-3">
+        Buy eSIM plans for global connectivity using Bitcoin. Privacy-focused,
+        secure, and reliable.
+      </h2>
+      <SIMCatalogue />
     </main>
   );
 }
