@@ -1,35 +1,18 @@
-import { getNetworks } from "./SIMactions";
+import React from "react";
+import TabsWrapper from "@/components/app/eSIM/TabsWrapper";
+
+import SearchCommand from "@/components/app/eSIM/SIMSearchComponente";
+import { getNetworks } from "@/components/app/eSIM/SIMactions";
 import { NetworksResponse } from "@/lib/types";
-import { countryNameMap } from "@/data/countryNames";
+import { countryNameMap, regionsMap } from "@/data/countryNames"; // Ensure regionsMap is exported from this file
 import { countryCodeToEmoji, slugify } from "@/utils/esimUtils";
-import SearchCommand from "./SIMSearchComponente";
-import LocalEsimsTab from "./SIMLocalEsimtab";
-import React, { Suspense } from "react";
+import { Suspense } from "react";
 
-const topSellers = [
-  "US",
-  "DE",
-  "GB",
-  "FR",
-  "CA",
-  "AU",
-  "JP",
-  "IT",
-  "ES",
-  "CN",
-  "BR",
-  "IN",
-  "ZA",
-  "MX",
-  "RU",
-  "KR",
-  "AE",
-  "CH",
-  "SE",
-  "NL",
-];
+interface EsimLayoutProps {
+  children: React.ReactNode;
+}
 
-export default async function LocalPage() {
+export default async function EsimLayout({ children }: EsimLayoutProps) {
   const networksData: NetworksResponse | null = await getNetworks();
 
   if (
@@ -59,15 +42,23 @@ export default async function LocalPage() {
     a.name.localeCompare(b.name)
   );
 
-  // Filter top sellers
-  const topSellerCountries = topSellers
-    .map((code) => sortedCountries.find((c) => c.code === code))
-    .filter(Boolean) as typeof sortedCountries;
+  // Prepare regions data
+  const allRegions = regionsMap.map((region) => ({
+    name: region.name,
+    slug: region.slug,
+  }));
 
   return (
-    <div className="flex flex-col justify-center items-center gap-4">
+    <main className="flex flex-col justify-center items-center gap-4 px-4">
+      <h1 className="text-6xl font-bold text-text dark:text-darkText my-10">
+        LN SIM
+      </h1>
+      <h2 className="text-center mb-3">
+        Buy eSIM plans for global connectivity using Bitcoin. Privacy-focused,
+        secure, and reliable.
+      </h2>
       <div className="flex justify-center items-center my-4">
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<div>Loading search...</div>}>
           <SearchCommand
             countries={sortedCountries.map(({ code, name, flag, slug }) => ({
               code,
@@ -75,13 +66,16 @@ export default async function LocalPage() {
               flag,
               slug,
             }))}
+            regions={allRegions} // Pass regions here
           />
         </Suspense>
       </div>
-      <LocalEsimsTab
-        topSellerCountries={topSellerCountries}
-        allCountries={sortedCountries}
-      />
-    </div>
+
+      {/* Tabs Navigation */}
+      <TabsWrapper />
+
+      {/* Render the selected tab content */}
+      {children}
+    </main>
   );
 }

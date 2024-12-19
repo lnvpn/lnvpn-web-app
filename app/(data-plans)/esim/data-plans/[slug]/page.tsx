@@ -114,8 +114,8 @@ export default async function Page({
   const entityData = await getEntityData(slug);
 
   return (
-    <main className="relative flex flex-col gap-4 items-center bg-bg dark:bg-darkBg px-5 flex-grow font-bold">
-      <h1 className="text-6xl font-bold text-text dark:text-darkText my-10">
+    <main className="relative flex w-full flex-col gap-4 items-center bg-bg dark:bg-darkBg px-5 flex-grow font-bold">
+      <h1 className="text-xl md:text-6xl font-bold text-text dark:text-darkText my-10">
         LN SIM
       </h1>
       <div className="flex w-full max-w-4xl justify-start">

@@ -1,5 +1,5 @@
-"use server";
-// lib/getNetworks.ts
+import "server-only";
+
 import { NetworksResponse } from "@/lib/types";
 
 export async function getNetworks(): Promise<NetworksResponse | null> {
@@ -31,7 +31,6 @@ export async function getNetworks(): Promise<NetworksResponse | null> {
     }
 
     const data = await res.json();
-    console.log("Data fetched from API:", data);
 
     if (!data || !Array.isArray(data.countryNetworks)) {
       console.error(

@@ -24,15 +24,15 @@ export default async function ConditionsAccordion(props: IAppProps) {
               {countryNetworkData.map((network, index) => (
                 <li key={index} className="mb-2">
                   <p>
-                    <strong>Name:</strong> {network.name}
+                    <strong>{network.name}</strong>
                   </p>
-                  <p>
+                  {/* <p>
                     <strong>MCC:</strong> {network.mcc}, <strong>MNC:</strong>{" "}
                     {network.mnc}
                   </p>
                   <p>
                     <strong>Speeds:</strong> {network.speeds?.join(", ")}
-                  </p>
+                  </p> */}
                 </li>
               ))}
             </ul>

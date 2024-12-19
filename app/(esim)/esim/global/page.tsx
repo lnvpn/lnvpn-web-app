@@ -1,6 +1,8 @@
-import * as React from "react";
+// app/esim/global/page.tsx
+
+import React from "react";
+import GlobalEsimsTab from "@/components/app/eSIM/SIMGlobalEsimtab";
 import { Metadata } from "next";
-import SIMCatalogue from "@/components/app/eSIM/SIMCatalogue";
 
 export const metadata: Metadata = {
   title: {
@@ -43,17 +45,10 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function SIM() {
+export default function GlobalPage() {
   return (
-    <main className="relative flex flex-col gap-4 items-center bg-bg dark:bg-darkBg px-5 flex-grow font-bold">
-      <h1 className="text-6xl font-bold text-text dark:text-darkText my-10">
-        LN SIM
-      </h1>
-      <h2 className="text-center mb-3">
-        Buy eSIM plans for global connectivity using Bitcoin. Privacy-focused,
-        secure, and reliable.
-      </h2>
-      <SIMCatalogue />
-    </main>
+    <div className="flex flex-col justify-center items-center gap-4">
+      <GlobalEsimsTab />
+    </div>
   );
 }

@@ -101,6 +101,9 @@ const config: Config = {
         m1300: {
           raw: "(max-width: 1300px)",
         },
+        m1250: {
+          raw: "(max-width: 1250px)",
+        },
         m1100: {
           raw: "(max-width: 1100px)",
         },

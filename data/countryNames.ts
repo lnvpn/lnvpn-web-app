@@ -233,6 +233,7 @@ export const countryNameMap: Record<string, string> = {
   AE: "United Arab Emirates",
   GB: "United Kingdom",
   US: "United States",
+
   UM: "United States Outlying Islands",
   UY: "Uruguay",
   UZ: "Uzbekistan",
@@ -251,9 +252,11 @@ export const countryNameMap: Record<string, string> = {
 export const regionsMap = [
   { name: "Africa", slug: "africa" },
   { name: "Asia", slug: "asia" },
-  { name: "Europe", slug: "europe" },
+  { name: "Europe", slug: "europa%20" },
   { name: "Global", slug: "global" },
-  { name: "Middle East", slug: "middle-east" },
+  { name: "Middle East & Africa", slug: "middle-east" },
+  { name: "Balkans", slug: "balkans" },
+  { name: "Caribbean", slug: "caribbean" },
   { name: "North America", slug: "north-america" },
   { name: "Oceania", slug: "oceania" },
   { name: "LATAM", slug: "latam" },

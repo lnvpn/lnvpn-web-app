@@ -33,7 +33,6 @@ export default function PaymentModal({
   active,
   setActive,
   amount,
-
   onPaymentSuccess,
 }: PaymentModalProps) {
   const [invoice, setInvoice] = useState<InvoiceResponse | null>(null);

@@ -1,5 +1,4 @@
-// In the server actions file where getCountryData was defined
-"use server";
+import "server-only";
 
 import {
   isCountrySlug,
@@ -88,7 +87,7 @@ export async function getEntityData(
       console.error("Invalid data format for slug:", slug, data);
       return null;
     }
-
+    console.log("Raw Bundle data:", data);
     const processedBundles = data.bundles.map((bundle) => {
       const dataInGB = bundle.dataAmount / 1000;
       const countryName =
