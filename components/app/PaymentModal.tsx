@@ -19,6 +19,7 @@ interface PaymentModalProps {
   active: boolean;
   setActive: React.Dispatch<React.SetStateAction<boolean>>;
   amount: number;
+  memo: string;
 
   onPaymentSuccess?: () => void;
 }
@@ -33,6 +34,7 @@ export default function PaymentModal({
   active,
   setActive,
   amount,
+  memo,
   onPaymentSuccess,
 }: PaymentModalProps) {
   const [invoice, setInvoice] = useState<InvoiceResponse | null>(null);
@@ -45,7 +47,7 @@ export default function PaymentModal({
 
     const generateInvoice = async () => {
       try {
-        const data = await getInvoice(amount, "LNVPN");
+        const data = await getInvoice(amount, memo);
         if (isMounted) {
           setInvoice(data);
         }

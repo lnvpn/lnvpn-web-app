@@ -4,8 +4,14 @@ import RefProviderWrapper from "./context/RefProviderWrapper";
 import type { Metadata } from "next";
 
 import { Inter } from "next/font/google";
+import { Space_Grotesk } from "next/font/google";
 
 const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+});
+
+const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
   display: "swap",
 });
@@ -57,6 +63,57 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: RootLayoutProps) {
+  const vpnPrices = {
+    hour: 0.1,
+    day: 0.5,
+    week: 1.5,
+    month: 3,
+    quarter: 8,
+  };
+
+  const vpnEndpoints = [
+    {
+      country: " United-States",
+      isoCode: "US",
+    },
+    {
+      country: " United-Kingdom",
+      isoCode: "GB",
+    },
+    { country: "India", isoCode: "IN" },
+    { country: "Netherlands", isoCode: "NL" },
+    { country: "Russia", isoCode: "RU" },
+    { country: "Ukraine", isoCode: "UA" },
+    { country: "Israel", isoCode: "IL" },
+    { country: "Kazakhstan", isoCode: "KZ" },
+    { country: "Portugal", isoCode: "PT" },
+    { country: "Iceland", isoCode: "IS" },
+    { country: "Australia", isoCode: "AU" },
+  ];
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: "LNVPN - Privacy-Focused VPN",
+    description:
+      "Secure your privacy with LNVPN's no-log VPN. Pay with Bitcoin for ultimate anonymity. Plans start at just 10 cents!",
+    provider: {
+      "@type": "Organization",
+      name: "LNVPN",
+      url: "https://lnvpn.net",
+    },
+    offers: Object.entries(vpnPrices).map(([duration, price]) => ({
+      "@type": "Offer",
+      price,
+      priceCurrency: "USD",
+      description: `VPN connection for ${duration}`,
+    })),
+    areaServed: vpnEndpoints.map((endpoint) => ({
+      "@type": "Country",
+      name: endpoint.country,
+    })),
+  };
+
   return (
     <>
       <html lang="en" className={inter.className}>
@@ -64,6 +121,10 @@ export default function RootLayout({ children }: RootLayoutProps) {
           <link rel="icon" href="/favicon.ico" sizes="any" />
           <link rel="icon" href="/icon.svg" type="image/svg+xml" />
           <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          />
         </head>
         <body className="flex flex-col min-h-screen ">
           <ThemeProvider

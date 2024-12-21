@@ -76,6 +76,7 @@ export default function VPNCheckout() {
         active={isModalActive}
         setActive={setIsModalActive}
         amount={selectedDuration}
+        memo="LNVPN"
         onPaymentSuccess={handlePaymentSuccess}
       />
     </div>

@@ -11,28 +11,25 @@ export interface IAppProps {
   isoCode: string;
 }
 
-export default async function ConditionsAccordion(props: IAppProps) {
+export default async function NetworksAccordion(props: IAppProps) {
   const countryNetworkData = await getCountryNetworkData(props.isoCode);
 
   return (
-    <Accordion className="w-full lg:w-[unset]" type="single" collapsible>
-      <AccordionItem className="lg:w-[500px] max-w-full" value="item-1">
-        <AccordionTrigger>Available Networks</AccordionTrigger>
+    <Accordion className="w-full " type="single" collapsible>
+      <AccordionItem className=" max-w-full" value="item-1">
+        <AccordionTrigger>Included Networks</AccordionTrigger>
         <AccordionContent>
           {countryNetworkData ? (
             <ul>
               {countryNetworkData.map((network, index) => (
                 <li key={index} className="mb-2">
                   <p>
-                    <strong>{network.name}</strong>
+                    <strong>{network.brandName}</strong>
                   </p>
-                  {/* <p>
-                    <strong>MCC:</strong> {network.mcc}, <strong>MNC:</strong>{" "}
-                    {network.mnc}
-                  </p>
-                  <p>
-                    <strong>Speeds:</strong> {network.speeds?.join(", ")}
-                  </p> */}
+
+                  {network.speed?.length > 0 && (
+                    <p>Speed: {network.speed.join(" / ")}</p>
+                  )}
                 </li>
               ))}
             </ul>

@@ -35,6 +35,18 @@ interface RawBundle {
   imageUrl?: string;
 }
 
+export interface ProcessedBundle {
+  name: string;
+  speed: string[];
+  description: string;
+  dataInGB: number;
+  durationInDays: number;
+  countryName: string;
+  price: number;
+  roamingEnabled: RawCountry[];
+  unlimited: boolean;
+}
+
 export async function getEntityData(
   slug: string
 ): Promise<ProcessedBundle[] | null> {
@@ -87,7 +99,7 @@ export async function getEntityData(
       console.error("Invalid data format for slug:", slug, data);
       return null;
     }
-    console.log("Raw Bundle data:", data);
+
     const processedBundles = data.bundles.map((bundle) => {
       const dataInGB = bundle.dataAmount / 1000;
       const countryName =
@@ -97,10 +109,14 @@ export async function getEntityData(
       const adjustedPrice = Math.floor(bundle.price * priceAdjustment);
 
       return {
+        name: bundle.name,
+        speed: bundle.speed,
+        description: bundle.description,
         dataInGB,
         durationInDays: bundle.duration,
         countryName,
         price: adjustedPrice,
+        roamingEnabled: bundle.roamingEnabled,
         unlimited: bundle.unlimited,
       };
     });
@@ -112,12 +128,13 @@ export async function getEntityData(
   }
 }
 
-interface Network {
+export interface Network {
+  brandName: string;
   name: string;
   mcc: string;
   mnc: string;
   tagid: string;
-  speeds: string[];
+  speed: string[];
 }
 
 interface CountryNetwork {
@@ -161,7 +178,6 @@ export async function getCountryNetworkData(
     }
 
     const data: NetworksResponse = await res.json();
-    console.log("Raw Network data:", data);
 
     if (!data || !Array.isArray(data.countryNetworks)) {
       console.error(

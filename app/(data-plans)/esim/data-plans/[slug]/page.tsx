@@ -1,7 +1,12 @@
 import { Metadata, ResolvingMetadata } from "next";
 import { countryNameMap } from "@/data/countryNames";
 import { getCountryCodeFromSlug } from "@/utils/esimUtils";
-
+import {
+  FaUserShield,
+  FaBolt,
+  FaEnvelopeOpenText,
+  FaUserSlash,
+} from "react-icons/fa";
 import { getEntityData } from "@/components/app/eSIM/[slug]/SIMDetailPageActions"; // renamed import
 
 import BackButton from "@/components/app/BackButton";
@@ -12,17 +17,12 @@ import {
   isRegionSlug,
   getRegionNameFromSlug,
 } from "@/utils/esimUtils";
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardContent,
-  CardFooter,
-} from "@/components/ui/card";
-import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
-import { Calendar, Tag, Globe, RefreshCcw } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import ConditionsAccordion from "@/components/app/eSIM/[slug]/ConditionsAccordion";
+
+import { Suspense } from "react";
+import NetworksAccordion from "@/components/app/eSIM/[slug]/NetworksAccordion";
+import RoamingAccordion from "@/components/app/eSIM/[slug]/RoamingAccordion";
+import Image from "next/image";
+import ESIMPageClient from "./ESIMPageClient";
 
 export async function generateMetadata(
   { params }: { params: Promise<{ slug: string }> },
@@ -103,7 +103,9 @@ export default async function Page({
   } else {
     return (
       <main className="relative flex flex-col gap-4 items-center px-5 flex-grow font-bold">
-        <h1 className="text-6xl font-bold my-10">404 - Not found</h1>
+        <h1 className="my-10 text-shadow-neo scroll-m-20 font-Space_Grotesk text-5xl font-extrabold tracking-wide text-main lg:text-6xl">
+          404 - Not found
+        </h1>
         <div className="flex w-full max-w-4xl justify-start">
           <BackButton />
         </div>
@@ -113,72 +115,107 @@ export default async function Page({
 
   const entityData = await getEntityData(slug);
 
+  const jsonLd =
+    entityData && entityData.length > 0
+      ? {
+          "@context": "https://schema.org",
+          "@type": "Product",
+          name: `${title} eSIM Plan`,
+          description: `Explore ${title} eSIM plans with Bitcoin payments. Instant delivery and privacy-focused connectivity.`,
+          image: "/esim-icon.svg",
+          brand: {
+            "@type": "Brand",
+            name: "LN-SIM",
+          },
+          offers: entityData.map((plan) => ({
+            "@type": "Offer",
+            priceCurrency: "USD",
+            description: plan.description,
+            name: plan.name,
+            price: plan.price.toFixed(2),
+            acceptedPaymentMethod: "Bitcoin",
+            availability: "https://schema.org/InStock",
+            url: `https://lnvpn.net/esim/data-plans/${slug}`,
+          })),
+        }
+      : null;
+
   return (
     <main className="relative flex w-full flex-col gap-4 items-center bg-bg dark:bg-darkBg px-5 flex-grow font-bold">
-      <h1 className="text-xl md:text-6xl font-bold text-text dark:text-darkText my-10">
+      {jsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      )}
+      <h1 className="my-10 text-shadow-neo scroll-m-20 font-Space_Grotesk text-5xl font-extrabold tracking-wide text-main lg:text-6xl">
         LN SIM
       </h1>
       <div className="flex w-full max-w-4xl justify-start">
         <BackButton />
       </div>
-      <h2 className="text-4xl my-10">
-        {flagEmoji ? `${flagEmoji} ${title}` : title}
+      <h2 className="text-xl md:text-4xl my-8">
+        {flagEmoji ? `${flagEmoji} ${title}` : title} - eSIM Data Plans
       </h2>
 
-      {entityData && entityData.length > 0 ? (
-        <div className="w-full max-w-4xl space-y-4">
-          <h3 className="text-2xl font-semibold">Available Data Plans</h3>
-          <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
-            {entityData.map((plan, index) => (
-              <Card key={index}>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Globe className="w-5 h-5" />
-                    {plan.countryName}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <Table>
-                    <TableBody className="text-lg">
-                      <TableRow>
-                        <TableCell className=" flex items-center gap-1">
-                          <RefreshCcw className="w-4 h-4" /> Data
-                        </TableCell>
-                        <TableCell>{plan.dataInGB} GB</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell className=" flex items-center gap-1">
-                          <Calendar className="w-4 h-4" /> Duration
-                        </TableCell>
-                        <TableCell>{plan.durationInDays} days</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell className=" flex items-center gap-1">
-                          <Tag className="w-4 h-4" /> Price
-                        </TableCell>
-                        <TableCell>
-                          <strong>${plan.price}</strong>
-                        </TableCell>
-                      </TableRow>
-                    </TableBody>
-                  </Table>
-                </CardContent>
-                <CardFooter className="flex justify-end">
-                  <Button variant={"neutral"}>Buy Now</Button>
-                </CardFooter>
-              </Card>
-            ))}
-          </div>
-          <hr className="w-full my-10 text-black border-black" />
-          {isoCode && (
-            <div className="flex justify-center">
-              <ConditionsAccordion isoCode={isoCode} />
+      <div className="flex justify-center items-center flex-wrap gap-3">
+        <div className="flex items-center gap-2">
+          <FaUserShield />
+          <p>No KYC</p>
+        </div>
+        <div className="flex items-center gap-2">
+          <FaBolt />
+          <p>Instant delivery</p>
+        </div>
+        <div className="flex items-center gap-2">
+          <FaEnvelopeOpenText />
+          <p>No Email</p>
+        </div>
+        <div className="flex items-center gap-2">
+          <FaUserSlash />
+          <p>No Account</p>
+        </div>
+      </div>
+      <div className="flex justify-center items-start w-full lg:max-w-4xl gap-4 flex-wrap sm:flex-nowrap ">
+        <div className="w-1/2 flex-grow  h-full aspect-square flex flex-col justify-center items-center bg-white rounded-base shadow-light dark:shadow-dark border-2 border-border dark:border-darkBorder p-4 m-8">
+          <Image
+            src="/esim-icon.svg"
+            width={200}
+            height={200}
+            alt="ESim Picture"
+            placeholder="empty"
+            className="w-1/2 h-1/2 "
+          />
+        </div>
+        <div className="w-1/2 flex flex-grow flex-col justify-center items-center gap-3 my-8">
+          <h3 className="text-xl font-semibold">Available Data Plans</h3>
+          {entityData && entityData.length > 0 ? (
+            <div className="w-full max-w-4xl space-y-4">
+              <Suspense fallback={<p>Loading...</p>}>
+                <ESIMPageClient
+                  plans={entityData}
+                  isoCode={isoCode}
+                  slug={slug}
+                />
+              </Suspense>
+              <hr className="w-full text-black border-black" />
+              {isoCode && (
+                <div className="flex justify-center">
+                  <NetworksAccordion isoCode={isoCode} />
+                </div>
+              )}
+              {isRegionSlug(slug) && (
+                <div className="flex justify-center">
+                  <RoamingAccordion isoCode={slug} />
+                </div>
+              )}
             </div>
+          ) : (
+            <p>No data available for this entity.</p>
           )}
         </div>
-      ) : (
-        <p>No data available for this entity.</p>
-      )}
+      </div>
+      {/* Replace the commented-out card section with the RadioGroup */}
     </main>
   );
 }

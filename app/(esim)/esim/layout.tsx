@@ -50,7 +50,7 @@ export default async function EsimLayout({ children }: EsimLayoutProps) {
 
   return (
     <main className="flex flex-col justify-center items-center gap-4 px-4">
-      <h1 className="text-6xl font-bold text-text dark:text-darkText my-10">
+      <h1 className="my-10 text-shadow-neo scroll-m-20 font-Space_Grotesk text-5xl font-extrabold tracking-wide text-main lg:text-6xl">
         LN SIM
       </h1>
       <h2 className="text-center mb-3">
