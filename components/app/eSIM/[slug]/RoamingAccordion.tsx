@@ -5,13 +5,14 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { getEntityData, getCountryNetworkData } from "./SIMDetailPageActions";
+import { getCountryNetworkData, ProcessedBundle } from "./SIMDetailPageActions";
 
 import { countryCodeToEmoji } from "@/utils/esimUtils";
 
-export default async function RoamingAccordion(props: { isoCode: string }) {
-  const bundleDataList = await getEntityData(props.isoCode || "");
-
+export default async function RoamingAccordion(props: {
+  bundleDataList: ProcessedBundle[];
+}) {
+  const { bundleDataList } = props;
   if (!bundleDataList || bundleDataList.length === 0) return null;
 
   const bundleData = bundleDataList[0];
@@ -32,7 +33,7 @@ export default async function RoamingAccordion(props: { isoCode: string }) {
 
   return (
     <Accordion className="w-full" type="single" collapsible>
-      <AccordionItem className="max-w-full" value="item-1">
+      <AccordionItem className="max-w-full" value="item-2">
         <AccordionTrigger>Included Countries & Networks</AccordionTrigger>
         <AccordionContent>
           {networkData.length > 0 ? (

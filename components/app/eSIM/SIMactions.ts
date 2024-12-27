@@ -19,7 +19,7 @@ export async function getNetworks(): Promise<NetworksResponse | null> {
         "X-API-Key": apiKey,
         "Content-Type": "application/json",
       },
-      next: { revalidate: 3600 },
+      next: { revalidate: 360000 },
     });
 
     if (!res.ok) {

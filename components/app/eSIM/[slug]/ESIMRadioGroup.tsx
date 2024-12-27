@@ -1,77 +1,56 @@
 "use client";
 
-import { useState } from "react";
 import { RadioGroup, RadioGroupItem } from "./BundleRadioGroup";
 import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-
-export interface Plan {
-  id: string; // Ensure each plan has a unique ID
-  name: string;
-  dataInGB: number;
-  durationInDays: number;
-  price: number;
-  countryName: string;
-}
+import { ProcessedBundle } from "./SIMDetailPageActions";
 
 interface ESIMRadioGroupProps {
-  plans: Plan[];
-  onSelect: (plan: Plan) => void;
+  plans: ProcessedBundle[];
+  onSelect: (planName: string) => void;
+  // New prop: parent's currently selected plan name
+  selectedPlanName: string;
 }
 
-const ESIMRadioGroup: React.FC<ESIMRadioGroupProps> = ({ plans, onSelect }) => {
-  const [selected, setSelected] = useState<string>(plans[0]?.id || "");
+const ESIMRadioGroup: React.FC<ESIMRadioGroupProps> = ({
+  plans,
+  onSelect,
+  selectedPlanName,
+}) => {
+  // Instead of a local state that might get out of sync,
+  // we can read the "selectedPlanName" directly from the parent
+  // and only dispatch changes upward.
 
   const handleChange = (value: string) => {
-    setSelected(value);
-  };
-
-  const handleBuyNow = () => {
-    const selectedPlan = plans.find((plan) => plan.name === selected);
-    if (selectedPlan) {
-      onSelect(selectedPlan);
-    }
+    onSelect(value);
   };
 
   return (
-    <div>
-      <RadioGroup
-        value={selected}
-        onValueChange={handleChange}
-        className="space-y-4"
-      >
-        {plans.map((plan) => (
-          <Card
-            key={plan.name}
-            className="flex items-center justify-between gap-3 p-4 cursor-pointer"
-            onClick={() => handleChange(plan.name)}
-          >
-            <RadioGroupItem
-              key={plan.name}
-              value={plan.name}
-              id={`plan-${plan.name}`}
-            />
-            <Label htmlFor={`plan-${plan.name}`} className="flex flex-col">
-              <span>
-                {plan.dataInGB} GB • {plan.durationInDays} days •
-                <strong> ${plan.price}</strong>
-              </span>
-            </Label>
-          </Card>
-        ))}
-      </RadioGroup>
-      <div className="text-center my-6">
-        <Button
-          variant="neutral"
-          size="lg"
-          className="text-black"
-          onClick={handleBuyNow}
+    <RadioGroup
+      value={selectedPlanName}
+      onValueChange={handleChange}
+      className="space-y-4"
+    >
+      {plans.map((plan) => (
+        <Card
+          key={plan.name}
+          className="flex items-center justify-between gap-3 p-4 cursor-pointer"
+          onClick={() => handleChange(plan.name)}
         >
-          Buy Now
-        </Button>
-      </div>
-    </div>
+          <RadioGroupItem
+            key={plan.name}
+            value={plan.name}
+            id={`plan-${plan.name}`}
+          />
+          <Label htmlFor={`plan-${plan.name}`} className="flex flex-col">
+            <span>
+              {plan.dataInGB} GB • {plan.durationInDays} days •
+              <strong> ${plan.price}</strong>
+            </span>
+          </Label>
+        </Card>
+      ))}
+    </RadioGroup>
   );
 };
 

@@ -7,7 +7,10 @@ import {
   FaEnvelopeOpenText,
   FaUserSlash,
 } from "react-icons/fa";
-import { getEntityData } from "@/components/app/eSIM/[slug]/SIMDetailPageActions"; // renamed import
+import {
+  getCountryNetworkData,
+  getEntityData,
+} from "@/components/app/eSIM/[slug]/SIMDetailPageActions"; // renamed import
 
 import BackButton from "@/components/app/BackButton";
 import { countryCodeToEmoji } from "@/utils/esimUtils";
@@ -23,6 +26,12 @@ import NetworksAccordion from "@/components/app/eSIM/[slug]/NetworksAccordion";
 import RoamingAccordion from "@/components/app/eSIM/[slug]/RoamingAccordion";
 import Image from "next/image";
 import ESIMPageClient from "./ESIMPageClient";
+import { Alert } from "@/components/ui/alert";
+import DescriptionAccordion from "@/components/app/eSIM/[slug]/DescriptionAccordion";
+import TechnicalSpecAccordion from "@/components/app/eSIM/[slug]/TechnicalSpecAccordion";
+import RedeemInstructionsAccordion from "@/components/app/eSIM/[slug]/RedeemInstructionsAccordion";
+
+export const revalidate = 360000;
 
 export async function generateMetadata(
   { params }: { params: Promise<{ slug: string }> },
@@ -114,6 +123,7 @@ export default async function Page({
   }
 
   const entityData = await getEntityData(slug);
+  const countryNetworkData = (await getCountryNetworkData(isoCode)) || [];
 
   const jsonLd =
     entityData && entityData.length > 0
@@ -122,7 +132,7 @@ export default async function Page({
           "@type": "Product",
           name: `${title} eSIM Plan`,
           description: `Explore ${title} eSIM plans with Bitcoin payments. Instant delivery and privacy-focused connectivity.`,
-          image: "/esim-icon.svg",
+          images: ["https://lnvpn.net/LNVPN-Mask-Logo.svg"],
           brand: {
             "@type": "Brand",
             name: "LN-SIM",
@@ -157,26 +167,30 @@ export default async function Page({
       <h2 className="text-xl md:text-4xl my-8">
         {flagEmoji ? `${flagEmoji} ${title}` : title} - eSIM Data Plans
       </h2>
-
-      <div className="flex justify-center items-center flex-wrap gap-3">
-        <div className="flex items-center gap-2">
-          <FaUserShield />
-          <p>No KYC</p>
+      <Alert
+        variant={"destructive"}
+        className="w-full mx-auto mt-10 max-w-screen-md"
+      >
+        <div className="flex justify-center items-center flex-wrap gap-3 ">
+          <div className="flex items-center gap-2">
+            <FaUserShield />
+            <p>No KYC</p>
+          </div>
+          <div className="flex items-center gap-2">
+            <FaEnvelopeOpenText />
+            <p>No Email</p>
+          </div>
+          <div className="flex items-center gap-2">
+            <FaUserSlash />
+            <p>No Account</p>
+          </div>
+          <div className="flex items-center gap-2">
+            <FaBolt />
+            <p>Instant delivery</p>
+          </div>
         </div>
-        <div className="flex items-center gap-2">
-          <FaBolt />
-          <p>Instant delivery</p>
-        </div>
-        <div className="flex items-center gap-2">
-          <FaEnvelopeOpenText />
-          <p>No Email</p>
-        </div>
-        <div className="flex items-center gap-2">
-          <FaUserSlash />
-          <p>No Account</p>
-        </div>
-      </div>
-      <div className="flex justify-center items-start w-full lg:max-w-4xl gap-4 flex-wrap sm:flex-nowrap ">
+      </Alert>
+      <div className="flex justify-center items-start w-full lg:max-w-4xl md:gap-4 flex-wrap sm:flex-nowrap ">
         <div className="w-1/2 flex-grow  h-full aspect-square flex flex-col justify-center items-center bg-white rounded-base shadow-light dark:shadow-dark border-2 border-border dark:border-darkBorder p-4 m-8">
           <Image
             src="/esim-icon.svg"
@@ -192,23 +206,30 @@ export default async function Page({
           {entityData && entityData.length > 0 ? (
             <div className="w-full max-w-4xl space-y-4">
               <Suspense fallback={<p>Loading...</p>}>
-                <ESIMPageClient
-                  plans={entityData}
-                  isoCode={isoCode}
-                  slug={slug}
-                />
+                <ESIMPageClient plans={entityData} />
               </Suspense>
               <hr className="w-full text-black border-black" />
-              {isoCode && (
+              <div className="flex flex-col gap-1">
+                {isoCode && (
+                  <div className="flex justify-center">
+                    <NetworksAccordion networks={countryNetworkData} />
+                  </div>
+                )}
+                {isRegionSlug(slug) && (
+                  <div className="flex justify-center">
+                    <RoamingAccordion bundleDataList={entityData} />
+                  </div>
+                )}
                 <div className="flex justify-center">
-                  <NetworksAccordion isoCode={isoCode} />
+                  <DescriptionAccordion />
                 </div>
-              )}
-              {isRegionSlug(slug) && (
                 <div className="flex justify-center">
-                  <RoamingAccordion isoCode={slug} />
+                  <TechnicalSpecAccordion />
                 </div>
-              )}
+                <div className="flex justify-center">
+                  <RedeemInstructionsAccordion />
+                </div>
+              </div>
             </div>
           ) : (
             <p>No data available for this entity.</p>

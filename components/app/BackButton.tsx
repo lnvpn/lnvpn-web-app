@@ -9,8 +9,8 @@ const BackButton = () => {
   return (
     <div>
       <Button
-        variant={"neutral"}
-        className=" bg-white dark:text-white dark:bg-secondaryBlack"
+        variant={"default"}
+        className=" text-black"
         size="lg"
         onClick={() => router.back()}
       >

@@ -25,7 +25,6 @@ export const mapCountryToServerUrl = (countryCode: string): string | null => {
     "16": process.env.IP_PRT!, // Portugal
     "18": process.env.IP_ISL!, // Iceland
     "19": process.env.IP_AUS!, // Australia
-    // Add other mappings as needed
   };
 
   const serverUrl = countryServerMap[countryCode];
@@ -43,11 +42,31 @@ interface DurationMapping {
 }
 
 const durationMappings: DurationMapping[] = [
-  { selectedValue: 0.1, amount: 1, unit: "hour" },
-  { selectedValue: 0.5, amount: 1, unit: "day" },
-  { selectedValue: 1.5, amount: 1, unit: "week" },
-  { selectedValue: 3, amount: 1, unit: "month" },
-  { selectedValue: 9, amount: 3, unit: "month" },
+  {
+    selectedValue: Number(process.env.NEXT_PUBLIC_price_hour),
+    amount: 1,
+    unit: "hour",
+  },
+  {
+    selectedValue: Number(process.env.NEXT_PUBLIC_price_day),
+    amount: 1,
+    unit: "day",
+  },
+  {
+    selectedValue: Number(process.env.NEXT_PUBLIC_price_week),
+    amount: 1,
+    unit: "week",
+  },
+  {
+    selectedValue: Number(process.env.NEXT_PUBLIC_price_month),
+    amount: 1,
+    unit: "month",
+  },
+  {
+    selectedValue: Number(process.env.NEXT_PUBLIC_price_quarter),
+    amount: 3,
+    unit: "month",
+  },
 ];
 
 export const getExpiryDate = (selectedDuration: number): Date => {

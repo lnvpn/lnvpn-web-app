@@ -5,23 +5,23 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { getCountryNetworkData } from "./SIMDetailPageActions";
+import { Network } from "./SIMDetailPageActions";
 
-export interface IAppProps {
-  isoCode: string;
+export interface NetworkAccordionProps {
+  networks: Network[];
 }
 
-export default async function NetworksAccordion(props: IAppProps) {
-  const countryNetworkData = await getCountryNetworkData(props.isoCode);
+export default async function NetworksAccordion(props: NetworkAccordionProps) {
+  if (!props.networks) return null;
 
   return (
     <Accordion className="w-full " type="single" collapsible>
       <AccordionItem className=" max-w-full" value="item-1">
         <AccordionTrigger>Included Networks</AccordionTrigger>
         <AccordionContent>
-          {countryNetworkData ? (
+          {props.networks ? (
             <ul>
-              {countryNetworkData.map((network, index) => (
+              {props.networks.map((network, index) => (
                 <li key={index} className="mb-2">
                   <p>
                     <strong>{network.brandName}</strong>

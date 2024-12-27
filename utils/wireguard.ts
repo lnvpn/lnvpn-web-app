@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// utils/wireguard.ts
 
 function gf(init?: number[]): Float64Array {
   const r = new Float64Array(16);

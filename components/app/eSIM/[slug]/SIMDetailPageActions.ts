@@ -1,4 +1,4 @@
-import "server-only";
+"use server";
 
 import {
   isCountrySlug,
@@ -83,7 +83,7 @@ export async function getEntityData(
         "X-API-Key": apiKey,
         "Content-Type": "application/json",
       },
-      next: { revalidate: 3600 },
+      next: { revalidate: 360000 },
     });
 
     if (!res.ok) {
@@ -106,7 +106,7 @@ export async function getEntityData(
         bundle.countries && bundle.countries.length > 0
           ? bundle.countries[0].name
           : "Unknown Country";
-      const adjustedPrice = Math.floor(bundle.price * priceAdjustment);
+      const adjustedPrice = Math.floor(bundle.price + priceAdjustment);
 
       return {
         name: bundle.name,
@@ -147,10 +147,15 @@ interface NetworksResponse {
 }
 
 export async function getCountryNetworkData(
-  isoCode: string
+  isoCode: string | null
 ): Promise<Network[] | null> {
   const baseUrl = process.env.ESIM_API_URL;
   const apiKey = process.env.ESIM_API_KEY;
+
+  if (!isoCode) {
+    console.error("Missing required ISO code for fetching network data.");
+    return null;
+  }
 
   if (!baseUrl || !apiKey) {
     console.error(
@@ -166,7 +171,7 @@ export async function getCountryNetworkData(
         accept: "application/json",
         "X-API-Key": apiKey,
       },
-      next: { revalidate: 3600 },
+      next: { revalidate: 360000 },
     });
 
     if (!res.ok) {

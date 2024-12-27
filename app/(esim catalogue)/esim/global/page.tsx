@@ -1,7 +1,7 @@
-// app/esim/regional/page.tsx
+// app/esim/global/page.tsx
 
 import React from "react";
-import RegionsTab from "@/components/app/eSIM/SIMRegionalEsimtab";
+import GlobalEsimsTab from "@/components/app/eSIM/SIMGlobalEsimtab";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -45,10 +45,12 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RegionalPage() {
+export const revalidate = 360000;
+
+export default function GlobalPage() {
   return (
     <div className="flex flex-col justify-center items-center gap-4">
-      <RegionsTab />
+      <GlobalEsimsTab />
     </div>
   );
 }

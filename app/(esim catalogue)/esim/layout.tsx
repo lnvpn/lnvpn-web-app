@@ -21,7 +21,7 @@ export default async function EsimLayout({ children }: EsimLayoutProps) {
     networksData.countryNetworks.length === 0
   ) {
     return (
-      <main className="p-4">
+      <main className="p-4 text-center">
         <h1 className="text-3xl font-bold mb-6">eSIM Networks</h1>
         <div>No networks available or an error occurred.</div>
       </main>
