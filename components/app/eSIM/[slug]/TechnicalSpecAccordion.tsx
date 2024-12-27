@@ -10,7 +10,7 @@ export default async function TechnicalSpecsAccordion() {
   return (
     <Accordion className="w-full" type="single" collapsible>
       <AccordionItem className="max-w-full" value="item-4">
-        <AccordionTrigger>Technical Specs</AccordionTrigger>
+        <AccordionTrigger>Technical Specification</AccordionTrigger>
         <AccordionContent>
           <ul className="list-disc pl-5 mb-4">
             <li>

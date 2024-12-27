@@ -86,11 +86,11 @@ const ESIMPageClient: React.FC<ESIMPageClientProps> = ({ plans }) => {
         onSelect={handleSelectPlan}
       />
 
-      <div className="mt-4 text-center">
+      <div className="mt-4 text-center w-full">
         <Button
           variant="neutral"
           size="lg"
-          className="text-black"
+          className="text-black w-full p-8 text-lg"
           onClick={handleBuyNow}
           disabled={!selectedPlan}
         >

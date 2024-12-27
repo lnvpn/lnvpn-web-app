@@ -16,7 +16,7 @@ export default function FAQ() {
         <h1 className="my-10 text-shadow-neo scroll-m-20 font-Space_Grotesk text-5xl font-extrabold tracking-wide text-main lg:text-6xl">
           FAQ
         </h1>
-        <div className="grid  sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid  sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           <div>
             <h2 className="text-2xl flex justify-center my-4 font-bold text-text dark:text-darkText">
               VPN
@@ -277,6 +277,148 @@ export default function FAQ() {
                   >
                     Join via invite link
                   </a>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          </div>
+          <div>
+            <h2 className="text-2xl flex justify-center my-4 font-bold text-text dark:text-darkText">
+              eSIM
+            </h2>
+            <Accordion
+              className="w-full lg:w-[unset]"
+              type="single"
+              collapsible
+            >
+              {/* 1. Compatibility */}
+              <AccordionItem
+                className="lg:w-[500px] max-w-full"
+                value="item-501"
+              >
+                <AccordionTrigger>
+                  Which devices are compatible with eSIM?
+                </AccordionTrigger>
+                <AccordionContent>
+                  <p>
+                    Most newer smartphones, tablets, and wearables now include
+                    eSIM functionality. Popular brands like Apple (iPhone XS and
+                    later), Samsung (Galaxy S20 and later), and Google Pixel
+                    (Pixel 3 and newer) typically support eSIM. However, it’s
+                    always best to check the exact model specifications or
+                    consult with your carrier for confirmation.
+                  </p>
+                </AccordionContent>
+              </AccordionItem>
+
+              {/* 2. How to Set Up an eSIM */}
+              <AccordionItem
+                className="lg:w-[500px] max-w-full"
+                value="item-502"
+              >
+                <AccordionTrigger>
+                  How do I install or set up my eSIM plan?
+                </AccordionTrigger>
+                <AccordionContent>
+                  <p>
+                    After purchasing an eSIM plan, you typically receive a QR
+                    code or an activation code. Go to your device’s cellular
+                    settings, select “Add Cellular Plan” (or similar), then scan
+                    the QR code or enter the activation code. Your device will
+                    download the eSIM profile and guide you through the final
+                    steps to get connected.
+                  </p>
+                </AccordionContent>
+              </AccordionItem>
+
+              {/* 3. Switching Between Profiles */}
+              <AccordionItem
+                className="lg:w-[500px] max-w-full"
+                value="item-503"
+              >
+                <AccordionTrigger>
+                  Can I store multiple eSIM profiles on one device?
+                </AccordionTrigger>
+                <AccordionContent>
+                  <p>
+                    Yes. Many eSIM-enabled devices let you store multiple eSIM
+                    profiles (like a home SIM, a travel SIM, or a work SIM) so
+                    you can switch between them in your settings without
+                    swapping physical cards. However, most devices can only use
+                    one eSIM profile at a time.
+                  </p>
+                </AccordionContent>
+              </AccordionItem>
+
+              {/* 4. Coverage and Network Quality */}
+              <AccordionItem
+                className="lg:w-[500px] max-w-full"
+                value="item-504"
+              >
+                <AccordionTrigger>
+                  Does an eSIM have the same coverage and speeds as a physical
+                  SIM?
+                </AccordionTrigger>
+                <AccordionContent>
+                  <p>
+                    Yes. eSIM service is provided over the same network
+                    infrastructure as a traditional physical SIM. Your coverage,
+                    data speeds, and call quality depend on the carrier you
+                    choose and their network strength in your location.
+                  </p>
+                </AccordionContent>
+              </AccordionItem>
+
+              {/* 5. Cost and Data Plans */}
+              <AccordionItem
+                className="lg:w-[500px] max-w-full"
+                value="item-505"
+              >
+                <AccordionTrigger>
+                  Are eSIM plans more expensive than physical SIM plans?
+                </AccordionTrigger>
+                <AccordionContent>
+                  <p>
+                    Pricing can vary by carrier, but eSIM plans often have
+                    similar or sometimes better rates. Because there’s no
+                    physical card, carriers can reduce overhead costs, and that
+                    can translate into savings for consumers. Always compare
+                    plan details to find the best deal.
+                  </p>
+                </AccordionContent>
+              </AccordionItem>
+
+              {/* 6. Security and Privacy */}
+              <AccordionItem
+                className="lg:w-[500px] max-w-full"
+                value="item-506"
+              >
+                <AccordionTrigger>Is eSIM secure to use?</AccordionTrigger>
+                <AccordionContent>
+                  <p>
+                    Yes. eSIM profiles are securely encrypted and stored on a
+                    dedicated chip within your device. Activation usually
+                    requires secure credentials, such as a QR code or activation
+                    code, which helps ensure your information remains protected.
+                  </p>
+                </AccordionContent>
+              </AccordionItem>
+
+              {/* 7. Troubleshooting */}
+              <AccordionItem
+                className="lg:w-[500px] max-w-full"
+                value="item-507"
+              >
+                <AccordionTrigger>
+                  What if I experience connectivity issues with my eSIM?
+                </AccordionTrigger>
+                <AccordionContent>
+                  <p>
+                    First, check your network settings and ensure the eSIM
+                    profile is active. Restarting your device can also resolve
+                    minor issues. If problems persist, contact your carrier’s
+                    support team for assistance with troubleshooting or
+                    re-provisioning your eSIM profile.
+                  </p>
                 </AccordionContent>
               </AccordionItem>
             </Accordion>

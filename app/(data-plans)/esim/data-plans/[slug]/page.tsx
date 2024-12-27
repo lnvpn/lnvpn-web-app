@@ -112,7 +112,7 @@ export default async function Page({
   } else {
     return (
       <main className="relative flex flex-col gap-4 items-center px-5 flex-grow font-bold">
-        <h1 className="my-10 text-shadow-neo scroll-m-20 font-Space_Grotesk text-5xl font-extrabold tracking-wide text-main lg:text-6xl">
+        <h1 className="my-10 text-shadow-neo scroll-m-20 font-Space_Grotesk text-5xl font-extrabold tracking-wide text-black lg:text-6xl">
           404 - Not found
         </h1>
         <div className="flex w-full max-w-4xl justify-start">
