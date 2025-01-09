@@ -22,7 +22,7 @@ export default function SIMProfilButton() {
   // Open the modal
   const handleOpenModal = () => {
     setIsOpen(true);
-    // router.prefetch(`/user/${iccid}`);
+    router.prefetch(`/user/${iccid}`);
   };
 
   // Close the modal
