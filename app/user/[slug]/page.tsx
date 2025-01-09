@@ -162,7 +162,15 @@ export default async function Page({
 
       {/* Our new checkout modal, passing countries + regions */}
       <div className="flex justify-center w-full my-8">
-        <BundleCheckout iccid={iccid} countries={countries} regions={regions} />
+        <Suspense
+          fallback={<FaSpinner className="animate-spin h-6 w-6 mr-2" />}
+        >
+          <BundleCheckout
+            iccid={iccid}
+            countries={countries}
+            regions={regions}
+          />
+        </Suspense>
       </div>
     </main>
   );

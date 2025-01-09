@@ -11,23 +11,30 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { User } from "lucide-react"; // Profile icon
+import { FaSpinner } from "react-icons/fa6";
 
 export default function SIMProfilButton() {
   const [iccid, setIccid] = useState(""); // Input state
   const [isOpen, setIsOpen] = useState(false); // Modal open state
+  const [isLoading, setIsLoading] = useState(false); // Loading state
   const router = useRouter(); // Next.js router
 
   // Open the modal
-  const handleOpenModal = () => setIsOpen(true);
+  const handleOpenModal = () => {
+    setIsOpen(true);
+    // router.prefetch(`/user/${iccid}`);
+  };
 
   // Close the modal
   const handleCloseModal = () => setIsOpen(false);
 
   // Handle form submission
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (iccid.trim()) {
-      router.push(`/user/${iccid}`);
-      setIsOpen(false); // Close the modal after redirect
+      setIsLoading(true);
+      await router.push(`/user/${iccid}`);
+      setIsOpen(false);
+      setIsLoading(false);
     }
   };
 
@@ -67,8 +74,12 @@ export default function SIMProfilButton() {
                 autoFocus
               />
               <div className="flex justify-end w-full">
-                <Button type="submit" size="sm">
-                  Submit
+                <Button type="submit" size="sm" disabled={isLoading}>
+                  {isLoading ? (
+                    <FaSpinner className="animate-spin h-4 w-4" />
+                  ) : (
+                    "Submit"
+                  )}
                 </Button>
               </div>
             </form>

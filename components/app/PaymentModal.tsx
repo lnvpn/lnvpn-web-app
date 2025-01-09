@@ -70,7 +70,7 @@ export default function PaymentModal({
       setError(null);
       setCopiedInvoice(false);
     };
-  }, [active, amount]);
+  }, [active, amount, memo]);
 
   useEffect(() => {
     if (!invoice || !active || isPaid) return;
