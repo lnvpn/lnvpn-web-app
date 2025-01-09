@@ -11,14 +11,14 @@ interface LocalEsimsTabProps {
     name: string;
     flag: string;
     slug: string;
-    networks: any[];
+    // networks: any[];
   }[];
   allCountries: {
     code: string;
     name: string;
     flag: string;
     slug: string;
-    networks: any[];
+    // networks: any[];
   }[];
 }
 

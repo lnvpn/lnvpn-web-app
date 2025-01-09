@@ -12,6 +12,7 @@ import { getNetworks } from "@/components/app/eSIM/SIMactions";
 import { NetworksResponse } from "@/lib/types";
 
 import { buildCountriesAndRegions } from "@/utils/esimUtils";
+import { isError } from "@/utils/isError";
 
 export const metadata: Metadata = {
   title: {
@@ -67,11 +68,17 @@ export default async function Page({
   try {
     esimData = await fetchEsimData(iccid);
     bundleData = await fetchEsimBundles(iccid);
-  } catch (error: any) {
+  } catch (error: unknown) {
+    let errorMessage = "Could not fetch eSIM details.";
+
+    if (isError(error)) {
+      errorMessage = error.message;
+    }
+
     return (
       <div className="p-4 text-center">
         <h1 className="text-xl font-bold">No eSIM found</h1>
-        <p>{error.message ?? "Could not fetch eSIM details."}</p>
+        <p>{errorMessage}</p>
       </div>
     );
   }

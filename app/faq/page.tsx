@@ -428,7 +428,7 @@ export default function FAQ() {
                     minor issues. If problems persist, contact your carrier’s
                     support team for assistance with troubleshooting or
                     re-provisioning your eSIM profile. You can also got to your
-                    eSIM profile page and try the "Refresh" button.
+                    eSIM profile page and try the &quot;Refresh&quot; button.
                   </p>
                 </AccordionContent>
               </AccordionItem>
@@ -450,9 +450,9 @@ export default function FAQ() {
                     </li>
 
                     <li>
-                      <strong>In your phone's eSIM settings:</strong> Navigate
-                      to your mobile phone’s settings and look for the eSIM
-                      details under the network or SIM card settings.
+                      <strong>In your phone&apos;s eSIM settings:</strong>{" "}
+                      Navigate to your mobile phone&apos;s settings and look for
+                      the eSIM details under the network or SIM card settings.
                     </li>
                     <li>
                       <strong>On your Lightning invoice:</strong> If you have

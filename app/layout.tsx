@@ -11,6 +11,7 @@ const inter = Inter({
   display: "swap",
 });
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
   display: "swap",

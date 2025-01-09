@@ -22,6 +22,7 @@ import { FaSpinner } from "react-icons/fa6";
 import { validateBundleAvailability, purchaseBundle } from "./ESIMBuyActions";
 import { ProcessedBundle } from "@/lib/types";
 import { Checkbox } from "@/components/ui/checkbox";
+import { isError } from "@/utils/isError";
 
 interface ESIMPageClientProps {
   plans: ProcessedBundle[];
@@ -55,7 +56,12 @@ const ESIMPageClient: React.FC<ESIMPageClientProps> = ({ plans }) => {
     startTransition(async () => {
       try {
         // Validate plan availability
-        const result = await validateBundleAvailability(selectedPlan.name);
+        const result = (await validateBundleAvailability(
+          selectedPlan.name
+        )) ?? {
+          success: false,
+          message: "Failed to validate bundle.",
+        };
         if (!result.success) {
           setAlertMessage(result.message ?? "Bundle is not available.");
           setAlertOpen(true);
@@ -64,8 +70,12 @@ const ESIMPageClient: React.FC<ESIMPageClientProps> = ({ plans }) => {
 
         // If the plan is available, open PaymentModal
         setIsModalActive(true);
-      } catch (error: any) {
-        setAlertMessage(error?.message || "Something went wrong.");
+      } catch (error: unknown) {
+        if (isError(error)) {
+          setAlertMessage(error.message);
+        } else {
+          setAlertMessage("Something went wrong.");
+        }
         setAlertOpen(true);
       }
     });
@@ -80,7 +90,10 @@ const ESIMPageClient: React.FC<ESIMPageClientProps> = ({ plans }) => {
         }
 
         // Now that user paid, call the final purchase step
-        const purchaseResult = await purchaseBundle(selectedPlan.name);
+        const purchaseResult = (await purchaseBundle(selectedPlan.name)) ?? {
+          success: false,
+          message: "Failed to purchase eSIM.",
+        };
         if (!purchaseResult.success) {
           setAlertMessage(purchaseResult.message ?? "Failed to purchase eSIM.");
           setAlertOpen(true);
@@ -96,10 +109,12 @@ const ESIMPageClient: React.FC<ESIMPageClientProps> = ({ plans }) => {
 
         // Redirect the user to /user/[iccid] for installation instructions
         router.push(`/user/${iccid}`);
-      } catch (error: any) {
-        setAlertMessage(
-          error?.message || "Something went wrong during purchase."
-        );
+      } catch (error: unknown) {
+        if (isError(error)) {
+          setAlertMessage(error.message);
+        } else {
+          setAlertMessage("Something went wrong during purchase.");
+        }
         setAlertOpen(true);
       }
     });

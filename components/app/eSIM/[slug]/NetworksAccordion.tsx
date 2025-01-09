@@ -5,10 +5,10 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Network } from "@/lib/types";
+import { NetworkInfo } from "@/lib/types";
 
 export interface NetworkAccordionProps {
-  networks: Network[];
+  networks: NetworkInfo[];
 }
 
 export default async function NetworksAccordion(props: NetworkAccordionProps) {

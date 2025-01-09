@@ -3,7 +3,6 @@
 import React, { useState, useMemo } from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 
 // These types match your data structure

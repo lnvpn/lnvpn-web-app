@@ -5,13 +5,18 @@ import {
   handleEsimOrderApi,
   handleEsimRefresh,
 } from "@/utils/esim-api/EsimAndOrder";
+import { isError } from "@/utils/isError";
 
 export async function refreshEsimAction(iccid: string) {
   try {
     const result = await handleEsimRefresh(iccid);
     return { success: true, result };
-  } catch (error: any) {
-    return { success: false, message: error.message };
+  } catch (error: unknown) {
+    return {
+      success: false,
+      message:
+        error instanceof Error ? error.message : "An unknown error occurred.",
+    };
   }
 }
 
@@ -32,10 +37,12 @@ export async function validateBundleAvailability(bundleName: string) {
       success: true,
       subTotal: result.subTotal, // if you want to store/inspect subTotal
     };
-  } catch (error: any) {
+  } catch (error: unknown) {
     return {
       success: false,
-      message: error.message || "Unknown error validating bundle",
+      message: isError(error)
+        ? error.message
+        : "Unknown error validating bundle",
     };
   }
 }
@@ -58,11 +65,13 @@ export async function checkEsimCompatibility(iccid: string, bundle: string) {
 
     // Return the same structure or handle errors as needed
     return result;
-  } catch (error: any) {
+  } catch (error: unknown) {
     return {
       success: false,
       message:
-        error.message || "Unknown error while checking eSIM compatibility",
+        error instanceof Error
+          ? error.message
+          : "Unknown error while checking eSIM compatibility",
     };
   }
 }

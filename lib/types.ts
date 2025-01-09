@@ -1,4 +1,5 @@
 export interface NetworkInfo {
+  brandName: string;
   name: string;
   mcc?: string;
   mnc?: string;

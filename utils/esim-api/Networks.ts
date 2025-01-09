@@ -170,6 +170,7 @@ export async function getCountryNetworkDataFromAPI(
         accept: "application/json",
         "X-API-Key": apiKey,
       },
+      next: { revalidate: 360000 },
     });
 
     if (!res.ok) {

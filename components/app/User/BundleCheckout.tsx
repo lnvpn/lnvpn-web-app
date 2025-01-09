@@ -13,10 +13,6 @@ import {
 
 import { Country, Region, ProcessedBundle } from "@/lib/types";
 
-// Your server actions:
-
-import { handleEsimCompatibility } from "@/utils/esim-api/EsimAndOrder";
-
 // Payment Modal
 import PaymentModal from "@/components/app/PaymentModal";
 
@@ -41,6 +37,7 @@ import {
   validateBundleAvailability,
 } from "./UserComponenteActions";
 import { Checkbox } from "@/components/ui/checkbox";
+import { isError } from "@/utils/isError";
 
 export interface BundlePurchaseProps {
   iccid: string;
@@ -61,7 +58,7 @@ export default function BundleCheckout({
   const [step, setStep] = useState<1 | 2>(1);
 
   // For region/country selection
-  const [selectedSlug, setSelectedSlug] = useState<string | null>(null);
+  // const [selectedSlug, setSelectedSlug] = useState<string | null>(null);
 
   // Bundles for the selected slug
   const [bundles, setBundles] = useState<ProcessedBundle[]>([]);
@@ -82,7 +79,7 @@ export default function BundleCheckout({
   // Step 1: Region selection
   // -------------------------
   const handleRegionSelected = async (slug: string) => {
-    setSelectedSlug(slug);
+    // setSelectedSlug(slug);
 
     // 1) Fetch the available bundles for that slug
     const data = await getAvailableBundles(slug);
@@ -144,13 +141,16 @@ export default function BundleCheckout({
           return;
         }
 
-        // ---- ALL CHECKS PASSED: close the main checkout modal first ----
         setOpen(false);
 
         // ---- Then open the Payment Modal ----
         setIsPaymentModalActive(true);
-      } catch (error: any) {
-        setAlertMessage(error?.message || "Something went wrong");
+      } catch (error: unknown) {
+        setAlertMessage(
+          isError(error)
+            ? error.message
+            : "Something went wrong during bundle validation and compatibility checks."
+        );
         setAlertOpen(true);
       }
     });
@@ -189,10 +189,12 @@ export default function BundleCheckout({
         // Then redirect or show success
         // e.g., push user to /user/[iccid]
         router.push(`/user/${purchasedIccid}`);
-      } catch (error: any) {
-        setAlertMessage(
-          error?.message || "Something went wrong during purchase"
-        );
+      } catch (error: unknown) {
+        const alertMessage = isError(error)
+          ? error.message
+          : "Something went wrong during purchase.";
+
+        setAlertMessage(alertMessage);
         setAlertOpen(true);
       }
     });
@@ -201,7 +203,7 @@ export default function BundleCheckout({
   // "Back" button to go from step 2 to step 1
   const handleBackToStep1 = () => {
     setStep(1);
-    setSelectedSlug(null);
+    // setSelectedSlug(null);
     setBundles([]);
     setSelectedPlan(null);
   };

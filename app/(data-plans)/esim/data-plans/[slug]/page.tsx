@@ -1,4 +1,4 @@
-import { Metadata, ResolvingMetadata } from "next";
+import { Metadata } from "next";
 import { countryNameMap } from "@/data/countryNames";
 import { getCountryCodeFromSlug } from "@/utils/esimUtils";
 import {
@@ -30,13 +30,16 @@ import { Alert } from "@/components/ui/alert";
 import DescriptionAccordion from "@/components/app/eSIM/[slug]/DescriptionAccordion";
 import TechnicalSpecAccordion from "@/components/app/eSIM/[slug]/TechnicalSpecAccordion";
 import RedeemInstructionsAccordion from "@/components/app/eSIM/[slug]/RedeemInstructionsAccordion";
+import { NetworkInfo } from "@/lib/types";
+import { FaSpinner } from "react-icons/fa6";
 
 export const revalidate = 360000;
 
-export async function generateMetadata(
-  { params }: { params: Promise<{ slug: string }> },
-  parent: ResolvingMetadata
-): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
   const { slug } = await params;
 
   let entityName: string;
@@ -101,7 +104,7 @@ export default async function Page({
   let title: string;
   let flagEmoji: string | null = null;
   let isoCode: string | null = null;
-  let countryNetworkData: any[] = [];
+  let countryNetworkData: NetworkInfo[] = [];
 
   if (isCountrySlug(slug)) {
     isoCode = getCountryCodeFromSlug(slug)!;
@@ -205,37 +208,44 @@ export default async function Page({
         </div>
         <div className="w-1/2 flex flex-grow flex-col justify-center items-center gap-3 my-8">
           <h3 className="text-xl font-semibold">Available Data Plans</h3>
-          {entityData && entityData.length > 0 ? (
-            <div className="w-full max-w-4xl space-y-4">
-              <Suspense fallback={<p>Loading...</p>}>
+          <Suspense
+            fallback={
+              <div className="flex items-center justify-center h-full">
+                <FaSpinner className="animate-spin text-4xl" />
+              </div>
+            }
+          >
+            {entityData && entityData.length > 0 ? (
+              <div className="w-full max-w-4xl space-y-4">
                 <ESIMPageClient plans={entityData} />
-              </Suspense>
-              <hr className="w-full text-black border-black" />
-              <div className="flex flex-col gap-1">
-                {isoCode && (
+
+                <hr className="w-full text-black border-black" />
+                <div className="flex flex-col gap-1">
+                  {isoCode && (
+                    <div className="flex justify-center">
+                      <NetworksAccordion networks={countryNetworkData} />
+                    </div>
+                  )}
+                  {isRegionSlug(slug) && (
+                    <div className="flex justify-center">
+                      <RoamingAccordion bundleDataList={entityData} />
+                    </div>
+                  )}
                   <div className="flex justify-center">
-                    <NetworksAccordion networks={countryNetworkData} />
+                    <DescriptionAccordion />
                   </div>
-                )}
-                {isRegionSlug(slug) && (
                   <div className="flex justify-center">
-                    <RoamingAccordion bundleDataList={entityData} />
+                    <TechnicalSpecAccordion />
                   </div>
-                )}
-                <div className="flex justify-center">
-                  <DescriptionAccordion />
-                </div>
-                <div className="flex justify-center">
-                  <TechnicalSpecAccordion />
-                </div>
-                <div className="flex justify-center">
-                  <RedeemInstructionsAccordion />
+                  <div className="flex justify-center">
+                    <RedeemInstructionsAccordion />
+                  </div>
                 </div>
               </div>
-            </div>
-          ) : (
-            <p>No data available for this entity.</p>
-          )}
+            ) : (
+              <p>No data available for this entity.</p>
+            )}
+          </Suspense>
         </div>
       </div>
       {/* Replace the commented-out card section with the RadioGroup */}
