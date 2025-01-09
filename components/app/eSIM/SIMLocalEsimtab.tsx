@@ -32,7 +32,7 @@ export default function LocalEsimsTab({
     ? allCountries
     : topSellerCountries.slice(0, 20);
 
-  const headingText = showAll ? "All Countries" : "Top Seller";
+  const headingText = showAll ? "All Countries" : "Top Countries";
   const buttonText = showAll ? "Show only topseller" : "Show 200+ countries";
 
   return (

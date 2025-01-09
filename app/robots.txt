@@ -1,0 +1,5 @@
+User-Agent: *
+Allow: /
+Disallow: /user/
+
+Sitemap: https://lnvpn.com/sitemap.xml

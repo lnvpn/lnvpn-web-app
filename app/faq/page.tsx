@@ -290,6 +290,18 @@ export default function FAQ() {
               type="single"
               collapsible
             >
+              <AccordionItem
+                className="lg:w-[500px] max-w-full"
+                value="item-500"
+              >
+                <AccordionTrigger>What is an eSIM?</AccordionTrigger>
+                <AccordionContent>
+                  <p>
+                    An eSIM is a digital SIM that allows you to activate a
+                    mobile data plan without using a physical SIM card.
+                  </p>
+                </AccordionContent>
+              </AccordionItem>
               {/* 1. Compatibility */}
               <AccordionItem
                 className="lg:w-[500px] max-w-full"
@@ -300,7 +312,7 @@ export default function FAQ() {
                 </AccordionTrigger>
                 <AccordionContent>
                   <p>
-                    Most newer smartphones, tablets, and wearables now include
+                    Many newer smartphones, tablets, and wearables now include
                     eSIM functionality. Popular brands like Apple (iPhone XS and
                     later), Samsung (Galaxy S20 and later), and Google Pixel
                     (Pixel 3 and newer) typically support eSIM. However, it’s
@@ -367,22 +379,20 @@ export default function FAQ() {
                   </p>
                 </AccordionContent>
               </AccordionItem>
-
-              {/* 5. Cost and Data Plans */}
+              {/* 4. Coverage and Network Quality */}
               <AccordionItem
                 className="lg:w-[500px] max-w-full"
                 value="item-505"
               >
                 <AccordionTrigger>
-                  Are eSIM plans more expensive than physical SIM plans?
+                  Can I add multiple bundles to one eSIM?
                 </AccordionTrigger>
                 <AccordionContent>
                   <p>
-                    Pricing can vary by carrier, but eSIM plans often have
-                    similar or sometimes better rates. Because there’s no
-                    physical card, carriers can reduce overhead costs, and that
-                    can translate into savings for consumers. Always compare
-                    plan details to find the best deal.
+                    Yes, you can add multiple data bundles to the same eSIM and
+                    use them as needed. Just go to your eSIM profile page and
+                    add multiple bundles. The bundles are actived as soon as
+                    your reach the country of the bundle.
                   </p>
                 </AccordionContent>
               </AccordionItem>
@@ -417,8 +427,46 @@ export default function FAQ() {
                     profile is active. Restarting your device can also resolve
                     minor issues. If problems persist, contact your carrier’s
                     support team for assistance with troubleshooting or
-                    re-provisioning your eSIM profile.
+                    re-provisioning your eSIM profile. You can also got to your
+                    eSIM profile page and try the "Refresh" button.
                   </p>
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem
+                className="lg:w-[500px] max-w-full"
+                value="item-508"
+              >
+                <AccordionTrigger>
+                  Where can I find my eSIM number?
+                </AccordionTrigger>
+                <AccordionContent>
+                  <p>Your eSIM number can be found in the following ways:</p>
+                  <ol className="list-decimal list-inside space-y-2">
+                    <li>
+                      <strong>On your first eSIM purchase:</strong> If you
+                      purchased a bundle or an eSIM for the first time, you will
+                      be redirected to your eSIM profile page, where you can
+                      find your eSIM number.
+                    </li>
+
+                    <li>
+                      <strong>In your phone's eSIM settings:</strong> Navigate
+                      to your mobile phone’s settings and look for the eSIM
+                      details under the network or SIM card settings.
+                    </li>
+                    <li>
+                      <strong>On your Lightning invoice:</strong> If you have
+                      already an eSIM profile with us and you add a new bundle
+                      to it, look at your Lightning invoice for the eSIM number:
+                      <br />
+                      <code className="bg-gray-100 p-1 rounded">
+                        Buying eSIM: esim_1GB_7D_ROC_V2 for 8932042000006857011
+                      </code>
+                      <br />
+                      The last part is your eSIM number.
+                    </li>
+                  </ol>
+                  <p></p>
                 </AccordionContent>
               </AccordionItem>
             </Accordion>

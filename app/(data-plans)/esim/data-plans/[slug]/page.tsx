@@ -10,7 +10,7 @@ import {
 import {
   getCountryNetworkData,
   getEntityData,
-} from "@/components/app/eSIM/[slug]/SIMDetailPageActions"; // renamed import
+} from "@/components/app/eSIM/[slug]/SIMDetailPageActions";
 
 import BackButton from "@/components/app/BackButton";
 import { countryCodeToEmoji } from "@/utils/esimUtils";
@@ -53,25 +53,25 @@ export async function generateMetadata(
   const hasPlans = entityData && entityData.length > 0;
 
   const fallbackTitle = `eSIM Plans for ${entityName} | LNVPN`;
-  const fallbackDescription = `Discover eSIM plans for ${entityName} with Bitcoin payments. Stay connected with LN-SIM by LNVPN.`;
+  const fallbackDescription = `Discover eSIM plans for ${entityName} with Bitcoin payments. Stay connected with LN SIM by LNVPN.`;
 
   return {
-    title: hasPlans ? `${entityName} eSIM Plans | LN-SIM` : fallbackTitle,
+    title: hasPlans ? `${entityName} eSIM Plans | LN SIM` : fallbackTitle,
     description: hasPlans
-      ? `Buy eSIM plans for ${entityName}. Enjoy reliable and privacy-focused connectivity with LN-SIM and pay using Bitcoin Lightning Network.`
+      ? `Buy eSIM plans for ${entityName}. Enjoy reliable and privacy-focused connectivity with LN SIM and pay using Bitcoin Lightning Network.`
       : fallbackDescription,
     keywords: [
       "eSIM",
       `${entityName} eSIM`,
       "Bitcoin eSIM",
-      "LN-SIM",
+      "LN SIM",
       "Lightning Network eSIM",
       "global eSIM",
       "travel eSIM",
       "LNVPN",
     ],
     openGraph: {
-      title: hasPlans ? `${entityName} eSIM Plans | LN-SIM` : fallbackTitle,
+      title: hasPlans ? `${entityName} eSIM Plans | LN SIM` : fallbackTitle,
       description: hasPlans
         ? `Buy eSIM plans for ${entityName} with Bitcoin. Reliable and private connectivity worldwide.`
         : fallbackDescription,
@@ -81,7 +81,7 @@ export async function generateMetadata(
     },
     twitter: {
       card: "summary_large_image",
-      title: hasPlans ? `${entityName} eSIM Plans | LN-SIM` : fallbackTitle,
+      title: hasPlans ? `${entityName} eSIM Plans | LN SIM` : fallbackTitle,
       description: hasPlans
         ? `Get the best eSIM plans for ${entityName}. Pay securely with Bitcoin Lightning Network.`
         : fallbackDescription,
@@ -101,6 +101,7 @@ export default async function Page({
   let title: string;
   let flagEmoji: string | null = null;
   let isoCode: string | null = null;
+  let countryNetworkData: any[] = [];
 
   if (isCountrySlug(slug)) {
     isoCode = getCountryCodeFromSlug(slug)!;
@@ -108,11 +109,10 @@ export default async function Page({
     flagEmoji = countryCodeToEmoji(isoCode);
   } else if (isRegionSlug(slug)) {
     title = getRegionNameFromSlug(slug)!;
-    // No emoji for regions
   } else {
     return (
       <main className="relative flex flex-col gap-4 items-center px-5 flex-grow font-bold">
-        <h1 className="my-10 text-shadow-neo scroll-m-20 font-Space_Grotesk text-5xl font-extrabold tracking-wide text-black lg:text-6xl">
+        <h1 className="my-10  scroll-m-20  text-5xl font-extrabold tracking-wide text-black lg:text-6xl">
           404 - Not found
         </h1>
         <div className="flex w-full max-w-4xl justify-start">
@@ -123,7 +123,9 @@ export default async function Page({
   }
 
   const entityData = await getEntityData(slug);
-  const countryNetworkData = (await getCountryNetworkData(isoCode)) || [];
+  if (isoCode) {
+    countryNetworkData = (await getCountryNetworkData(isoCode)) || [];
+  }
 
   const jsonLd =
     entityData && entityData.length > 0
@@ -135,7 +137,7 @@ export default async function Page({
           images: ["https://lnvpn.net/LNVPN-Mask-Logo.svg"],
           brand: {
             "@type": "Brand",
-            name: "LN-SIM",
+            name: "LN SIM",
           },
           offers: entityData.map((plan) => ({
             "@type": "Offer",

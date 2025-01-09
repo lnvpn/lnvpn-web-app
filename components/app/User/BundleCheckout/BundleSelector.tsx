@@ -16,7 +16,7 @@ interface ESIMRadioGroupProps {
   selectedPlanName: string;
 }
 
-const ESIMRadioGroup: React.FC<ESIMRadioGroupProps> = ({
+const BundleSelector: React.FC<ESIMRadioGroupProps> = ({
   plans,
   onSelect,
   selectedPlanName,
@@ -29,12 +29,12 @@ const ESIMRadioGroup: React.FC<ESIMRadioGroupProps> = ({
     <RadioGroup
       value={selectedPlanName}
       onValueChange={handleChange}
-      className="space-y-4"
+      className="flex flex-col gap-3 py-4"
     >
       {plans.map((plan) => (
         <Card
           key={plan.name}
-          className="flex items-center justify-between gap-3 p-4 cursor-pointer"
+          className="flex items-center justify-between gap-1 p-4 cursor-pointer"
           onClick={() => handleChange(plan.name)}
         >
           <RadioGroupItem
@@ -54,7 +54,7 @@ const ESIMRadioGroup: React.FC<ESIMRadioGroupProps> = ({
   );
 };
 
-export default ESIMRadioGroup;
+export default BundleSelector;
 
 // ---- RadioGroup Components (merged from your second file) ----
 

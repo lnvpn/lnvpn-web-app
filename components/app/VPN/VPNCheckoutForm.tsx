@@ -67,7 +67,7 @@ export default function VPNCheckoutForm({
 
       <div className="w-full justify-center flex p-2">
         <Button variant={"neutral"} size={"lg"} onClick={handlePurchase}>
-          Pay with Bitcoin
+          Buy VPN
         </Button>
       </div>
 

@@ -64,6 +64,16 @@ export default function VPNAppCollapsible() {
                 <span>iOS</span>
               </div>
             </Link>
+            <Link
+              href="https://www.wireguard.com/install/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <div className="rounded-base border-2 border-border dark:border-darkBorder bg-main px-4 py-3 font-mono text-sm flex items-center gap-3 hover:bg-hover cursor-pointer">
+                <FaLinux className="w-5 h-5" />
+                <span>Linux</span>
+              </div>
+            </Link>
 
             <Link
               href="https://download.wireguard.com/windows-client/wireguard-installer.exe"
@@ -84,17 +94,6 @@ export default function VPNAppCollapsible() {
               <div className="rounded-base border-2 border-border dark:border-darkBorder bg-main px-4 py-3 font-mono text-sm flex items-center gap-3 hover:bg-hover cursor-pointer">
                 <FaAndroid className="w-5 h-5" />
                 <span>Android</span>
-              </div>
-            </Link>
-
-            <Link
-              href="https://www.wireguard.com/install/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <div className="rounded-base border-2 border-border dark:border-darkBorder bg-main px-4 py-3 font-mono text-sm flex items-center gap-3 hover:bg-hover cursor-pointer">
-                <FaLinux className="w-5 h-5" />
-                <span>Linux</span>
               </div>
             </Link>
           </div>

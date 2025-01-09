@@ -5,7 +5,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Network } from "./SIMDetailPageActions";
+import { Network } from "@/lib/types";
 
 export interface NetworkAccordionProps {
   networks: Network[];

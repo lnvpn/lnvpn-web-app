@@ -9,7 +9,7 @@ import { Logo } from "./Logo";
 function Navbar() {
   return (
     <nav className="sticky top-0 z-20 mx-auto flex h-[88px] w-full items-center border-b-4 border-border dark:border-darkNavBorder bg-white dark:bg-secondaryBlack px-5 m500:h-16">
-      <div className="mx-auto flex w-[1300px] dark:text-darkText text-text max-w-full items-center justify-between">
+      <div className="mx-auto flex  w-[1300px] dark:text-darkText text-text max-w-full items-center justify-between">
         <MobileDrawer />
 
         <div className="flex justify-center gap-10">

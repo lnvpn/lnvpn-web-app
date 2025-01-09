@@ -1,11 +1,9 @@
 "use client";
 
 import React, { useState, useTransition } from "react";
+import { useRouter } from "next/navigation";
 
 import PaymentModal from "@/components/app/PaymentModal";
-import { ProcessedBundle } from "@/components/app/eSIM/[slug]/SIMDetailPageActions";
-import { v4 as uuidv4 } from "uuid";
-import { useRouter } from "next/navigation";
 
 import {
   AlertDialog,
@@ -19,7 +17,11 @@ import {
 import { Button } from "@/components/ui/button";
 import ESIMRadioGroup from "@/components/app/eSIM/[slug]/ESIMRadioGroup";
 import { FaSpinner } from "react-icons/fa6";
-import { validateBundleAvailability } from "./ESIMBuyActions";
+
+// Import your server actions (these are your existing functions)
+import { validateBundleAvailability, purchaseBundle } from "./ESIMBuyActions";
+import { ProcessedBundle } from "@/lib/types";
+import { Checkbox } from "@/components/ui/checkbox";
 
 interface ESIMPageClientProps {
   plans: ProcessedBundle[];
@@ -33,23 +35,22 @@ const ESIMPageClient: React.FC<ESIMPageClientProps> = ({ plans }) => {
     plans.length ? plans[0] : null
   );
 
-  const [orderId, setOrderId] = useState<string>("");
+  // 2. States for showing alerts, modals, spinners
   const [alertOpen, setAlertOpen] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [isModalActive, setIsModalActive] = useState(false);
-
-  // 2. For your loading spinner/indicator while validating
   const [isPending, startTransition] = useTransition();
+  const [isChecked, setIsChecked] = useState(false);
 
-  // Called by the child whenever the user selects a different plan
+  // 3. Called by the child RadioGroup when user selects a different plan
   const handleSelectPlan = (planName: string) => {
     const found = plans.find((p) => p.name === planName) ?? null;
     setSelectedPlan(found);
   };
 
-  // 3. The Buy/Pay button in the parent
+  // 4. The Buy/Pay button
   const handleBuyNow = () => {
-    if (!selectedPlan) return; // just to be safe
+    if (!selectedPlan) return;
 
     startTransition(async () => {
       try {
@@ -61,9 +62,7 @@ const ESIMPageClient: React.FC<ESIMPageClientProps> = ({ plans }) => {
           return;
         }
 
-        // If the plan is available
-        const newOrderId = uuidv4();
-        setOrderId(newOrderId);
+        // If the plan is available, open PaymentModal
         setIsModalActive(true);
       } catch (error: any) {
         setAlertMessage(error?.message || "Something went wrong.");
@@ -72,36 +71,78 @@ const ESIMPageClient: React.FC<ESIMPageClientProps> = ({ plans }) => {
     });
   };
 
-  // Called by PaymentModal after a successful payment
+  // 5. Called by PaymentModal after invoice is confirmed paid
   const handlePaymentSuccess = () => {
-    router.push(`/esim-order/${orderId}`);
+    startTransition(async () => {
+      try {
+        if (!selectedPlan) {
+          throw new Error("No selected plan found.");
+        }
+
+        // Now that user paid, call the final purchase step
+        const purchaseResult = await purchaseBundle(selectedPlan.name);
+        if (!purchaseResult.success) {
+          setAlertMessage(purchaseResult.message ?? "Failed to purchase eSIM.");
+          setAlertOpen(true);
+          return;
+        }
+
+        // If success, we get the iccid from the server action
+        const iccid = purchaseResult.iccid;
+        if (!iccid) {
+          setAlertMessage(purchaseResult.message ?? "Failed to purchase eSIM.");
+          throw new Error("No ICCID returned from purchase API.");
+        }
+
+        // Redirect the user to /user/[iccid] for installation instructions
+        router.push(`/user/${iccid}`);
+      } catch (error: any) {
+        setAlertMessage(
+          error?.message || "Something went wrong during purchase."
+        );
+        setAlertOpen(true);
+      }
+    });
   };
 
   return (
     <>
       <ESIMRadioGroup
         plans={plans}
-        // Pass the parent's selected plan name so the child remains in sync
         selectedPlanName={selectedPlan?.name || ""}
         onSelect={handleSelectPlan}
       />
 
       <div className="mt-4 text-center w-full">
+        {/* Button */}
         <Button
           variant="neutral"
           size="lg"
-          className="text-black w-full p-8 text-lg"
+          className="text-black w-full p-8 text-lg font-bold my-5"
           onClick={handleBuyNow}
-          disabled={!selectedPlan}
+          disabled={!isChecked || isPending}
         >
           {isPending ? (
-            <>
-              <FaSpinner className="animate-spin h-6 w-6 mr-2" />
-            </>
+            <FaSpinner className="animate-spin h-6 w-6 mr-2" />
           ) : (
             "Buy Now"
           )}
         </Button>
+
+        {/* Checkbox */}
+        <div className="flex items-center justify-center space-x-2 mt-4">
+          <Checkbox
+            id="esim-ready-checkbox"
+            checked={isChecked}
+            onCheckedChange={(checked) => setIsChecked(checked === true)}
+          />
+          <label
+            htmlFor="esim-ready-checkbox"
+            className="text-sm text-gray-700"
+          >
+            I have checked if my phone is eSIM ready.
+          </label>
+        </div>
       </div>
 
       {selectedPlan && (
@@ -109,7 +150,8 @@ const ESIMPageClient: React.FC<ESIMPageClientProps> = ({ plans }) => {
           active={isModalActive}
           setActive={setIsModalActive}
           amount={selectedPlan.price}
-          memo={`lnvpn.net/esim-order/${orderId}`}
+          // The memo can be whatever you want for LN invoice
+          memo={`Buying eSIM: ${selectedPlan.name}`}
           onPaymentSuccess={handlePaymentSuccess}
         />
       )}
@@ -117,7 +159,7 @@ const ESIMPageClient: React.FC<ESIMPageClientProps> = ({ plans }) => {
       <AlertDialog open={alertOpen} onOpenChange={setAlertOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Bundle Unavailable</AlertDialogTitle>
+            <AlertDialogTitle>Notice</AlertDialogTitle>
             <AlertDialogDescription>{alertMessage}</AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

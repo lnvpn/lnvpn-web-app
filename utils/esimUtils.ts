@@ -1,4 +1,6 @@
 import { countryNameMap, regionsMap } from "@/data/countryNames";
+import { premiumConfig } from "@/data/premiumConfig";
+import { Country, NetworksResponse, Region } from "@/lib/types";
 
 export function countryCodeToEmoji(countryCode: string): string {
   // Take only the part before a dash if exists (e.g. "US-HI" -> "US")
@@ -49,4 +51,55 @@ export function isCountrySlug(slug: string): boolean {
 
 export function isRegionSlug(slug: string): boolean {
   return !!getRegionNameFromSlug(slug);
+}
+
+export function buildCountriesAndRegions(
+  networksData: NetworksResponse | null
+): { countries: Country[]; regions: Region[] } {
+  let countries: Country[] = [];
+  let regions: Region[] = [];
+
+  // 1) Build countries
+  if (networksData && Array.isArray(networksData.countryNetworks)) {
+    countries = networksData.countryNetworks.map((c) => {
+      const code = c.name.toUpperCase(); // e.g. "US"
+      const fullName = countryNameMap[code] || code; // e.g. "United States"
+      const flag = countryCodeToEmoji(code); // e.g. "🇺🇸"
+      const slug = slugify(fullName); // e.g. "united-states"
+      return { code, name: fullName, flag, slug };
+    });
+    // Sort alphabetically by country name
+    countries.sort((a, b) => a.name.localeCompare(b.name));
+  }
+
+  // 2) Build regions from your predefined regionsMap
+  if (Array.isArray(regionsMap)) {
+    regions = regionsMap.map((r) => ({
+      name: r.name,
+      slug: r.slug,
+    }));
+  }
+
+  return { countries, regions };
+}
+
+export function getPremiumMultiplier(slug: string): number {
+  // 1️⃣ Check if it's a country slug
+  const countryCode = getCountryCodeFromSlug(slug);
+  if (countryCode) {
+    return (
+      premiumConfig.multipliers[countryCode] ?? premiumConfig.defaultMultiplier
+    );
+  }
+
+  // 2️⃣ Check if it's a region slug
+  const regionName = getRegionNameFromSlug(slug);
+  if (regionName) {
+    return (
+      premiumConfig.multipliers[regionName] ?? premiumConfig.defaultMultiplier
+    );
+  }
+
+  // 3️⃣ Fallback to default multiplier
+  return premiumConfig.defaultMultiplier;
 }

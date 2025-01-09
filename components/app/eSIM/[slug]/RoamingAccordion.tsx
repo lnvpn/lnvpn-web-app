@@ -5,9 +5,10 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { getCountryNetworkData, ProcessedBundle } from "./SIMDetailPageActions";
+import { getCountryNetworkData } from "./SIMDetailPageActions";
 
 import { countryCodeToEmoji } from "@/utils/esimUtils";
+import { ProcessedBundle } from "@/lib/types";
 
 export default async function RoamingAccordion(props: {
   bundleDataList: ProcessedBundle[];
@@ -49,7 +50,7 @@ export default async function RoamingAccordion(props: {
                   <ul className="list-disc list-inside space-y-1 pl-5">
                     {item.networkData.map((network, idx) => (
                       <li key={idx}>
-                        <span className="font-medium">{network.brandName}</span>
+                        <span className="font-medium">{network.name}</span>
                         {network.speed?.length > 0 && (
                           <span>: {network.speed.join(" / ")}</span>
                         )}

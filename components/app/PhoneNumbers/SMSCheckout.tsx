@@ -171,7 +171,7 @@ export default function SMSCheckout() {
                   {loading ? (
                     <FaSpinner className="animate-spin h-6 w-6" />
                   ) : (
-                    "Pay with Bitcoin"
+                    "Receive Activation Code"
                   )}
                 </Button>
               </div>

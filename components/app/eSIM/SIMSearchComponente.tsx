@@ -15,18 +15,7 @@ import {
 } from "@/components/ui/command";
 import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
 import { DialogDescription, DialogTitle } from "@radix-ui/react-dialog";
-
-interface Country {
-  code: string;
-  name: string;
-  flag: string;
-  slug: string;
-}
-
-interface Region {
-  name: string;
-  slug: string;
-}
+import { Country, Region } from "@/lib/types";
 
 interface SearchProps {
   countries: Country[];
