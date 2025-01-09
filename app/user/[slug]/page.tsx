@@ -13,6 +13,8 @@ import { NetworksResponse } from "@/lib/types";
 
 import { buildCountriesAndRegions } from "@/utils/esimUtils";
 import { isError } from "@/utils/isError";
+import { Suspense } from "react";
+import { FaSpinner } from "react-icons/fa6";
 
 export const metadata: Metadata = {
   title: {
@@ -141,13 +143,21 @@ export default async function Page({
 
       {/* eSIM Info */}
       <div className="w-full">
-        <EsimInstructionsClient esimData={esimData} />
+        <Suspense
+          fallback={<FaSpinner className="animate-spin h-6 w-6 mr-2" />}
+        >
+          <EsimInstructionsClient esimData={esimData} />
+        </Suspense>
       </div>
 
       {/* Bundles */}
       <div className="w-full mt-8">
         <hr className="border-black dark:border-white my-4" />
-        <EsimBundlesCards bundles={bundles} iccid={iccid} />
+        <Suspense
+          fallback={<FaSpinner className="animate-spin h-6 w-6 mr-2" />}
+        >
+          <EsimBundlesCards bundles={bundles} iccid={iccid} />
+        </Suspense>
       </div>
 
       {/* Our new checkout modal, passing countries + regions */}
