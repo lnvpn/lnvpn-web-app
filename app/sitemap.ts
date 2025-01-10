@@ -1,5 +1,7 @@
 import { countryNameMap } from "@/data/countryNames";
 import { getNetworksFromAPI } from "@/utils/esim-api/Networks";
+import { slugify } from "@/utils/esimUtils";
+
 import type { MetadataRoute } from "next";
 
 const BASE_URL = "https://lnvpn.net";
@@ -91,9 +93,8 @@ export default async function sitemap({
   const dynamicUrls = networksResponse.countryNetworks
     .slice(start, end)
     .flatMap((country) => {
-      const countrySlug = (
-        countryNameMap[country.name] || country.name
-      ).toLowerCase();
+      // Use the slugify function to ensure all country slugs are URL-safe
+      const countrySlug = slugify(countryNameMap[country.name] || country.name);
 
       return {
         url: `${BASE_URL}/esim/data-plans/${countrySlug}`,

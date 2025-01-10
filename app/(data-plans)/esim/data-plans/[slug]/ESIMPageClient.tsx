@@ -104,10 +104,18 @@ const ESIMPageClient: React.FC<ESIMPageClientProps> = ({ plans }) => {
         const iccid = purchaseResult.iccid;
         if (!iccid) {
           setAlertMessage(purchaseResult.message ?? "Failed to purchase eSIM.");
+          setAlertOpen(true);
           throw new Error("No ICCID returned from purchase API.");
         }
 
-        // Redirect the user to /user/[iccid] for installation instructions
+        // 1. Show the user a success message
+        setAlertMessage("Purchase successful! Preparing your eSIM…");
+        setAlertOpen(true);
+
+        // 2. Wait a couple seconds
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+
+        // 3. Then redirect
         router.push(`/user/${iccid}`);
       } catch (error: unknown) {
         if (isError(error)) {

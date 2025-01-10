@@ -40,13 +40,8 @@ export default function SIMProfilButton() {
 
   return (
     <div className="flex justify-start">
-      <Button
-        size="sm"
-        variant="noShadow"
-        onClick={handleOpenModal}
-        className="relative z-30"
-      >
-        <span className="hidden sm:inline 0">My eSIM profile</span>{" "}
+      <Button size="sm" variant="noShadow" onClick={handleOpenModal}>
+        <span className="hidden sm:inline 0">Your eSIM profile</span>{" "}
         <User className="sm:hidden h-5 w-5" />
       </Button>
 

@@ -23,6 +23,7 @@ interface RootLayoutProps {
 
 import "./globals.css";
 import Footer from "@/components/app/Footer";
+import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
   title: {
@@ -140,6 +141,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
             </main>
             <div id="drawer"></div>
             <div id="modal"></div>
+            <Toaster />
             <Footer />
           </ThemeProvider>
         </body>

@@ -13,6 +13,8 @@ import {
 } from "@/components/ui/collapsible";
 import { refreshEsimAction } from "./UserComponenteActions";
 import { IoIosRefresh } from "react-icons/io";
+import { useToast } from "@/hooks/use-toast";
+import { ToastAction } from "@/components/ui/toast";
 
 // Import the server action
 
@@ -41,27 +43,30 @@ export function EsimInstructionsClient({ esimData }: { esimData: EsimData }) {
     matchingId = "",
     smdpAddress = "",
   } = esimData;
-
+  const { toast } = useToast();
   const isInstalled = profileStatus === "Installed";
   const [isOpen, setIsOpen] = useState(!isInstalled);
 
   // This state can hold any response from the refresh action
-  const [refreshMessage, setRefreshMessage] = useState<string | null>(null);
 
   // Construct the eSIM activation string for the QR code
   const qrValue = `LPA:1$${smdpAddress}$${matchingId}`;
 
   const handleRefreshClick = async () => {
-    setRefreshMessage(null); // Clear old message (optional)
-
     const response = await refreshEsimAction(iccid);
 
     if (response.success) {
-      // You might want to re-fetch eSIM details or show a success message
-      setRefreshMessage("eSIM refreshed successfully!");
-      // Possibly revalidate data or do something else with response.result
+      toast({
+        title: "eSIM Refreshed",
+        description: "Your eSIM connection has been refreshed.",
+        action: <ToastAction altText="Goto schedule to undo">Ok</ToastAction>,
+      });
     } else {
-      setRefreshMessage(`Error: ${response.message}`);
+      toast({
+        title: "Error",
+        description: response.message ?? "Failed to refresh eSIM.",
+        action: <ToastAction altText="Goto schedule to undo">Ok</ToastAction>,
+      });
     }
   };
 
@@ -157,11 +162,6 @@ export function EsimInstructionsClient({ esimData }: { esimData: EsimData }) {
               />
             </div>
           </div>
-
-          {/* Show refresh result or error */}
-          {refreshMessage && (
-            <p className="text-sm text-red-500">{refreshMessage}</p>
-          )}
 
           <div className="flex justify-end gap-2 mt-4">
             <p className="text-sm">

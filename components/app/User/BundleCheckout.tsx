@@ -12,6 +12,8 @@ import {
 } from "@/components/ui/dialog";
 
 import { Country, Region, ProcessedBundle } from "@/lib/types";
+import { ToastAction } from "@/components/ui/toast";
+import { useToast } from "@/hooks/use-toast";
 
 // Payment Modal
 import PaymentModal from "@/components/app/PaymentModal";
@@ -51,7 +53,7 @@ export default function BundleCheckout({
   regions,
 }: BundlePurchaseProps) {
   const router = useRouter();
-
+  const { toast } = useToast();
   const [open, setOpen] = useState(false);
 
   // Steps: 1 = region selection, 2 = bundle selection
@@ -177,18 +179,26 @@ export default function BundleCheckout({
           return;
         }
 
-        // If success, we might have an ICCID from the server
-        const purchasedIccid = purchaseResult.iccid;
-        if (!purchasedIccid) {
-          throw new Error("No ICCID returned from purchase API.");
-        }
+        // // If success, we might have an ICCID from the server
+        // const purchasedIccid = purchaseResult.iccid;
+        // if (!purchasedIccid) {
+        //   throw new Error("No ICCID returned from purchase API.");
+        // }
 
         // For example, close the entire checkout modal
         setOpen(false);
 
         // Then redirect or show success
         // e.g., push user to /user/[iccid]
-        router.push(`/user/${purchasedIccid}`);
+        toast({
+          title: "Purchase successful",
+          description: "Your bundle has been purchased.",
+          action: <ToastAction altText="Goto schedule to undo">Ok</ToastAction>,
+        });
+
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+
+        router.refresh();
       } catch (error: unknown) {
         const alertMessage = isError(error)
           ? error.message

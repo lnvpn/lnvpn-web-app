@@ -15,6 +15,7 @@ import { buildCountriesAndRegions } from "@/utils/esimUtils";
 import { isError } from "@/utils/isError";
 import { Suspense } from "react";
 import { FaSpinner } from "react-icons/fa6";
+import RefreshButton from "@/components/app/RefreshButton";
 
 export const metadata: Metadata = {
   title: {
@@ -78,9 +79,11 @@ export default async function Page({
     }
 
     return (
-      <div className="p-4 text-center">
-        <h1 className="text-xl font-bold">No eSIM found</h1>
+      <div className="flex flex-col  justify-center items-center h-screen">
+        <h1 className="text-xl font-bold">No eSIM found, try to refresh.</h1>
+        <p>Your eSIM number: {iccid}</p>
         <p>{errorMessage}</p>
+        <RefreshButton />
       </div>
     );
   }
@@ -88,9 +91,10 @@ export default async function Page({
   // 2. Handle "access denied"
   if (esimData?.message === "Access denied") {
     return (
-      <div className="p-4">
+      <div className="flex justify-center items-center h-screen">
         <h1 className="text-xl font-bold">No eSIM found</h1>
         <p>It looks like this ICCID doesn’t exist or you have no access.</p>
+        <RefreshButton />
       </div>
     );
   }
