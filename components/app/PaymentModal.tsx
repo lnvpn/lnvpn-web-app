@@ -14,6 +14,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import PaymentModalTemplate from "../react/components/PaymentModalTemplate";
+import Link from "next/link";
 
 interface PaymentModalProps {
   active: boolean;
@@ -170,6 +171,13 @@ export default function PaymentModal({
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
+            </div>
+            <div className="mt-4">
+              <Button variant="neutral" asChild>
+                <Link href={`lightning:${invoice.payment_request}`}>
+                  Open in Wallet
+                </Link>
+              </Button>
             </div>
           </div>
         )}
