@@ -42,6 +42,10 @@ const ESIMPageClient: React.FC<ESIMPageClientProps> = ({ plans }) => {
   const [isModalActive, setIsModalActive] = useState(false);
   const [isPending, startTransition] = useTransition();
   const [isChecked, setIsChecked] = useState(false);
+  const [iccid, setIccid] = useState<string | null>(null);
+
+  type PurchaseStatus = "idle" | "processing" | "error" | "success";
+  const [purchaseStatus, setPurchaseStatus] = useState<PurchaseStatus>("idle");
 
   // 3. Called by the child RadioGroup when user selects a different plan
   const handleSelectPlan = (planName: string) => {
@@ -82,6 +86,7 @@ const ESIMPageClient: React.FC<ESIMPageClientProps> = ({ plans }) => {
   };
 
   // 5. Called by PaymentModal after invoice is confirmed paid
+  // 5. Called by PaymentModal after invoice is confirmed paid
   const handlePaymentSuccess = () => {
     startTransition(async () => {
       try {
@@ -89,18 +94,18 @@ const ESIMPageClient: React.FC<ESIMPageClientProps> = ({ plans }) => {
           throw new Error("No selected plan found.");
         }
 
-        // Now that user paid, call the final purchase step
+        // After user pays, purchase the eSIM
         const purchaseResult = (await purchaseBundle(selectedPlan.name)) ?? {
           success: false,
           message: "Failed to purchase eSIM.",
         };
+
         if (!purchaseResult.success) {
           setAlertMessage(purchaseResult.message ?? "Failed to purchase eSIM.");
           setAlertOpen(true);
           return;
         }
 
-        // If success, we get the iccid from the server action
         const iccid = purchaseResult.iccid;
         if (!iccid) {
           setAlertMessage(purchaseResult.message ?? "Failed to purchase eSIM.");
@@ -108,16 +113,24 @@ const ESIMPageClient: React.FC<ESIMPageClientProps> = ({ plans }) => {
           throw new Error("No ICCID returned from purchase API.");
         }
 
-        // 1. Show the user a success message
-        setAlertMessage("Purchase successful! Preparing your eSIM…");
+        // --- Add your new status updates here:
+
+        // 1. We got a successful purchase, so let’s show "processing"
+        setPurchaseStatus("processing");
+        setAlertMessage("Purchase successful! Creating your eSIM…");
         setAlertOpen(true);
 
-        // 2. Wait a couple seconds
+        // 2. Wait 2s to ensure eSIM is fully created
         await new Promise((resolve) => setTimeout(resolve, 2000));
 
-        // 3. Then redirect
-        router.push(`/user/${iccid}`);
+        // 3. Mark success and store the iccid in state
+        setIccid(iccid);
+        setPurchaseStatus("success");
+        setAlertMessage("Your eSIM is ready. Tap OK to continue.");
       } catch (error: unknown) {
+        // If anything failed, set purchaseStatus to "error"
+        setPurchaseStatus("error");
+
         if (isError(error)) {
           setAlertMessage(error.message);
         } else {
@@ -185,10 +198,31 @@ const ESIMPageClient: React.FC<ESIMPageClientProps> = ({ plans }) => {
             <AlertDialogTitle>Notice</AlertDialogTitle>
             <AlertDialogDescription>{alertMessage}</AlertDialogDescription>
           </AlertDialogHeader>
+
           <AlertDialogFooter>
-            <AlertDialogCancel onClick={() => setAlertOpen(false)}>
-              OK
-            </AlertDialogCancel>
+            {purchaseStatus === "processing" || purchaseStatus === "error" ? (
+              // Show a "Loading..." style button if you REALLY want it for errors, too
+              <Button disabled>
+                <FaSpinner className="animate-spin h-4 w-4 mr-2" />
+                {purchaseStatus === "processing" ? "Processing..." : "Error..."}
+              </Button>
+            ) : purchaseStatus === "success" ? (
+              // Show an "OK" button that triggers the redirect
+              <Button
+                onClick={() => {
+                  setAlertOpen(false);
+                  // Because this is user-initiated, iOS Safari should allow it
+                  if (iccid) router.push(`/user/${iccid}`);
+                }}
+              >
+                OK
+              </Button>
+            ) : (
+              // Fallback if purchaseStatus === "idle" or anything else
+              <AlertDialogCancel onClick={() => setAlertOpen(false)}>
+                OK
+              </AlertDialogCancel>
+            )}
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

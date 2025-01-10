@@ -12,8 +12,6 @@ import {
 } from "@/components/ui/dialog";
 
 import { Country, Region, ProcessedBundle } from "@/lib/types";
-import { ToastAction } from "@/components/ui/toast";
-import { useToast } from "@/hooks/use-toast";
 
 // Payment Modal
 import PaymentModal from "@/components/app/PaymentModal";
@@ -47,13 +45,15 @@ export interface BundlePurchaseProps {
   regions: Region[];
 }
 
+type PurchaseStatus = "idle" | "processing" | "success" | "error";
+
 export default function BundleCheckout({
   iccid,
   countries,
   regions,
 }: BundlePurchaseProps) {
   const router = useRouter();
-  const { toast } = useToast();
+  const [purchaseStatus, setPurchaseStatus] = useState<PurchaseStatus>("idle");
   const [open, setOpen] = useState(false);
 
   // Steps: 1 = region selection, 2 = bundle selection
@@ -159,6 +159,7 @@ export default function BundleCheckout({
   };
 
   // Called by PaymentModal after successful LN payment
+
   const handlePaymentSuccess = () => {
     startTransition(async () => {
       try {
@@ -166,12 +167,13 @@ export default function BundleCheckout({
           throw new Error("No selected plan found!");
         }
 
-        // 3) Finalize purchase
+        // 1) Finalize purchase
         const purchaseResult = await purchaseBundleForIccid(
           selectedPlan.name,
           iccid
         );
         if (!purchaseResult.success) {
+          setPurchaseStatus("error");
           setAlertMessage(
             purchaseResult.message || "Failed to complete purchase."
           );
@@ -179,31 +181,22 @@ export default function BundleCheckout({
           return;
         }
 
-        // // If success, we might have an ICCID from the server
-        // const purchasedIccid = purchaseResult.iccid;
-        // if (!purchasedIccid) {
-        //   throw new Error("No ICCID returned from purchase API.");
-        // }
+        // 2) Set to "processing" and show an alert
+        setPurchaseStatus("processing");
+        setAlertMessage("Purchase successful! Creating your eSIM…");
+        setAlertOpen(true);
 
-        // For example, close the entire checkout modal
-        setOpen(false);
-
-        // Then redirect or show success
-        // e.g., push user to /user/[iccid]
-        toast({
-          title: "Purchase successful",
-          description: "Your bundle has been purchased.",
-          action: <ToastAction altText="Goto schedule to undo">Ok</ToastAction>,
-        });
-
+        // 3) Delay 2 seconds
         await new Promise((resolve) => setTimeout(resolve, 2000));
 
-        router.refresh();
+        // 4) Mark as success and update the alert message
+        setPurchaseStatus("success");
+        setAlertMessage("Your eSIM is ready. Tap OK to refresh.");
       } catch (error: unknown) {
+        setPurchaseStatus("error");
         const alertMessage = isError(error)
           ? error.message
           : "Something went wrong during purchase.";
-
         setAlertMessage(alertMessage);
         setAlertOpen(true);
       }
@@ -316,9 +309,37 @@ export default function BundleCheckout({
             <AlertDialogDescription>{alertMessage}</AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel onClick={() => setAlertOpen(false)}>
-              OK
-            </AlertDialogCancel>
+            {purchaseStatus === "processing" ? (
+              // Show a "Processing..." button
+              <Button disabled>Processing...</Button>
+            ) : purchaseStatus === "success" ? (
+              // Show an "OK" that triggers refresh
+              <Button
+                onClick={() => {
+                  // user-initiated => iOS won't block
+                  setAlertOpen(false);
+                  setOpen(false); // also close the checkout dialog
+                  router.refresh();
+                }}
+              >
+                OK
+              </Button>
+            ) : purchaseStatus === "error" ? (
+              // Show "Close" that dismisses the alert
+              <Button
+                onClick={() => {
+                  setAlertOpen(false);
+                  setPurchaseStatus("idle"); // reset status if you want
+                }}
+              >
+                Close
+              </Button>
+            ) : (
+              // purchaseStatus === "idle" or anything else
+              <AlertDialogCancel onClick={() => setAlertOpen(false)}>
+                OK
+              </AlertDialogCancel>
+            )}
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
