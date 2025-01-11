@@ -21,7 +21,7 @@ import { getAvailableBundles } from "./BundleCheckout/BundleCheckoutActions";
 import RegionSelector from "./BundleCheckout/RegionSelector";
 import BundleSelector from "./BundleCheckout/BundleSelector";
 
-// For showing an alert
+// AlertDialog for final success only
 import {
   AlertDialog,
   AlertDialogContent,
@@ -31,13 +31,21 @@ import {
   AlertDialogDescription,
   AlertDialogCancel,
 } from "@/components/ui/alert-dialog";
+
+// Server actions
 import {
   checkEsimCompatibility,
   purchaseBundleForIccid,
   validateBundleAvailability,
 } from "./UserComponenteActions";
+
+// UI components
 import { Checkbox } from "@/components/ui/checkbox";
 import { isError } from "@/utils/isError";
+
+// Import your toast utilities
+import { useToast } from "@/hooks/use-toast";
+import { ToastAction } from "@/components/ui/toast";
 
 export interface BundlePurchaseProps {
   iccid: string;
@@ -53,58 +61,57 @@ export default function BundleCheckout({
   regions,
 }: BundlePurchaseProps) {
   const router = useRouter();
+  const { toast } = useToast();
+
   const [purchaseStatus, setPurchaseStatus] = useState<PurchaseStatus>("idle");
+  // `open` is for the multi-step dialog
   const [open, setOpen] = useState(false);
 
   // Steps: 1 = region selection, 2 = bundle selection
   const [step, setStep] = useState<1 | 2>(1);
 
-  // For region/country selection
-  // const [selectedSlug, setSelectedSlug] = useState<string | null>(null);
-
-  // Bundles for the selected slug
+  // Bundles for the selected region/country
   const [bundles, setBundles] = useState<ProcessedBundle[]>([]);
-
-  // The currently selected plan (object). Default to the first plan when user goes to step 2.
   const [selectedPlan, setSelectedPlan] = useState<ProcessedBundle | null>(
     null
   );
 
-  // Payment-related states
+  // Payment modal
   const [isPaymentModalActive, setIsPaymentModalActive] = useState(false);
-  const [alertOpen, setAlertOpen] = useState(false);
-  const [alertMessage, setAlertMessage] = useState("");
+
+  // **Success** alert dialog
+  const [successDialogOpen, setSuccessDialogOpen] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
+
+  // For transitions / spinners
   const [isPending, startTransition] = useTransition();
+
+  // For user checking "I have eSIM ready" box
   const [isChecked, setIsChecked] = useState(false);
 
   // -------------------------
   // Step 1: Region selection
   // -------------------------
   const handleRegionSelected = async (slug: string) => {
-    // setSelectedSlug(slug);
-
-    // 1) Fetch the available bundles for that slug
+    // Fetch available bundles for that slug
     const data = await getAvailableBundles(slug);
-
-    // 2) Save them in state
     setBundles(data || []);
 
-    // 3) If we have bundles, auto-select the first one
+    // Auto-select the first one if available
     if (data && data.length > 0) {
       setSelectedPlan(data[0]);
     } else {
       setSelectedPlan(null);
     }
 
-    // 4) Move to step 2
+    // Advance to step 2
     setStep(2);
   };
 
   // -------------------------
-  // Step 2: Bundle Selection
+  // Step 2: Bundle selection
   // -------------------------
   const handleSelectPlan = (planName: string) => {
-    // find the plan object
     const found = bundles.find((b) => b.name === planName) ?? null;
     setSelectedPlan(found);
   };
@@ -114,8 +121,12 @@ export default function BundleCheckout({
   // -------------------------
   const handleConfirmBundle = () => {
     if (!selectedPlan) {
-      setAlertMessage("No bundle selected!");
-      setAlertOpen(true);
+      // Move this error into a toast
+      toast({
+        title: "No bundle selected",
+        description: "Please select a bundle before buying.",
+        action: <ToastAction altText="Close">Close</ToastAction>,
+      });
       return;
     }
 
@@ -124,10 +135,12 @@ export default function BundleCheckout({
         // 1) Check eSIM compatibility
         const compat = await checkEsimCompatibility(iccid, selectedPlan.name);
         if (!compat.success || !compat.compatible) {
-          setAlertMessage(
-            compat.message || "This bundle is not compatible with this eSIM."
-          );
-          setAlertOpen(true);
+          toast({
+            title: "Compatibility Error",
+            description:
+              compat.message || "This bundle is not compatible with this eSIM.",
+            action: <ToastAction altText="Close">Close</ToastAction>,
+          });
           return;
         }
 
@@ -136,30 +149,33 @@ export default function BundleCheckout({
           selectedPlan.name
         );
         if (!validateResult.success) {
-          setAlertMessage(
-            validateResult.message || "Bundle validation failed."
-          );
-          setAlertOpen(true);
+          toast({
+            title: "Bundle Validation Error",
+            description: validateResult.message || "Bundle validation failed.",
+            action: <ToastAction altText="Close">Close</ToastAction>,
+          });
           return;
         }
 
+        // Close the multi-step dialog
         setOpen(false);
-
-        // ---- Then open the Payment Modal ----
+        // Open Payment Modal
         setIsPaymentModalActive(true);
       } catch (error: unknown) {
-        setAlertMessage(
-          isError(error)
+        toast({
+          title: "Validation Error",
+          description: isError(error)
             ? error.message
-            : "Something went wrong during bundle validation and compatibility checks."
-        );
-        setAlertOpen(true);
+            : "Something went wrong during validation.",
+          action: <ToastAction altText="Close">Close</ToastAction>,
+        });
       }
     });
   };
 
-  // Called by PaymentModal after successful LN payment
-
+  // -------------------------
+  // PaymentModal: onPaymentSuccess
+  // -------------------------
   const handlePaymentSuccess = () => {
     startTransition(async () => {
       try {
@@ -174,31 +190,38 @@ export default function BundleCheckout({
         );
         if (!purchaseResult.success) {
           setPurchaseStatus("error");
-          setAlertMessage(
-            purchaseResult.message || "Failed to complete purchase."
-          );
-          setAlertOpen(true);
+          toast({
+            title: "Purchase Error",
+            description:
+              purchaseResult.message || "Failed to complete purchase.",
+            action: <ToastAction altText="Close">Close</ToastAction>,
+          });
           return;
         }
 
-        // 2) Set to "processing" and show an alert
+        // 2) Let user know we're processing
         setPurchaseStatus("processing");
-        setAlertMessage("Purchase successful! Creating your eSIM…");
-        setAlertOpen(true);
+        toast({
+          title: "Purchase Successful",
+          description: "Creating your eSIM, please wait...",
+        });
 
-        // 3) Delay 2 seconds
+        // 3) Delay 2s
         await new Promise((resolve) => setTimeout(resolve, 2000));
 
-        // 4) Mark as success and update the alert message
+        // 4) Mark success & show final success alert
         setPurchaseStatus("success");
-        setAlertMessage("Your eSIM is ready. Tap OK to refresh.");
+        setSuccessMessage("Your eSIM is ready. Tap OK to refresh.");
+        setSuccessDialogOpen(true);
       } catch (error: unknown) {
         setPurchaseStatus("error");
-        const alertMessage = isError(error)
-          ? error.message
-          : "Something went wrong during purchase.";
-        setAlertMessage(alertMessage);
-        setAlertOpen(true);
+        toast({
+          title: "Purchase Error",
+          description: isError(error)
+            ? error.message
+            : "Something went wrong during purchase.",
+          action: <ToastAction altText="Close">Close</ToastAction>,
+        });
       }
     });
   };
@@ -206,14 +229,13 @@ export default function BundleCheckout({
   // "Back" button to go from step 2 to step 1
   const handleBackToStep1 = () => {
     setStep(1);
-    // setSelectedSlug(null);
     setBundles([]);
     setSelectedPlan(null);
   };
 
   return (
     <>
-      {/* The main trigger for the multi-step checkout */}
+      {/* The main trigger for the multi-step checkout dialog */}
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
           <Button size="lg" variant="neutral" className="text-black">
@@ -301,42 +323,31 @@ export default function BundleCheckout({
         />
       )}
 
-      {/* Alert for any errors or messages */}
-      <AlertDialog open={alertOpen} onOpenChange={setAlertOpen}>
+      {/* AlertDialog for final success ONLY */}
+      <AlertDialog open={successDialogOpen} onOpenChange={setSuccessDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Notice</AlertDialogTitle>
-            <AlertDialogDescription>{alertMessage}</AlertDialogDescription>
+            <AlertDialogTitle>Purchase Successful</AlertDialogTitle>
+            <AlertDialogDescription>{successMessage}</AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             {purchaseStatus === "processing" ? (
-              // Show a "Processing..." button
+              // If you'd prefer a spinner:
               <Button disabled>Processing...</Button>
             ) : purchaseStatus === "success" ? (
-              // Show an "OK" that triggers refresh
               <Button
                 onClick={() => {
-                  // user-initiated => iOS won't block
-                  setAlertOpen(false);
-                  setOpen(false); // also close the checkout dialog
+                  setSuccessDialogOpen(false);
+                  // Also close the multi-step checkout dialog if it's open
+                  setOpen(false);
+                  // Refresh the page
                   router.refresh();
                 }}
               >
                 OK
               </Button>
-            ) : purchaseStatus === "error" ? (
-              // Show "Close" that dismisses the alert
-              <Button
-                onClick={() => {
-                  setAlertOpen(false);
-                  setPurchaseStatus("idle"); // reset status if you want
-                }}
-              >
-                Close
-              </Button>
             ) : (
-              // purchaseStatus === "idle" or anything else
-              <AlertDialogCancel onClick={() => setAlertOpen(false)}>
+              <AlertDialogCancel onClick={() => setSuccessDialogOpen(false)}>
                 OK
               </AlertDialogCancel>
             )}

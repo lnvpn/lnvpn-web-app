@@ -30,7 +30,7 @@ export async function handleEsimOrderApi(
     // Assign this bundle to an existing eSIM
     orderItem.iccids = [iccid];
     // Usually you'd set allowReassign to false if you don't want a new eSIM
-    orderItem.allowReassign = false;
+    orderItem.allowReassign = true;
   }
 
   // Build the full payload

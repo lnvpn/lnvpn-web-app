@@ -32,7 +32,7 @@ interface EsimBundlesClientProps {
 
 export function EsimBundlesCards({ bundles }: EsimBundlesClientProps) {
   // Checkbox state
-  const [showInactive, setShowInactive] = useState(false);
+  const [showInactive, setShowInactive] = useState(true);
 
   // 1. We filter the bundles based on the assignment states
   //    Usually “active” means we only show ones that have an assignment with bundleState=active

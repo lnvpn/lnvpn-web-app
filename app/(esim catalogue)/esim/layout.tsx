@@ -39,7 +39,7 @@ export default async function EsimLayout({ children }: EsimLayoutProps) {
         LN SIM
       </h1>
       <SIMProfilButton />
-      <h2 className="text-center my-3">
+      <h2 className="text-center mt-6">
         Buy eSIM plans for global connectivity using Bitcoin. Privacy-focused,
         secure, and reliable.
       </h2>

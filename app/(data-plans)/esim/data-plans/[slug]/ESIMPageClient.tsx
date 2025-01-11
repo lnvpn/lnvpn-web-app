@@ -18,11 +18,15 @@ import { Button } from "@/components/ui/button";
 import ESIMRadioGroup from "@/components/app/eSIM/[slug]/ESIMRadioGroup";
 import { FaSpinner } from "react-icons/fa6";
 
-// Import your server actions (these are your existing functions)
+// Import your server actions
 import { validateBundleAvailability, purchaseBundle } from "./ESIMBuyActions";
 import { ProcessedBundle } from "@/lib/types";
 import { Checkbox } from "@/components/ui/checkbox";
 import { isError } from "@/utils/isError";
+
+// --- Toast
+import { useToast } from "@/hooks/use-toast";
+import { ToastAction } from "@/components/ui/toast";
 
 interface ESIMPageClientProps {
   plans: ProcessedBundle[];
@@ -30,15 +34,16 @@ interface ESIMPageClientProps {
 
 const ESIMPageClient: React.FC<ESIMPageClientProps> = ({ plans }) => {
   const router = useRouter();
+  const { toast } = useToast();
 
   // 1. Default to the *first* plan if available
   const [selectedPlan, setSelectedPlan] = useState<ProcessedBundle | null>(
     plans.length ? plans[0] : null
   );
 
-  // 2. States for showing alerts, modals, spinners
+  // 2. Local states
   const [alertOpen, setAlertOpen] = useState(false);
-  const [alertMessage, setAlertMessage] = useState("");
+  const [alertMessage, setAlertMessage] = useState(""); // For success
   const [isModalActive, setIsModalActive] = useState(false);
   const [isPending, startTransition] = useTransition();
   const [isChecked, setIsChecked] = useState(false);
@@ -66,9 +71,13 @@ const ESIMPageClient: React.FC<ESIMPageClientProps> = ({ plans }) => {
           success: false,
           message: "Failed to validate bundle.",
         };
+
         if (!result.success) {
-          setAlertMessage(result.message ?? "Bundle is not available.");
-          setAlertOpen(true);
+          toast({
+            title: "Validation Error",
+            description: result.message ?? "Bundle is not available.",
+            action: <ToastAction altText="Close">Close</ToastAction>,
+          });
           return;
         }
 
@@ -76,16 +85,22 @@ const ESIMPageClient: React.FC<ESIMPageClientProps> = ({ plans }) => {
         setIsModalActive(true);
       } catch (error: unknown) {
         if (isError(error)) {
-          setAlertMessage(error.message);
+          toast({
+            title: "Validation Error",
+            description: error.message,
+            action: <ToastAction altText="Close">Close</ToastAction>,
+          });
         } else {
-          setAlertMessage("Something went wrong.");
+          toast({
+            title: "Validation Error",
+            description: "Something went wrong.",
+            action: <ToastAction altText="Close">Close</ToastAction>,
+          });
         }
-        setAlertOpen(true);
       }
     });
   };
 
-  // 5. Called by PaymentModal after invoice is confirmed paid
   // 5. Called by PaymentModal after invoice is confirmed paid
   const handlePaymentSuccess = () => {
     startTransition(async () => {
@@ -101,42 +116,62 @@ const ESIMPageClient: React.FC<ESIMPageClientProps> = ({ plans }) => {
         };
 
         if (!purchaseResult.success) {
-          setAlertMessage(purchaseResult.message ?? "Failed to purchase eSIM.");
-          setAlertOpen(true);
+          toast({
+            title: "Purchase Error",
+            description: purchaseResult.message ?? "Failed to purchase eSIM.",
+            action: <ToastAction altText="Close">Close</ToastAction>,
+          });
           return;
         }
 
-        const iccid = purchaseResult.iccid;
-        if (!iccid) {
-          setAlertMessage(purchaseResult.message ?? "Failed to purchase eSIM.");
-          setAlertOpen(true);
+        const purchaseIccid = purchaseResult.iccid;
+        if (!purchaseIccid) {
+          toast({
+            title: "Purchase Error",
+            description: purchaseResult.message ?? "No ICCID returned.",
+            action: <ToastAction altText="Close">Close</ToastAction>,
+          });
           throw new Error("No ICCID returned from purchase API.");
         }
 
-        // --- Add your new status updates here:
-
         // 1. We got a successful purchase, so let’s show "processing"
         setPurchaseStatus("processing");
-        setAlertMessage("Purchase successful! Creating your eSIM…");
-        setAlertOpen(true);
+
+        // Give the user a short toast that the eSIM is being created
+        toast({
+          title: "Purchase Successful",
+          description: "Creating your eSIM, please wait...",
+        });
 
         // 2. Wait 2s to ensure eSIM is fully created
         await new Promise((resolve) => setTimeout(resolve, 2000));
 
         // 3. Mark success and store the iccid in state
-        setIccid(iccid);
+        setIccid(purchaseIccid);
         setPurchaseStatus("success");
-        setAlertMessage("Your eSIM is ready. Tap OK to continue.");
+
+        // Show success in alert
+        setAlertMessage(
+          `Your eSIM is ready! ICCID: ${purchaseIccid}. Tap OK to continue.`
+        );
+        setAlertOpen(true);
       } catch (error: unknown) {
         // If anything failed, set purchaseStatus to "error"
         setPurchaseStatus("error");
 
         if (isError(error)) {
-          setAlertMessage(error.message);
+          toast({
+            title: "Purchase Error",
+            description: error.message,
+            action: <ToastAction altText="Close">Close</ToastAction>,
+          });
         } else {
-          setAlertMessage("Something went wrong during purchase.");
+          toast({
+            title: "Purchase Error",
+            description: "Something went wrong during purchase.",
+            action: <ToastAction altText="Close">Close</ToastAction>,
+          });
         }
-        setAlertOpen(true);
       }
     });
   };
@@ -186,39 +221,37 @@ const ESIMPageClient: React.FC<ESIMPageClientProps> = ({ plans }) => {
           active={isModalActive}
           setActive={setIsModalActive}
           amount={selectedPlan.price}
-          // The memo can be whatever you want for LN invoice
           memo={`Buying eSIM: ${selectedPlan.name}`}
           onPaymentSuccess={handlePaymentSuccess}
         />
       )}
 
+      {/* Alert Dialog used ONLY for the success & user redirection */}
       <AlertDialog open={alertOpen} onOpenChange={setAlertOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Notice</AlertDialogTitle>
+            <AlertDialogTitle>Purchase Successful!</AlertDialogTitle>
             <AlertDialogDescription>{alertMessage}</AlertDialogDescription>
           </AlertDialogHeader>
 
           <AlertDialogFooter>
-            {purchaseStatus === "processing" || purchaseStatus === "error" ? (
-              // Show a "Loading..." style button if you REALLY want it for errors, too
+            {purchaseStatus === "processing" ? (
               <Button disabled>
                 <FaSpinner className="animate-spin h-4 w-4 mr-2" />
-                {purchaseStatus === "processing" ? "Processing..." : "Error..."}
+                Processing...
               </Button>
             ) : purchaseStatus === "success" ? (
-              // Show an "OK" button that triggers the redirect
               <Button
                 onClick={() => {
                   setAlertOpen(false);
-                  // Because this is user-initiated, iOS Safari should allow it
-                  if (iccid) router.push(`/user/${iccid}`);
+                  if (iccid) {
+                    router.push(`/user/${iccid}`);
+                  }
                 }}
               >
                 OK
               </Button>
             ) : (
-              // Fallback if purchaseStatus === "idle" or anything else
               <AlertDialogCancel onClick={() => setAlertOpen(false)}>
                 OK
               </AlertDialogCancel>
