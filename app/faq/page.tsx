@@ -176,9 +176,10 @@ export default function FAQ() {
                   you use?
                 </AccordionTrigger>
                 <AccordionContent>
-                  We use LDK and getAlby for your Lightning integration. On the
-                  VPN endpoints, we don’t use a commercial VPN service. We have
-                  our own servers in each country for each endpoint.
+                  We use LDK for our Lightning integration. On the VPN
+                  endpoints, we don’t use a commercial VPN service. We have our
+                  own servers in each country for each endpoint. LNVPN uses the
+                  Wireguard open source VPN protocol.
                 </AccordionContent>
               </AccordionItem>
 
@@ -192,15 +193,16 @@ export default function FAQ() {
                   store the first half of your IP address in our webserver logs.
                   For example, the IP 1.12.123.234 would be stored as 1.12.0.0.
                   On the VPN endpoints, we store your WireGuard public key, the
-                  PSK, and the total amount of bandwidth you used. While you
-                  maintain an active connection to a LNVPN VPN endpoint, we have
-                  to keep your IP address in memory, but after 5 minutes of
-                  inactivity, we remove your IP address from memory. We never
-                  store it on disk. Payments are only possible via Bitcoin
-                  Lightning, so we don’t know where the money comes from. We
-                  only verify if an invoice was paid or not. If you use the
-                  “Send via email” feature for your WireGuard configuration, the
-                  email is sent via{" "}
+                  PSK, and the total amount of bandwidth you used. While you’re
+                  connected to our VPN, the endpoint temporarily keeps your IP
+                  address in memory to maintain the connection. If there’s no
+                  activity for 5 minutes, the IP address is automatically
+                  deleted. We never store it on any disk or permanent storage.
+                  Payments are only possible via Bitcoin Lightning, so we don’t
+                  know where the money comes from. We only verify if an invoice
+                  was paid or not. We are not able to link your payment to an
+                  endpoint. If you use the “Send via email” feature for your
+                  WireGuard configuration, the email is sent via{" "}
                   <a
                     href="https://sendgrid.com/"
                     target="_blank"
@@ -230,11 +232,11 @@ export default function FAQ() {
                 <AccordionContent>
                   <h6>Currently, we have four data plans:</h6>
                   <ul className="list-disc pl-4">
-                    <li>1 hour = 5GB</li>
-                    <li>1 day = 25GB</li>
-                    <li>1 week = 75GB</li>
-                    <li>1 month = 200GB</li>
-                    <li>3 months = 450GB</li>
+                    <li>1 hour = 10GB</li>
+                    <li>1 day = 50GB</li>
+                    <li>1 week = 150GB</li>
+                    <li>1 month = 300GB</li>
+                    <li>3 months = 800GB</li>
                   </ul>
                 </AccordionContent>
               </AccordionItem>

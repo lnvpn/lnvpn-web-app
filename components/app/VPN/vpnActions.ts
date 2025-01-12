@@ -58,7 +58,7 @@ export async function fetchVPNCredentials(
   const requestBody = {
     publicKey,
     presharedKey,
-    bwLimit: 50000 * priceDollar, // Adjust the calculation as needed
+    bwLimit: 100000 * priceDollar, // Adjust the calculation as needed
     subExpiry: expiryDate,
     ipIndex: 0,
   };
