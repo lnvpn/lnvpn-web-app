@@ -40,7 +40,12 @@ export default function SIMProfilButton() {
 
   return (
     <div className="flex justify-start">
-      <Button size="sm" variant="noShadow" onClick={handleOpenModal}>
+      <Button
+        size="sm"
+        variant="noShadow"
+        onClick={handleOpenModal}
+        className="text-black"
+      >
         <span className="hidden sm:inline 0">Your eSIM profile</span>{" "}
         <User className="sm:hidden h-5 w-5" />
       </Button>
@@ -69,7 +74,12 @@ export default function SIMProfilButton() {
                 autoFocus
               />
               <div className="flex justify-end w-full">
-                <Button type="submit" size="sm" disabled={isLoading}>
+                <Button
+                  type="submit"
+                  size="sm"
+                  disabled={isLoading}
+                  className="text-black"
+                >
                   {isLoading ? (
                     <FaSpinner className="animate-spin h-4 w-4" />
                   ) : (

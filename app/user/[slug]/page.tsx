@@ -118,7 +118,7 @@ export default async function Page({
         LN SIM
       </h1>
 
-      <h2 className="text-lg font-bold">eSIM - {slug}</h2>
+      <h2 className="text-xl font-mono font-bold">eSIM - {slug}</h2>
       {/* Alert with info & copy button */}
       <Alert variant={"destructive"} className="w-full mx-auto max-w-screen-md">
         <FaInfoCircle className="h-5 w-5 mr-2" aria-hidden="true" />

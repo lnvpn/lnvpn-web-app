@@ -393,6 +393,11 @@ export default function FAQ() {
                     use them as needed. Just go to your eSIM profile page and
                     add multiple bundles. The bundles are actived as soon as
                     your reach the country of the bundle.
+                    <br />
+                    <strong>
+                      Note: Not every bundle is compatible with every eSIM.
+                      Somethimes you need a new eSIM profile.
+                    </strong>
                   </p>
                 </AccordionContent>
               </AccordionItem>
@@ -467,6 +472,19 @@ export default function FAQ() {
                     </li>
                   </ol>
                   <p></p>
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem
+                className="lg:w-[500px] max-w-full"
+                value="item-509"
+              >
+                <AccordionTrigger>Who is your eSIM provider?</AccordionTrigger>
+                <AccordionContent>
+                  <p>
+                    Our eSIM provider is eSIM Go Limited, 8 North Bar Street,
+                    Banbury, Oxfordshire, England, OX16 0TB, United Kingdom. ICO
+                    registration number is ZB002633.
+                  </p>
                 </AccordionContent>
               </AccordionItem>
             </Accordion>

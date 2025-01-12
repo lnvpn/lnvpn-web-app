@@ -209,7 +209,7 @@ const ESIMPageClient: React.FC<ESIMPageClientProps> = ({ plans }) => {
           />
           <label
             htmlFor="esim-ready-checkbox"
-            className="text-sm text-gray-700"
+            className="text-black dark:text-white"
           >
             I have checked if my phone is eSIM ready.
           </label>

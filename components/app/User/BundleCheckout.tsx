@@ -138,7 +138,8 @@ export default function BundleCheckout({
           toast({
             title: "Compatibility Error",
             description:
-              compat.message || "This bundle is not compatible with this eSIM.",
+              compat.message ||
+              "This bundle is not compatible with this eSIM. You need a seperate eSIM.",
             action: <ToastAction altText="Close">Close</ToastAction>,
           });
           return;
@@ -281,7 +282,7 @@ export default function BundleCheckout({
                     />
                     <label
                       htmlFor="esim-ready-checkbox"
-                      className="text-sm text-gray-700"
+                      className="text-black dark:text-white"
                     >
                       I have checked if my phone is eSIM ready.
                     </label>
@@ -289,6 +290,7 @@ export default function BundleCheckout({
 
                   <div className="flex justify-center flex-row-reverse items-center gap-2 my-3">
                     <Button
+                      className="text-black"
                       variant="default"
                       onClick={handleConfirmBundle}
                       size="lg"
@@ -299,6 +301,7 @@ export default function BundleCheckout({
                     <Button
                       size="lg"
                       variant="neutral"
+                      className="text-black"
                       onClick={handleBackToStep1}
                       disabled={isPending}
                     >
