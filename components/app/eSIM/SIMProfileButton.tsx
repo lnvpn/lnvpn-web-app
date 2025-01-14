@@ -10,7 +10,6 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { User } from "lucide-react"; // Profile icon
 import { FaSpinner } from "react-icons/fa6";
 
 export default function SIMProfilButton() {
