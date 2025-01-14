@@ -340,6 +340,7 @@ export default function BundleCheckout({
             ) : purchaseStatus === "success" ? (
               <Button
                 onClick={() => {
+                  setPurchaseStatus("idle");
                   setSuccessDialogOpen(false);
                   // Also close the multi-step checkout dialog if it's open
                   setOpen(false);
