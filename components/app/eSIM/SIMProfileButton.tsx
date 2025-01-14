@@ -46,8 +46,7 @@ export default function SIMProfilButton() {
         onClick={handleOpenModal}
         className="text-black"
       >
-        <span className="hidden sm:inline 0">Your eSIM profile</span>{" "}
-        <User className="sm:hidden h-5 w-5" />
+        Your eSIM profile
       </Button>
 
       {isOpen && (
