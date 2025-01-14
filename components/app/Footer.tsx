@@ -4,7 +4,7 @@ import { Button } from "../ui/button";
 
 export default function Footer() {
   return (
-    <div className="flex justify-center items-center bg-bg dark:bg-darkBg pt-10 py-4 text-lg">
+    <div className="flex justify-center items-center bg-bg dark:bg-darkBg pt-10 p-4 text-lg">
       <Button variant="neutral" asChild className="ratio-square">
         <Link
           href="https://t.me/+x_j8zikjnqhiODIy"
@@ -14,9 +14,9 @@ export default function Footer() {
           aria-label="Telegram"
         >
           <svg
-            className="w-8 h-8 text-text dark:text-white "
+            className="w-6 h-6 text-text dark:text-white "
             fill="currentColor"
-            viewBox="0 0 24 24"
+            viewBox="0 0 22 22"
             xmlns="http://www.w3.org/2000/svg"
           >
             {/* Telegram Icon Path */}

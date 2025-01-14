@@ -608,8 +608,9 @@ export default function FAQ() {
                 <AccordionContent>
                   The LNVPN Affiliate Program allows you to earn Bitcoin by
                   referring new customers to our services. When someone signs up
-                  using your unique referral link and makes a purchase, you earn
-                  a 15% commission in Bitcoin.
+                  using your unique referral link and makes a VPN (eSIM
+                  following soon) purchase , you earn a 15% commission in
+                  Bitcoin.
                 </AccordionContent>
               </AccordionItem>
 
@@ -634,8 +635,8 @@ export default function FAQ() {
                 <AccordionTrigger>How much can I earn?</AccordionTrigger>
                 <AccordionContent>
                   You earn a 15% commission for every user you refer who makes a
-                  purchase. There&rsquo;s no limit to how much you can earn! The
-                  more users you refer, the more you make.
+                  VPN purchase. There&rsquo;s no limit to how much you can earn!
+                  The more users you refer, the more you make.
                 </AccordionContent>
               </AccordionItem>
 
