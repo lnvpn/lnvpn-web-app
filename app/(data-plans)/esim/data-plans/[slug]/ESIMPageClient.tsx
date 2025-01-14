@@ -243,7 +243,9 @@ const ESIMPageClient: React.FC<ESIMPageClientProps> = ({ plans }) => {
             ) : purchaseStatus === "success" ? (
               <Button
                 onClick={() => {
+                  setPurchaseStatus("idle");
                   setAlertOpen(false);
+
                   if (iccid) {
                     router.push(`/user/${iccid}`);
                   }
