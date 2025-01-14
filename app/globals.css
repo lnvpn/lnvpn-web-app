@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+
+
 :root {
   --main: #88aaee;
   --main50: #88aaeeb3;
@@ -73,3 +75,9 @@ body::-webkit-scrollbar-thumb,
     scrollbar-color: var(--sb-thumb-color) var(--sb-track-color);
   }
 }
+
+.text-shadow-neo {
+    text-shadow: 3px 3px #0f172a;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: #0f172a;
+  }

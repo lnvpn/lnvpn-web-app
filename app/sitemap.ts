@@ -1,44 +1,83 @@
-import { MetadataRoute } from "next";
+import type { MetadataRoute } from "next";
+import { countryNameMap } from "@/data/countryNames";
+import { getNetworksFromAPI } from "@/utils/esim-api/Networks";
+import { slugify } from "@/utils/esimUtils";
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const currentDate = new Date();
+const BASE_URL = "https://lnvpn.net";
 
-  return [
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const networksResponse = await getNetworksFromAPI();
+
+  // If there's an error or no data, return an empty list
+  if (!networksResponse) {
+    console.error("Failed to fetch networks for sitemap generation.");
+    return [];
+  }
+
+  // Define your static routes
+  const staticUrls: MetadataRoute.Sitemap = [
     {
-      url: "https://lnvpn.net",
-      lastModified: currentDate,
+      url: `${BASE_URL}`,
+      lastModified: new Date(),
       changeFrequency: "yearly",
       priority: 1,
     },
     {
-      url: "https://lnvpn.net/esim",
-      lastModified: currentDate,
+      url: `${BASE_URL}/esim`,
+      lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.8,
     },
     {
-      url: "https://lnvpn.net/phone-numbers",
-      lastModified: currentDate,
+      url: `${BASE_URL}/esim/regional`,
+      lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.8,
     },
     {
-      url: "https://lnvpn.net/faq",
-      lastModified: currentDate,
+      url: `${BASE_URL}/esim/global`,
+      lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.8,
     },
     {
-      url: "https://lnvpn.net/partners",
-      lastModified: currentDate,
+      url: `${BASE_URL}/phone-numbers`,
+      lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.8,
     },
     {
-      url: "https://lnvpn.net/api/documentation",
-      lastModified: currentDate,
+      url: `${BASE_URL}/faq`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: `${BASE_URL}/partners`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: `${BASE_URL}/api/documentation`,
+      lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.8,
     },
   ];
+
+  // Define your dynamic eSIM routes using fetched data
+  const dynamicUrls = networksResponse.countryNetworks.map((country) => {
+    const countrySlug = slugify(countryNameMap[country.name] || country.name);
+
+    return {
+      url: `${BASE_URL}/esim/data-plans/${countrySlug}`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+    };
+  });
+
+  // Return a single array of all sitemap URLs
+  return [...staticUrls, ...dynamicUrls];
 }

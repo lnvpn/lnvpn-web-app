@@ -1,5 +1,7 @@
 import type { Config } from "tailwindcss";
 
+const { fontFamily } = require("tailwindcss/defaultTheme");
+
 const config: Config = {
   darkMode: ["class"],
   content: [
@@ -54,6 +56,7 @@ const config: Config = {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
         },
+
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         chart: {
@@ -94,12 +97,19 @@ const config: Config = {
         "accordion-up": "accordion-up 0.2s ease-out",
         "caret-blink": "caret-blink 1.25s ease-out infinite",
       },
+      fontFamily: {
+        sans: ["var(--font-sans)", ...fontFamily.sans],
+        Space_Grotesk: ["Space Grotesk", ...fontFamily.sans],
+      },
       screens: {
         m1500: {
           raw: "(max-width: 1500px)",
         },
         m1300: {
           raw: "(max-width: 1300px)",
+        },
+        m1250: {
+          raw: "(max-width: 1250px)",
         },
         m1100: {
           raw: "(max-width: 1100px)",

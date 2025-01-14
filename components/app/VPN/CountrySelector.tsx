@@ -24,11 +24,17 @@ export default function CountrySelector({
     <div className="flex w-full justify-between">
       <Select value={selectedCountry} onValueChange={setSelectedCountry}>
         <SelectTrigger className="w-full">
-          <SelectValue placeholder="2. Select exit point" />
+          <SelectValue placeholder="2. Select country" />
         </SelectTrigger>
-        <SelectContent className="max-h-60 overflow-auto sm:max-h-none sm:overflow-visible">
+        <SelectContent>
           <SelectGroup>
-            <SelectLabel>Select exit point</SelectLabel>
+            <SelectLabel>
+              <strong>
+                Choose the country you want <br className="sm:hidden" /> to
+                appear to be browsing from.
+              </strong>
+            </SelectLabel>
+
             {vpnendpoints.map((endpoint) => (
               <SelectItem key={endpoint.cc} value={endpoint.cc}>
                 {endpoint.country}

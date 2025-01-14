@@ -5,10 +5,10 @@ import { FaInfoCircle } from "react-icons/fa";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import Link from "next/link";
 
-export default function Home() {
+export default async function Home() {
   return (
     <main className="relative flex flex-col gap-4 items-center bg-bg dark:bg-darkBg px-5 flex-grow font-bold">
-      <h1 className="text-6xl font-bold text-text dark:text-darkText my-10">
+      <h1 className="my-10 text-shadow-neo scroll-m-20 font-Space_Grotesk text-5xl font-extrabold tracking-wide text-main lg:text-6xl">
         LN VPN
       </h1>
 

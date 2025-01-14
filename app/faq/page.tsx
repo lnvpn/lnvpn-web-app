@@ -13,10 +13,10 @@ export default function FAQ() {
   return (
     <div className="text-text dark:text-darkText">
       <main className="relative flex flex-col gap-4 items-center bg-bg dark:bg-darkBg px-5 flex-grow font-bold">
-        <h1 className="text-6xl font-bold text-text dark:text-darkText my-10">
+        <h1 className="my-10 text-shadow-neo scroll-m-20 font-Space_Grotesk text-5xl font-extrabold tracking-wide text-main lg:text-6xl">
           FAQ
         </h1>
-        <div className="grid  sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid  sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           <div>
             <h2 className="text-2xl flex justify-center my-4 font-bold text-text dark:text-darkText">
               VPN
@@ -176,9 +176,10 @@ export default function FAQ() {
                   you use?
                 </AccordionTrigger>
                 <AccordionContent>
-                  We use LDK and getAlby for your Lightning integration. On the
-                  VPN endpoints, we don’t use a commercial VPN service. We have
-                  our own servers in each country for each endpoint.
+                  We use LDK for our Lightning integration. On the VPN
+                  endpoints, we don’t use a commercial VPN service. We have our
+                  own servers in each country for each endpoint. LNVPN uses the
+                  Wireguard open source VPN protocol.
                 </AccordionContent>
               </AccordionItem>
 
@@ -192,15 +193,16 @@ export default function FAQ() {
                   store the first half of your IP address in our webserver logs.
                   For example, the IP 1.12.123.234 would be stored as 1.12.0.0.
                   On the VPN endpoints, we store your WireGuard public key, the
-                  PSK, and the total amount of bandwidth you used. While you
-                  maintain an active connection to a LNVPN VPN endpoint, we have
-                  to keep your IP address in memory, but after 5 minutes of
-                  inactivity, we remove your IP address from memory. We never
-                  store it on disk. Payments are only possible via Bitcoin
-                  Lightning, so we don’t know where the money comes from. We
-                  only verify if an invoice was paid or not. If you use the
-                  “Send via email” feature for your WireGuard configuration, the
-                  email is sent via{" "}
+                  PSK, and the total amount of bandwidth you used. While you’re
+                  connected to our VPN, the endpoint temporarily keeps your IP
+                  address in memory to maintain the connection. If there’s no
+                  activity for 5 minutes, the IP address is automatically
+                  deleted. We never store it on any disk or permanent storage.
+                  Payments are only possible via Bitcoin Lightning, so we don’t
+                  know where the money comes from. We only verify if an invoice
+                  was paid or not. We are not able to link your payment to an
+                  endpoint. If you use the “Send via email” feature for your
+                  WireGuard configuration, the email is sent via{" "}
                   <a
                     href="https://sendgrid.com/"
                     target="_blank"
@@ -230,11 +232,11 @@ export default function FAQ() {
                 <AccordionContent>
                   <h6>Currently, we have four data plans:</h6>
                   <ul className="list-disc pl-4">
-                    <li>1 hour = 5GB</li>
-                    <li>1 day = 25GB</li>
-                    <li>1 week = 75GB</li>
-                    <li>1 month = 200GB</li>
-                    <li>3 months = 450GB</li>
+                    <li>1 hour = 10GB</li>
+                    <li>1 day = 50GB</li>
+                    <li>1 week = 150GB</li>
+                    <li>1 month = 300GB</li>
+                    <li>3 months = 800GB</li>
                   </ul>
                 </AccordionContent>
               </AccordionItem>
@@ -277,6 +279,214 @@ export default function FAQ() {
                   >
                     Join via invite link
                   </a>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          </div>
+          <div>
+            <h2 className="text-2xl flex justify-center my-4 font-bold text-text dark:text-darkText">
+              eSIM
+            </h2>
+            <Accordion
+              className="w-full lg:w-[unset]"
+              type="single"
+              collapsible
+            >
+              <AccordionItem
+                className="lg:w-[500px] max-w-full"
+                value="item-500"
+              >
+                <AccordionTrigger>What is an eSIM?</AccordionTrigger>
+                <AccordionContent>
+                  <p>
+                    An eSIM is a digital SIM that allows you to activate a
+                    mobile data plan without using a physical SIM card.
+                  </p>
+                </AccordionContent>
+              </AccordionItem>
+              {/* 1. Compatibility */}
+              <AccordionItem
+                className="lg:w-[500px] max-w-full"
+                value="item-501"
+              >
+                <AccordionTrigger>
+                  Which devices are compatible with eSIM?
+                </AccordionTrigger>
+                <AccordionContent>
+                  <p>
+                    Many newer smartphones, tablets, and wearables now include
+                    eSIM functionality. Popular brands like Apple (iPhone XS and
+                    later), Samsung (Galaxy S20 and later), and Google Pixel
+                    (Pixel 3 and newer) typically support eSIM. However, it’s
+                    always best to check the exact model specifications or
+                    consult with your carrier for confirmation.
+                  </p>
+                </AccordionContent>
+              </AccordionItem>
+
+              {/* 2. How to Set Up an eSIM */}
+              <AccordionItem
+                className="lg:w-[500px] max-w-full"
+                value="item-502"
+              >
+                <AccordionTrigger>
+                  How do I install or set up my eSIM plan?
+                </AccordionTrigger>
+                <AccordionContent>
+                  <p>
+                    After purchasing an eSIM plan, you typically receive a QR
+                    code or an activation code. Go to your device’s cellular
+                    settings, select “Add Cellular Plan” (or similar), then scan
+                    the QR code or enter the activation code. Your device will
+                    download the eSIM profile and guide you through the final
+                    steps to get connected.
+                  </p>
+                </AccordionContent>
+              </AccordionItem>
+
+              {/* 3. Switching Between Profiles */}
+              <AccordionItem
+                className="lg:w-[500px] max-w-full"
+                value="item-503"
+              >
+                <AccordionTrigger>
+                  Can I store multiple eSIM profiles on one device?
+                </AccordionTrigger>
+                <AccordionContent>
+                  <p>
+                    Yes. Many eSIM-enabled devices let you store multiple eSIM
+                    profiles (like a home SIM, a travel SIM, or a work SIM) so
+                    you can switch between them in your settings without
+                    swapping physical cards. However, most devices can only use
+                    one eSIM profile at a time.
+                  </p>
+                </AccordionContent>
+              </AccordionItem>
+
+              {/* 4. Coverage and Network Quality */}
+              <AccordionItem
+                className="lg:w-[500px] max-w-full"
+                value="item-504"
+              >
+                <AccordionTrigger>
+                  Does an eSIM have the same coverage and speeds as a physical
+                  SIM?
+                </AccordionTrigger>
+                <AccordionContent>
+                  <p>
+                    Yes. eSIM service is provided over the same network
+                    infrastructure as a traditional physical SIM. Your coverage,
+                    data speeds, and call quality depend on the carrier you
+                    choose and their network strength in your location.
+                  </p>
+                </AccordionContent>
+              </AccordionItem>
+              {/* 4. Coverage and Network Quality */}
+              <AccordionItem
+                className="lg:w-[500px] max-w-full"
+                value="item-505"
+              >
+                <AccordionTrigger>
+                  Can I add multiple bundles to one eSIM?
+                </AccordionTrigger>
+                <AccordionContent>
+                  <p>
+                    Yes, you can add multiple data bundles to the same eSIM and
+                    use them as needed. Just go to your eSIM profile page and
+                    add multiple bundles. The bundles are actived as soon as
+                    your reach the country of the bundle.
+                    <br />
+                    <strong>
+                      Note: Not every bundle is compatible with every eSIM.
+                      Somethimes you need a new eSIM profile.
+                    </strong>
+                  </p>
+                </AccordionContent>
+              </AccordionItem>
+
+              {/* 6. Security and Privacy */}
+              <AccordionItem
+                className="lg:w-[500px] max-w-full"
+                value="item-506"
+              >
+                <AccordionTrigger>Is eSIM secure to use?</AccordionTrigger>
+                <AccordionContent>
+                  <p>
+                    Yes. eSIM profiles are securely encrypted and stored on a
+                    dedicated chip within your device. Activation usually
+                    requires secure credentials, such as a QR code or activation
+                    code, which helps ensure your information remains protected.
+                  </p>
+                </AccordionContent>
+              </AccordionItem>
+
+              {/* 7. Troubleshooting */}
+              <AccordionItem
+                className="lg:w-[500px] max-w-full"
+                value="item-507"
+              >
+                <AccordionTrigger>
+                  What if I experience connectivity issues with my eSIM?
+                </AccordionTrigger>
+                <AccordionContent>
+                  <p>
+                    First, check your network settings and ensure the eSIM
+                    profile is active. Restarting your device can also resolve
+                    minor issues. If problems persist, contact your carrier’s
+                    support team for assistance with troubleshooting or
+                    re-provisioning your eSIM profile. You can also got to your
+                    eSIM profile page and try the &quot;Refresh&quot; button.
+                  </p>
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem
+                className="lg:w-[500px] max-w-full"
+                value="item-508"
+              >
+                <AccordionTrigger>
+                  Where can I find my eSIM number?
+                </AccordionTrigger>
+                <AccordionContent>
+                  <p>Your eSIM number can be found in the following ways:</p>
+                  <ol className="list-decimal list-inside space-y-2">
+                    <li>
+                      <strong>On your first eSIM purchase:</strong> If you
+                      purchased a bundle or an eSIM for the first time, you will
+                      be redirected to your eSIM profile page, where you can
+                      find your eSIM number.
+                    </li>
+
+                    <li>
+                      <strong>In your phone&apos;s eSIM settings:</strong>{" "}
+                      Navigate to your mobile phone&apos;s settings and look for
+                      the eSIM details under the network or SIM card settings.
+                    </li>
+                    <li>
+                      <strong>On your Lightning invoice:</strong> If you have
+                      already an eSIM profile with us and you add a new bundle
+                      to it, look at your Lightning invoice for the eSIM number:
+                      <br />
+                      <code className="bg-gray-100 p-1 rounded">
+                        Buying eSIM: esim_1GB_7D_ROC_V2 for 8932042000006857011
+                      </code>
+                      <br />
+                      The last part is your eSIM number.
+                    </li>
+                  </ol>
+                  <p></p>
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem
+                className="lg:w-[500px] max-w-full"
+                value="item-509"
+              >
+                <AccordionTrigger>Who is your eSIM provider?</AccordionTrigger>
+                <AccordionContent>
+                  <p>
+                    Our eSIM provider is eSIM Go Limited, 8 North Bar Street,
+                    Banbury, Oxfordshire, England, OX16 0TB, United Kingdom. ICO
+                    registration number is ZB002633.
+                  </p>
                 </AccordionContent>
               </AccordionItem>
             </Accordion>
@@ -398,8 +608,9 @@ export default function FAQ() {
                 <AccordionContent>
                   The LNVPN Affiliate Program allows you to earn Bitcoin by
                   referring new customers to our services. When someone signs up
-                  using your unique referral link and makes a purchase, you earn
-                  a 15% commission in Bitcoin.
+                  using your unique referral link and makes a VPN (eSIM
+                  following soon) purchase , you earn a 15% commission in
+                  Bitcoin.
                 </AccordionContent>
               </AccordionItem>
 
@@ -424,8 +635,8 @@ export default function FAQ() {
                 <AccordionTrigger>How much can I earn?</AccordionTrigger>
                 <AccordionContent>
                   You earn a 15% commission for every user you refer who makes a
-                  purchase. There&rsquo;s no limit to how much you can earn! The
-                  more users you refer, the more you make.
+                  VPN purchase. There&rsquo;s no limit to how much you can earn!
+                  The more users you refer, the more you make.
                 </AccordionContent>
               </AccordionItem>
 

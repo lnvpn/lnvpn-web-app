@@ -19,7 +19,7 @@ After a successful payment, the website reloads and presents you a new QR code a
 
 On the lnvpn.net website, we don't use cookies and we only store the first half of your ip address in our webserver logs. For example the IP 1.12.123.234 would be stored as 1.12.0.0. On the VPN endpoints we store your WireGuard public key, the PSK and the total amount of bandwidth you used. 
 
-While you maintain an active connection to a LNVPN VPN endpoint, we have to keep your IP address in memory, but after 5 minutes of inactivity we remove your IP address from memory. We never store it on disk. As payments are only possible via Bitcoin Lightning, we don't know where the money comes from, we can only verify whether an invoice was paid or not 🤷. If you use the "Send via email" feature for your WireGuard configuration, the email is send via Sendgrid.
+While you're connected to our VPN, the endpoint temporarily keeps your IP address in memory to maintain the connection. If there's no activity for 5 minutes, the IP address is automatically deleted. We never store it on any disk or permanent storage. As payments are only possible via Bitcoin Lightning, we don't know where the money comes from, we can only verify whether an invoice was paid or not 🤷. If you use the "Send via email" feature for your WireGuard configuration, the email is send via Sendgrid.
 
 # What happens after the timeframe I paid my VPN for?
 
@@ -29,11 +29,11 @@ You won't be able to transfer any data over the VPN connection anymore. Your VPN
 
 Currently, we have five data plans:
 
-    1 hour = 5GB
-    1 day = 25GB
-    1 week = 75GB
-    1 month = 200GB
-    3 months (1 quarter) = 450GB
+    1 hour = 10GB
+    1 day = 50GB
+    1 week = 150GB
+    1 month = 300GB
+    3 months (1 quarter) = 800GB
 
 
 # Can I use this VPN for my Lightning Node?
