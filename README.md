@@ -4,7 +4,8 @@ Select a country ➡️ Select duration ➡️ Pay with Lightning ➡️ Use you
 
 LNVPN is a privacy focused VPN provider. We accept only Lightning payments. 
 
-<img width="876" alt="Screenshot 2024-10-08 at 09 22 47" src="https://github.com/user-attachments/assets/d97124f8-e63f-4da3-acfb-0020fee48322">
+<img width="904" alt="Screenshot 2025-01-14 at 13 37 26" src="https://github.com/user-attachments/assets/3ae0302a-ff24-4732-b502-d7f234836f26" />
+
 
 # How does it work?
 
@@ -40,6 +41,14 @@ Currently, we have five data plans:
 
 If you need a VPN for your Lightning Node visit tunnelsats.com.
 
+# eSIM for Lightning Payments 🔒📶
+
+We now offer **eSIM services** for **Lightning payments**, making it easier than ever to stay connected without compromising your privacy. Through our partnership with **esim-go**, we provide **data-only bundles** that can be activated without the need for any personal information. Our eSIM solution is fast, secure, and completely anonymous, offering a hassle-free way to get online whether you're traveling or need additional data. Experience true digital freedom with privacy-focused mobile connectivity.
+
+![Screenshot 2025-01-14 at 13 40 37](https://github.com/user-attachments/assets/199ae50a-8179-43ae-9289-3f277d042eb9)
+
+
+
 # Who build this?
 
 Berlin Bitcoiners
@@ -52,4 +61,8 @@ Receive service activations in a few clicks, anonymously 🎉
 3. Receive the SMS you requested.
 
 Note that if you have not received an SMS code successfully, your payment will be canceled automatically and funds will return to your wallet. No refund needed!
+
+
+
+
 
