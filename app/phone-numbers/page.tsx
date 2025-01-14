@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     type: "website",
     description:
       "Get disposable phone numbers for SMS verification. Pay with Bitcoin",
-    images: ["https://lnvpn.net/LNVPN-Mask-Logo.svg"],
+    images: ["https://lnvpn.net/media/logoPNGLNVPN.png"],
     url: "https://lnvpn.net/",
     title: "LNVPN - Disposable Phone Numbers",
   },
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "LNVPN - Disposable Phone Numbers",
     description: "A privacy-focused VPN service.",
-    images: ["https://lnvpn.net/LNVPN-Mask-Logo.svg"],
+    images: ["https://lnvpn.net/media/logoPNGLNVPN.png"],
     creator: "@ln_vpn",
   },
 };

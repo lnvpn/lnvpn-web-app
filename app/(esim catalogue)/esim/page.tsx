@@ -54,7 +54,7 @@ export const metadata: Metadata = {
     type: "website",
     description:
       "Buy global eSIMs with Bitcoin at LN SIM by LNVPN. Stay connected with a privacy-focused eSIM solution.",
-    images: ["https://lnvpn.net/LNVPN-Mask-Logo.svg"],
+    images: ["https://lnvpn.net/media/logoPNGLNVPN.png"],
     url: "https://lnvpn.net/esim",
     title: "LN SIM - Bitcoin eSIM for Global Connectivity",
   },
@@ -64,7 +64,7 @@ export const metadata: Metadata = {
     title: "LN SIM - Bitcoin eSIM for Global Connectivity",
     description:
       "Buy global eSIMs with Bitcoin at LN SIM by LNVPN. A privacy-first service for seamless global connectivity.",
-    images: ["https://lnvpn.net/LNVPN-Mask-Logo.svg"],
+    images: ["https://lnvpn.net/media/logoPNGLNVPN.png"],
     creator: "@ln_vpn",
   },
 };

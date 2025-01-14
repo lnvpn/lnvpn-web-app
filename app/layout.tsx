@@ -51,7 +51,7 @@ export const metadata: Metadata = {
     title: "Bitcoin VPN Service | LNVPN - Privacy-Focused VPN",
     description:
       "Secure your privacy with LNVPN's no-log VPN. Pay with Bitcoin for ultimate anonymity. Plans start at just 10 cents! Get protected today.",
-    images: [{ url: "/LNVPN-Mask-Logo.svg" }],
+    images: [{ url: "https://lnvpn.net/media/logoPNGLNVPN.png" }],
   },
   metadataBase: new URL("https://lnvpn.net"),
   twitter: {
@@ -60,7 +60,7 @@ export const metadata: Metadata = {
     title: "Bitcoin VPN Service | LNVPN - Privacy-Focused VPN",
     description:
       "Secure your privacy with LNVPN's no-log VPN. Pay with Bitcoin for ultimate anonymity. Plans start at just 10 cents! Get protected today.",
-    images: ["/LNVPN-Mask-Logo.svg"],
+    images: ["https://lnvpn.net/media/logoPNGLNVPN.png"],
   },
 };
 

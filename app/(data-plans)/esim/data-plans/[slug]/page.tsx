@@ -79,7 +79,7 @@ export async function generateMetadata({
         ? `Buy eSIM plans for ${entityName} with Bitcoin. Reliable and private connectivity worldwide.`
         : fallbackDescription,
       url: `https://lnvpn.net/esim/${slug}`,
-      images: ["https://lnvpn.net/LNVPN-Mask-Logo.svg"],
+      images: ["https://lnvpn.net/media/logoPNGLNVPN.png"],
       type: "website",
     },
     twitter: {
@@ -88,7 +88,7 @@ export async function generateMetadata({
       description: hasPlans
         ? `Get the best eSIM plans for ${entityName}. Pay securely with Bitcoin Lightning Network.`
         : fallbackDescription,
-      images: ["https://lnvpn.net/LNVPN-Mask-Logo.svg"],
+      images: ["https://lnvpn.net/media/logoPNGLNVPN.png"],
       creator: "@ln_vpn",
     },
   };
@@ -137,7 +137,7 @@ export default async function Page({
           "@type": "Product",
           name: `${title} eSIM Plan`,
           description: `Explore ${title} eSIM plans with Bitcoin payments. Instant delivery and privacy-focused connectivity.`,
-          images: ["https://lnvpn.net/LNVPN-Mask-Logo.svg"],
+          images: ["https://lnvpn.net/media/logoPNGLNVPN.png"],
           brand: {
             "@type": "Brand",
             name: "LN SIM",
