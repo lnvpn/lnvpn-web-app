@@ -5,7 +5,7 @@ import { Button } from "../ui/button";
 export default function Footer() {
   return (
     <div className="flex justify-center items-center bg-bg dark:bg-darkBg pt-10 p-4 text-lg">
-      <Button variant="neutral" asChild className="ratio-square">
+      <Button variant="neutral" asChild className="ratio-square ">
         <Link
           href="https://t.me/+x_j8zikjnqhiODIy"
           target="_blank"
@@ -14,7 +14,7 @@ export default function Footer() {
           aria-label="Telegram"
         >
           <svg
-            className="w-6 h-6 text-text dark:text-white "
+            className="w-6 h-6 text-text  "
             fill="currentColor"
             viewBox="0 0 22 22"
             xmlns="http://www.w3.org/2000/svg"
@@ -33,12 +33,12 @@ export default function Footer() {
           aria-label="X (Twitter)"
         >
           <svg
-            className="h-6 w-6 text-text dark:text-white"
+            className="h-6 w-6 text-text "
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 512 512"
           >
             <path
-              className="fill-text dark:fill-darkText"
+              className="fill-text "
               d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"
             />
           </svg>
@@ -53,7 +53,7 @@ export default function Footer() {
           aria-label="GitHub"
         >
           <svg
-            className="w-6 h-6 text-black dark:text-white"
+            className="w-6 h-6 text-black "
             fill="currentColor"
             viewBox="0 0 24 24"
             xmlns="http://www.w3.org/2000/svg"
@@ -72,7 +72,7 @@ export default function Footer() {
           aria-label="NOSTR"
         >
           <svg
-            className="w-6 h-6 text-black dark:text-white"
+            className="w-6 h-6 text-black "
             fill="currentColor"
             viewBox="0 0 1024 1024"
             xmlns="http://www.w3.org/2000/svg"
@@ -92,7 +92,7 @@ export default function Footer() {
           aria-label="Primal"
         >
           <svg
-            className="w-6 h-6 text-black dark:text-white"
+            className="w-6 h-6 text-black "
             fill="currentColor"
             viewBox="0 0 256 256"
             xmlns="http://www.w3.org/2000/svg"
