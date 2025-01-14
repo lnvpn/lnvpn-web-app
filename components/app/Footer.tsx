@@ -65,7 +65,7 @@ export default function Footer() {
       </Button>
       <Button variant="default" asChild className="ratio-square">
         <Link
-          href="nostr:npub1qmw7jhczdr8yqy5t7u72d6z4v7u9va5gaff0ynwd2u6wwlzs7tvs694er8"
+          href="https://nostr.at/npub1qmw7jhczdr8yqy5t7u72d6z4v7u9va5gaff0ynwd2u6wwlzs7tvs694er8"
           target="_blank"
           rel="noopener noreferrer"
           className="mx-2"
