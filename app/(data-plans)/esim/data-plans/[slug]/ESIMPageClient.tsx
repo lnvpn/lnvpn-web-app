@@ -152,7 +152,7 @@ const ESIMPageClient: React.FC<ESIMPageClientProps> = ({ plans }) => {
 
         // Show success in alert
         setAlertMessage(
-          `Your eSIM is ready! ICCID: ${purchaseIccid}. Tap OK to continue.`
+          `Your eSIM is ready! eSIM Number: ${purchaseIccid}. Tap OK to continue.`
         );
         setAlertOpen(true);
       } catch (error: unknown) {

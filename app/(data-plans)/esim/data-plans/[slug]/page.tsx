@@ -138,6 +138,7 @@ export default async function Page({
           name: `${title} eSIM Plan`,
           description: `Explore ${title} eSIM plans with Bitcoin payments. Instant delivery and privacy-focused connectivity.`,
           images: ["https://lnvpn.net/media/logoPNGLNVPN.png"],
+          image: "https://lnvpn.net/media/logoPNGLNVPN.png",
           brand: {
             "@type": "Brand",
             name: "LN SIM",
@@ -148,6 +149,7 @@ export default async function Page({
             description: plan.description,
             name: plan.name,
             price: plan.price.toFixed(2),
+            image: "https://lnvpn.net/media/logoPNGLNVPN.png",
             acceptedPaymentMethod: "Bitcoin",
             availability: "https://schema.org/InStock",
             url: `https://lnvpn.net/esim/data-plans/${slug}`,
