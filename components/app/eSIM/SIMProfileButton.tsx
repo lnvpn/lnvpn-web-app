@@ -32,8 +32,6 @@ export default function SIMProfilButton() {
     if (iccid.trim()) {
       setIsLoading(true);
       await router.push(`/user/${iccid}`);
-      setIsOpen(false);
-      setIsLoading(false);
     }
   };
 
