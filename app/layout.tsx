@@ -27,11 +27,11 @@ import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
   title: {
-    default: "Bitcoin VPN Service | LNVPN - Privacy-Focused VPN",
+    default: "Bitcoin VPN & eSIM Service | LNVPN - Privacy-Focused Solutions",
     template: "%s | LNVPN",
   },
   description:
-    "Secure your privacy with LNVPN's no-log VPN. Pay with Bitcoin for ultimate anonymity. Plans start at just 10 cents! Get protected today.",
+    "Protect your privacy with LNVPN's no-log VPN, Bitcoin eSIM, and disposable phone numbers. Pay with Bitcoin for ultimate anonymity. Plans start at just 10 cents! Get protected today.",
   keywords: [
     "Bitcoin VPN service",
     "anonymous VPN",
@@ -43,23 +43,29 @@ export const metadata: Metadata = {
     "Bitcoin-only VPN",
     "best VPN for cryptocurrency",
     "private VPN service",
+    "Bitcoin eSIM",
+    "anonymous eSIM",
+    "disposable phone numbers",
+    "private phone number",
+    "eSIM for bitcoin payment",
+    "cryptocurrency phone number",
   ],
   authors: [{ name: "LNVPN", url: "https://github.com/lnvpn" }],
   openGraph: {
     type: "website",
     url: "https://lnvpn.net/",
-    title: "Bitcoin VPN Service | LNVPN - Privacy-Focused VPN",
+    title: "Bitcoin VPN & eSIM Service | LNVPN - Privacy-Focused Solutions",
     description:
-      "Secure your privacy with LNVPN's no-log VPN. Pay with Bitcoin for ultimate anonymity. Plans start at just 10 cents! Get protected today.",
+      "Protect your privacy with LNVPN's no-log VPN, Bitcoin eSIM, and disposable phone numbers. Pay with Bitcoin for ultimate anonymity. Plans start at just 10 cents! Get protected today.",
     images: [{ url: "https://lnvpn.net/media/logoPNGLNVPN.png" }],
   },
   metadataBase: new URL("https://lnvpn.net"),
   twitter: {
     card: "summary_large_image",
     creator: "@ln_vpn",
-    title: "Bitcoin VPN Service | LNVPN - Privacy-Focused VPN",
+    title: "Bitcoin VPN & eSIM Service | LNVPN - Privacy-Focused Solutions",
     description:
-      "Secure your privacy with LNVPN's no-log VPN. Pay with Bitcoin for ultimate anonymity. Plans start at just 10 cents! Get protected today.",
+      "Protect your privacy with LNVPN's no-log VPN, Bitcoin eSIM, and disposable phone numbers. Pay with Bitcoin for ultimate anonymity. Plans start at just 10 cents! Get protected today.",
     images: ["https://lnvpn.net/media/logoPNGLNVPN.png"],
   },
 };
