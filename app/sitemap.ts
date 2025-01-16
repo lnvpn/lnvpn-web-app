@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { countryNameMap } from "@/data/countryNames";
+import { countryNameMap, regionsMap } from "@/data/countryNames";
 import { getNetworksFromAPI } from "@/utils/esim-api/Networks";
 import { slugify } from "@/utils/esimUtils";
 
@@ -66,10 +66,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ];
 
-  // Define your dynamic eSIM routes using fetched data
-  const dynamicUrls = networksResponse.countryNetworks.map((country) => {
-    const countrySlug = slugify(countryNameMap[country.name] || country.name);
+  // Build region-based routes
+  const regionUrls = regionsMap.map((region) => {
+    return {
+      url: `${BASE_URL}/esim/data-plans/${region.slug}`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+    };
+  });
 
+  // Build country-based eSIM routes using fetched data
+  const countryUrls = networksResponse.countryNetworks.map((country) => {
+    const countrySlug = slugify(countryNameMap[country.name] || country.name);
     return {
       url: `${BASE_URL}/esim/data-plans/${countrySlug}`,
       lastModified: new Date(),
@@ -79,5 +88,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   });
 
   // Return a single array of all sitemap URLs
-  return [...staticUrls, ...dynamicUrls];
+  return [...staticUrls, ...regionUrls, ...countryUrls];
 }
