@@ -1,4 +1,4 @@
-# LNVPN - A Very Different VPN - Privacy by Design - THE Bitcoin VPN
+# LNVPN – Privacy by Design – THE Bitcoin VPN, eSIM and SMS Service
 
 Select a country ➡️ Select duration ➡️ Pay with Lightning ➡️ Use your VPN
 
