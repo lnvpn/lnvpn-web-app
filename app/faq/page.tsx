@@ -264,23 +264,6 @@ export default function FAQ() {
                   Berlin Bitcoiners with Love ❤️.
                 </AccordionContent>
               </AccordionItem>
-              <AccordionItem
-                className="lg:w-[500px] max-w-full"
-                value="item-10"
-              >
-                <AccordionTrigger>Where do I get support?</AccordionTrigger>
-                <AccordionContent>
-                  We have a anonymous Telegram channel for support:{" "}
-                  <a
-                    className="dark:text-main text-text underline"
-                    href="https://t.me/+IKTR7ZYTuEJhZWEy"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Join via invite link
-                  </a>
-                </AccordionContent>
-              </AccordionItem>
             </Accordion>
           </div>
           <div>
@@ -677,6 +660,69 @@ export default function FAQ() {
                 <AccordionContent>
                   Feel free to reach out to our Telegram channel. We&apos;re
                   here to help and answer any questions you might have.
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          </div>
+          <div>
+            <h2 className="text-2xl flex justify-center my-4 font-bold text-text dark:text-darkText">
+              Support
+            </h2>
+            <Accordion
+              className="w-full lg:w-[unset]"
+              type="single"
+              collapsible
+            >
+              <AccordionItem
+                className="lg:w-[500px] max-w-full"
+                value="item-101"
+              >
+                <AccordionTrigger>How to contact you?</AccordionTrigger>
+                <AccordionContent>
+                  <p className="my-2">
+                    We have a Telegram channel for general questions:{" "}
+                    <a
+                      className="dark:text-main text-text underline"
+                      href="https://t.me/+IKTR7ZYTuEJhZWEy"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Join via invite link
+                    </a>
+                  </p>
+
+                  <p className="my-2">
+                    Or reach out via DM on Telegram:{" "}
+                    <a
+                      className="dark:text-main text-text underline"
+                      href="https://t.me/lnvpn"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      lnvpn
+                    </a>
+                  </p>
+                  <p className="my-2">
+                    You can also contact us via DM on X:{" "}
+                    <a
+                      className="dark:text-main text-text underline"
+                      href="https://x.com/ln_VPN"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      ln_vpn
+                    </a>
+                  </p>
+
+                  <p className="my-2">
+                    Finally, you can email us at:{" "}
+                    <a
+                      className="dark:text-main text-text underline"
+                      href="mailto:info@lnvpn.com"
+                    >
+                      info at lnvpn.com
+                    </a>
+                  </p>
                 </AccordionContent>
               </AccordionItem>
             </Accordion>
