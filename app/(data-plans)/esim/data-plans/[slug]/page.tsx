@@ -78,7 +78,7 @@ export async function generateMetadata({
       description: hasPlans
         ? `Buy eSIM plans for ${entityName} with Bitcoin. Reliable and private connectivity worldwide.`
         : fallbackDescription,
-      url: `https://lnvpn.net/esim/${slug}`,
+      url: `https://lnvpn.net/esim/data-plans/${slug}`,
       images: ["https://lnvpn.net/media/logoPNGLNVPN.png"],
       type: "website",
     },
