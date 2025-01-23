@@ -48,6 +48,7 @@ const ESIMPageClient: React.FC<ESIMPageClientProps> = ({ plans }) => {
   const [isPending, startTransition] = useTransition();
   const [isChecked, setIsChecked] = useState(false);
   const [iccid, setIccid] = useState<string | null>(null);
+  const [isRedirecting, setIsRedirecting] = useState(false);
 
   type PurchaseStatus = "idle" | "processing" | "error" | "success";
   const [purchaseStatus, setPurchaseStatus] = useState<PurchaseStatus>("idle");
@@ -245,16 +246,25 @@ const ESIMPageClient: React.FC<ESIMPageClientProps> = ({ plans }) => {
               </Button>
             ) : purchaseStatus === "success" ? (
               <Button
-                onClick={() => {
-                  setPurchaseStatus("idle");
+                // Added: wrap in async to await router.push
+                onClick={async () => {
+                  setIsRedirecting(true); // <-- NEW
                   setAlertOpen(false);
 
                   if (iccid) {
-                    router.push(`/user/${iccid}`);
+                    await router.push(`/user/${iccid}`);
                   }
+                  // After the route change completes (if the component is still mounted):
+                  setIsRedirecting(false); // <-- NEW
                 }}
+                disabled={isRedirecting} // <-- NEW
               >
-                OK
+                {/* Conditionally render spinner or text */}
+                {isRedirecting ? (
+                  <FaSpinner className="animate-spin h-4 w-4" />
+                ) : (
+                  "OK"
+                )}
               </Button>
             ) : (
               <AlertDialogCancel onClick={() => setAlertOpen(false)}>
