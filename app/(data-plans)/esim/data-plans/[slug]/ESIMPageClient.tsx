@@ -246,20 +246,22 @@ const ESIMPageClient: React.FC<ESIMPageClientProps> = ({ plans }) => {
               </Button>
             ) : purchaseStatus === "success" ? (
               <Button
-                // Added: wrap in async to await router.push
                 onClick={async () => {
-                  setIsRedirecting(true); // <-- NEW
-                  setAlertOpen(false);
+                  setIsRedirecting(true);
+                  try {
+                    if (iccid) {
+                      await router.push(`/user/${iccid}`);
+                    }
+                  } catch (error) {
+                    console.error("Navigation error:", error);
+                  } finally {
+                    setIsRedirecting(false);
 
-                  if (iccid) {
-                    await router.push(`/user/${iccid}`);
+                    setAlertOpen(false);
                   }
-                  // After the route change completes (if the component is still mounted):
-                  setIsRedirecting(false); // <-- NEW
                 }}
-                disabled={isRedirecting} // <-- NEW
+                disabled={isRedirecting}
               >
-                {/* Conditionally render spinner or text */}
                 {isRedirecting ? (
                   <FaSpinner className="animate-spin h-4 w-4" />
                 ) : (
