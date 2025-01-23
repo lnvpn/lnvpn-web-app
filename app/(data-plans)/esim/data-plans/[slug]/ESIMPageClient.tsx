@@ -4,7 +4,7 @@ import React, { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 
 import PaymentModal from "@/components/app/PaymentModal";
-
+import { v4 as uuidv4 } from "uuid";
 import {
   AlertDialog,
   AlertDialogContent,
@@ -108,9 +108,12 @@ const ESIMPageClient: React.FC<ESIMPageClientProps> = ({ plans }) => {
         if (!selectedPlan) {
           throw new Error("No selected plan found.");
         }
-
+        const transactionId = uuidv4();
         // After user pays, purchase the eSIM
-        const purchaseResult = (await purchaseBundle(selectedPlan.name)) ?? {
+        const purchaseResult = (await purchaseBundle(
+          selectedPlan.name,
+          transactionId
+        )) ?? {
           success: false,
           message: "Failed to purchase eSIM.",
         };
