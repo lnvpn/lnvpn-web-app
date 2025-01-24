@@ -13,6 +13,8 @@ import {
 
 import { Country, Region, ProcessedBundle } from "@/lib/types";
 
+import { v4 as uuidv4 } from "uuid";
+
 // Payment Modal
 import PaymentModal from "@/components/app/PaymentModal";
 
@@ -47,6 +49,7 @@ import { isError } from "@/utils/isError";
 import { useToast } from "@/hooks/use-toast";
 import { ToastAction } from "@/components/ui/toast";
 import { FaSpinner } from "react-icons/fa6";
+import { set } from "mongoose";
 
 export interface BundlePurchaseProps {
   iccid: string;
@@ -54,7 +57,7 @@ export interface BundlePurchaseProps {
   regions: Region[];
 }
 
-type PurchaseStatus = "idle" | "processing" | "success" | "error";
+type PurchaseStatus = "processing" | "success" | "error" | null;
 
 export default function BundleCheckout({
   iccid,
@@ -64,7 +67,7 @@ export default function BundleCheckout({
   const router = useRouter();
   const { toast } = useToast();
 
-  const [purchaseStatus, setPurchaseStatus] = useState<PurchaseStatus>("idle");
+  const [purchaseStatus, setPurchaseStatus] = useState<PurchaseStatus>(null);
   // `open` is for the multi-step dialog
   const [open, setOpen] = useState(false);
 
@@ -180,16 +183,21 @@ export default function BundleCheckout({
   // PaymentModal: onPaymentSuccess
   // -------------------------
   const handlePaymentSuccess = () => {
+    if (purchaseStatus === "processing" || purchaseStatus === "success") {
+      return; // Skip if we’re already in flow or done
+    }
+
     startTransition(async () => {
       try {
         if (!selectedPlan) {
           throw new Error("No selected plan found!");
         }
-
+        const transactionId: string = uuidv4();
         // 1) Finalize purchase
         const purchaseResult = await purchaseBundleForIccid(
           selectedPlan.name,
-          iccid
+          iccid,
+          transactionId
         );
         if (!purchaseResult.success) {
           setPurchaseStatus("error");
@@ -337,7 +345,6 @@ export default function BundleCheckout({
           </AlertDialogHeader>
           <AlertDialogFooter>
             {purchaseStatus === "processing" ? (
-              // If you'd prefer a spinner:
               <Button disabled>Processing...</Button>
             ) : purchaseStatus === "success" ? (
               <Button
@@ -350,11 +357,9 @@ export default function BundleCheckout({
                     await router.refresh();
                   } catch (error) {
                     console.error("Refresh error:", error);
-                    // Optionally show a toast or handle errors here
                   } finally {
-                    // 3. Turn off spinner and close dialogs
+                    await new Promise((resolve) => setTimeout(resolve, 2000));
                     setIsRefreshing(false);
-                    setPurchaseStatus("idle");
                     setSuccessDialogOpen(false);
                     setOpen(false);
                   }

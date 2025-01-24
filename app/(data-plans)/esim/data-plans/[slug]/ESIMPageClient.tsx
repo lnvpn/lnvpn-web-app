@@ -50,8 +50,8 @@ const ESIMPageClient: React.FC<ESIMPageClientProps> = ({ plans }) => {
   const [iccid, setIccid] = useState<string | null>(null);
   const [isRedirecting, setIsRedirecting] = useState(false);
 
-  type PurchaseStatus = "idle" | "processing" | "error" | "success";
-  const [purchaseStatus, setPurchaseStatus] = useState<PurchaseStatus>("idle");
+  type PurchaseStatus = "processing" | "error" | "success" | null;
+  const [purchaseStatus, setPurchaseStatus] = useState<PurchaseStatus>(null);
 
   // 3. Called by the child RadioGroup when user selects a different plan
   const handleSelectPlan = (planName: string) => {
@@ -62,6 +62,9 @@ const ESIMPageClient: React.FC<ESIMPageClientProps> = ({ plans }) => {
   // 4. The Buy/Pay button
   const handleBuyNow = () => {
     if (!selectedPlan) return;
+    if (purchaseStatus === "processing" || purchaseStatus === "success") {
+      return; // Skip if we’re already in flow or done
+    }
 
     startTransition(async () => {
       try {
@@ -104,6 +107,10 @@ const ESIMPageClient: React.FC<ESIMPageClientProps> = ({ plans }) => {
 
   // 5. Called by PaymentModal after invoice is confirmed paid
   const handlePaymentSuccess = () => {
+    if (purchaseStatus === "processing" || purchaseStatus === "success") {
+      return; // Skip if we’re already in flow or done
+    }
+
     startTransition(async () => {
       try {
         if (!selectedPlan) {
@@ -255,8 +262,6 @@ const ESIMPageClient: React.FC<ESIMPageClientProps> = ({ plans }) => {
                   } catch (error) {
                     console.error("Navigation error:", error);
                   } finally {
-                    setIsRedirecting(false);
-                    setPurchaseStatus("idle");
                   }
                 }}
                 disabled={isRedirecting}

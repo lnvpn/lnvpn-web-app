@@ -6,6 +6,7 @@ import {
   handleEsimRefresh,
 } from "@/utils/esim-api/EsimAndOrder";
 import { isError } from "@/utils/isError";
+import { getCompletedOrder, saveCompletedOrder } from "@/utils/orderCheck";
 
 export async function refreshEsimAction(iccid: string) {
   try {
@@ -52,10 +53,40 @@ export async function validateBundleAvailability(bundleName: string) {
  */
 export async function purchaseBundleForIccid(
   bundleName: string,
-  iccid: string
+  iccid: string,
+  transactionId: string
 ) {
-  // We set assign = true because we want to actually attach the purchased bundle
-  return await handleEsimOrderApi(bundleName, "transaction", true, iccid);
+  // 1. Check if order already completed
+  const existing = getCompletedOrder(transactionId);
+  if (existing) {
+    return {
+      success: true,
+      iccid: existing.iccid,
+      message: "Order already completed. No additional purchase made.",
+    };
+  }
+
+  // 2. Actually attach the purchased bundle
+  //    (assign = true, so that the bundle is assigned to the given ICCID)
+  const res = await handleEsimOrderApi(bundleName, "transaction", true, iccid);
+
+  // 3. If the API call fails, return an error message
+  if (!res.success) {
+    return {
+      success: false,
+      message: res.message || "Failed to purchase eSIM bundle",
+    };
+  }
+
+  // 4. Save the completed order in memory (so no double-purchase)
+  saveCompletedOrder(transactionId, iccid);
+
+  // 5. Return success plus any relevant data
+  return {
+    success: true,
+    iccid,
+    message: "Bundle purchased successfully.",
+  };
 }
 
 export async function checkEsimCompatibility(iccid: string, bundle: string) {

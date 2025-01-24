@@ -165,12 +165,13 @@ export function EsimInstructionsClient({ esimData }: { esimData: EsimData }) {
 
           <div className="flex justify-end gap-2 mt-4">
             <p className="text-sm">
-              &quot;Refresh&quot; will disconnect your current eSIM connection
-              from the network and reconnect for troubleshooting purposes.
+              &quot;Disconnect&quot; will disconnect your current eSIM
+              connection from the network and reconnect for troubleshooting
+              purposes.
             </p>
             <Button variant="neutral" onClick={handleRefreshClick}>
               <IoIosRefresh className="mr-2" />
-              Refresh
+              Disconnect
             </Button>
           </div>
         </CollapsibleContent>
