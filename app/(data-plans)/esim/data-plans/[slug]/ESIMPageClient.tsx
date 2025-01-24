@@ -256,8 +256,7 @@ const ESIMPageClient: React.FC<ESIMPageClientProps> = ({ plans }) => {
                     console.error("Navigation error:", error);
                   } finally {
                     setIsRedirecting(false);
-
-                    setAlertOpen(false);
+                    setPurchaseStatus("idle");
                   }
                 }}
                 disabled={isRedirecting}

@@ -46,6 +46,7 @@ import { isError } from "@/utils/isError";
 // Import your toast utilities
 import { useToast } from "@/hooks/use-toast";
 import { ToastAction } from "@/components/ui/toast";
+import { FaSpinner } from "react-icons/fa6";
 
 export interface BundlePurchaseProps {
   iccid: string;
@@ -88,6 +89,7 @@ export default function BundleCheckout({
 
   // For user checking "I have eSIM ready" box
   const [isChecked, setIsChecked] = useState(false);
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
   // -------------------------
   // Step 1: Region selection
@@ -339,16 +341,32 @@ export default function BundleCheckout({
               <Button disabled>Processing...</Button>
             ) : purchaseStatus === "success" ? (
               <Button
-                onClick={() => {
-                  setPurchaseStatus("idle");
-                  setSuccessDialogOpen(false);
-                  // Also close the multi-step checkout dialog if it's open
-                  setOpen(false);
-                  // Refresh the page
-                  router.refresh();
+                onClick={async () => {
+                  // 1. Turn on spinner + disable the button
+                  setIsRefreshing(true);
+
+                  try {
+                    // 2. Await refresh, so we know when it finishes
+                    await router.refresh();
+                  } catch (error) {
+                    console.error("Refresh error:", error);
+                    // Optionally show a toast or handle errors here
+                  } finally {
+                    // 3. Turn off spinner and close dialogs
+                    setIsRefreshing(false);
+                    setPurchaseStatus("idle");
+                    setSuccessDialogOpen(false);
+                    setOpen(false);
+                  }
                 }}
+                disabled={isRefreshing}
               >
-                OK
+                {/* 4. Conditionally render spinner or “OK” text */}
+                {isRefreshing ? (
+                  <FaSpinner className="animate-spin h-4 w-4" />
+                ) : (
+                  "OK"
+                )}
               </Button>
             ) : (
               <AlertDialogCancel onClick={() => setSuccessDialogOpen(false)}>
