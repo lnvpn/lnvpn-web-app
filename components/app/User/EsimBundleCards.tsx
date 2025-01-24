@@ -1,18 +1,16 @@
 "use client";
-
 import React, { useState, useMemo } from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Progress } from "@/components/ui/progress";
 
-// These types match your data structure
 interface EsimBundleAssignment {
   id: string;
   callTypeGroup: string;
   initialQuantity: number;
   remainingQuantity: number;
-  startTime: string;
-  endTime: string;
+  startTime?: string;
+  endTime?: string;
   assignmentDateTime: string;
   assignmentReference: string;
   bundleState: "active" | "inactive" | string;
@@ -31,28 +29,35 @@ interface EsimBundlesClientProps {
 }
 
 export function EsimBundlesCards({ bundles }: EsimBundlesClientProps) {
-  // Checkbox state
   const [showInactive, setShowInactive] = useState(true);
 
-  // 1. We filter the bundles based on the assignment states
-  //    Usually “active” means we only show ones that have an assignment with bundleState=active
-  //    If showInactive is false, we exclude those with only “inactive”
-  const filteredBundles = useMemo(() => {
-    if (showInactive) {
-      return bundles;
-    } else {
-      return bundles.filter((b) =>
-        b.assignments.some((a) => a.bundleState === "active")
-      );
-    }
-  }, [bundles, showInactive]);
+  // 1. Flatten so each assignment is now its own "bundle" for display
+  //    (i.e., one card per assignment).
+  const allAssignments = useMemo(() => {
+    return bundles.flatMap((b) =>
+      b.assignments.map((assignment) => ({
+        // “clone” the bundle fields but store only this single assignment
+        ...b,
+        assignments: [assignment],
+      }))
+    );
+  }, [bundles]);
 
-  // 2. If no bundles are found (based on the filter), user can “Buy Bundle”
-  const hasBundles = filteredBundles.length > 0;
+  // 2. Filter out if user doesn’t want inactive assignments
+  const filtered = useMemo(() => {
+    if (showInactive) {
+      return allAssignments;
+    }
+    // only keep items that have an assignment with bundleState === "active"
+    return allAssignments.filter((b) =>
+      b.assignments.some((a) => a.bundleState === "active")
+    );
+  }, [allAssignments, showInactive]);
+
+  const hasBundles = filtered.length > 0;
 
   return (
     <section className="space-y-4">
-      {/* Title / Check Inactive */}
       <div className="flex items-center gap-2 mb-4">
         <h2 className="text-xl font-bold">Your Bundles</h2>
         <div className="flex items-center space-x-2 ml-auto">
@@ -70,7 +75,6 @@ export function EsimBundlesCards({ bundles }: EsimBundlesClientProps) {
         </div>
       </div>
 
-      {/* If no bundles (after filter), show a "Buy Bundle" button */}
       {!hasBundles && (
         <div className="p-4 text-center">
           <p className="mb-2">
@@ -79,11 +83,13 @@ export function EsimBundlesCards({ bundles }: EsimBundlesClientProps) {
         </div>
       )}
 
-      {/* If we do have bundles, map them */}
       {hasBundles && (
-        <div className="grid grid-cols-1 md:grid-cols-2  gap-4">
-          {filteredBundles.map((b) => (
-            <BundleCard key={b.name} bundle={b} />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {filtered.map((b) => (
+            <BundleCard
+              key={b.assignments[0].id} // each flattened item has exactly 1 assignment
+              bundle={b}
+            />
           ))}
         </div>
       )}
@@ -91,55 +97,40 @@ export function EsimBundlesCards({ bundles }: EsimBundlesClientProps) {
   );
 }
 
-// We can extract a subcomponent for each bundle card
+// Each card now displays exactly one assignment
 function BundleCard({ bundle }: { bundle: EsimBundle }) {
   const { description, assignments } = bundle;
-
-  // Get the first assignment
   const assignment = assignments[0];
-  if (!assignment) {
-    return null;
-  }
 
-  // Handle endTime
-  const now = new Date().getTime();
-  const endTime = assignment.endTime
-    ? new Date(assignment.endTime).getTime()
-    : null;
+  if (!assignment) return null; // should not happen, but just in case
 
-  let remainingDays: string | number = "Not activated";
-  if (endTime) {
-    const remainingMs = endTime - now;
-    remainingDays = Math.max(
-      0,
-      Math.floor(remainingMs / (1000 * 60 * 60 * 24))
-    );
-  }
-
-  function formatExpiryDateForDisplay(date: Date | string | null): string {
-    if (!date) return "-"; // Handle null or undefined input
-
-    // Convert string to Date if necessary
-    const validDate = typeof date === "string" ? new Date(date) : date;
-
-    if (isNaN(validDate.getTime())) return "Invalid date"; // Handle invalid date
-
-    const year = validDate.getUTCFullYear();
-    const month = String(validDate.getUTCMonth() + 1).padStart(2, "0");
-    const day = String(validDate.getUTCDate()).padStart(2, "0");
-    const hours = String(validDate.getUTCHours()).padStart(2, "0");
-    const minutes = String(validDate.getUTCMinutes()).padStart(2, "0");
-
+  // Helper to format date
+  function formatDateTime(date: string | undefined): string {
+    if (!date) return "-";
+    const d = new Date(date);
+    if (isNaN(d.getTime())) return "Invalid date";
+    const year = d.getUTCFullYear();
+    const month = String(d.getUTCMonth() + 1).padStart(2, "0");
+    const day = String(d.getUTCDate()).padStart(2, "0");
+    const hours = String(d.getUTCHours()).padStart(2, "0");
+    const minutes = String(d.getUTCMinutes()).padStart(2, "0");
     return `${year}-${month}-${day} ${hours}:${minutes} UTC`;
   }
 
-  // Data in MB/GB
-  const initialMB = assignment.initialQuantity / (1024 * 1024); // Convert to MB
+  // Calculate data usage
+  const isUnlimited = assignment.unlimited;
+  const initialMB = assignment.initialQuantity / (1024 * 1024);
   const remainingMB = assignment.remainingQuantity / (1024 * 1024);
   const progress = initialMB > 0 ? (remainingMB / initialMB) * 100 : 0;
 
-  // If unlimited, skip showing progress
-  const isUnlimited = assignment.unlimited;
+  // Calculate days left
+  const now = Date.now();
+  let daysRemaining: string | number = "Not activated";
+  if (assignment.endTime) {
+    const endTime = new Date(assignment.endTime).getTime();
+    const diffMs = endTime - now;
+    daysRemaining = Math.max(0, Math.floor(diffMs / (1000 * 60 * 60 * 24)));
+  }
 
   return (
     <Card>
@@ -151,26 +142,24 @@ function BundleCard({ bundle }: { bundle: EsimBundle }) {
           <li>
             State: <strong>{assignment.bundleState}</strong>
           </li>
-
-          <li>
-            Start Time: {formatExpiryDateForDisplay(assignment.startTime)}
-          </li>
-          <li>End Time: {formatExpiryDateForDisplay(assignment.endTime)}</li>
+          <li>Start: {formatDateTime(assignment.startTime)}</li>
+          <li>End: {formatDateTime(assignment.endTime)}</li>
 
           {!isUnlimited && (
             <>
-              <Progress value={progress} className="w-full" />
+              <Progress value={progress} className="w-full my-2" />
               <li>
                 Data Remaining: <strong>{remainingMB.toFixed(2)} MB</strong>
               </li>
             </>
           )}
+
           <li>
             Days Remaining:{" "}
             <strong>
-              {typeof remainingDays === "number"
-                ? `${remainingDays} day(s)`
-                : remainingDays}
+              {typeof daysRemaining === "number"
+                ? `${daysRemaining} day(s)`
+                : daysRemaining}
             </strong>
           </li>
         </ul>
