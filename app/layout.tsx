@@ -127,6 +127,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
       <html lang="en" className={inter.className}>
         <head>
           <link rel="icon" href="/favicon.ico" sizes="any" />
+          <link rel="canonical" href="https://lnvpn.net" />
           <link rel="icon" href="/icon.svg" type="image/svg+xml" />
           <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
           <script

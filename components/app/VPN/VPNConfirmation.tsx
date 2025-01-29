@@ -96,7 +96,7 @@ export default function VPNConfirmation({
 
     startTransition(async () => {
       try {
-        const priceDollar = selectedDuration; // Adjust pricing logic as needed
+        const priceDollar = selectedDuration;
 
         const expiryDateObj = getExpiryDate(selectedDuration);
         const formattedExpiryDate = formatExpiryDateForDisplay(expiryDateObj);
