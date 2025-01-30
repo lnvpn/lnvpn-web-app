@@ -55,11 +55,13 @@ export async function generateMetadata({
   const entityData = await getEntityData(slug);
   const hasPlans = entityData && entityData.length > 0;
 
-  const fallbackTitle = `eSIM Plans for ${entityName} | LNVPN`;
-  const fallbackDescription = `Discover eSIM plans for ${entityName} with Bitcoin payments. Stay connected with LN SIM by LNVPN.`;
+  const fallbackTitle = `eSIM Plans for ${entityName} | LN SIM - $0.99 Plans`;
+  const fallbackDescription = `Discover eSIM plans for ${entityName} with Bitcoin payments. Stay connected with LN SIM by LNVPN. Plans starting at just $0.99.`;
 
   return {
-    title: hasPlans ? `${entityName} eSIM Plans | LN SIM` : fallbackTitle,
+    title: hasPlans
+      ? `${entityName} eSIM Plans | LN SIM - $0.99 Plans`
+      : fallbackTitle,
     description: hasPlans
       ? `Buy eSIM plans for ${entityName}. Enjoy reliable and privacy-focused connectivity with LN SIM and pay using Bitcoin Lightning Network.`
       : fallbackDescription,
@@ -74,7 +76,9 @@ export async function generateMetadata({
       "LNVPN",
     ],
     openGraph: {
-      title: hasPlans ? `${entityName} eSIM Plans | LN SIM` : fallbackTitle,
+      title: hasPlans
+        ? `${entityName} eSIM Plans | LN SIM - $0.99 Plans`
+        : fallbackTitle,
       description: hasPlans
         ? `Buy eSIM plans for ${entityName} with Bitcoin. Reliable and private connectivity worldwide.`
         : fallbackDescription,
@@ -84,7 +88,9 @@ export async function generateMetadata({
     },
     twitter: {
       card: "summary_large_image",
-      title: hasPlans ? `${entityName} eSIM Plans | LN SIM` : fallbackTitle,
+      title: hasPlans
+        ? `${entityName} eSIM Plans | LN SIM - $0.99 Plans`
+        : fallbackTitle,
       description: hasPlans
         ? `Get the best eSIM plans for ${entityName}. Pay securely with Bitcoin Lightning Network.`
         : fallbackDescription,

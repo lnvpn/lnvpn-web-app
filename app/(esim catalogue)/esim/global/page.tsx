@@ -6,11 +6,11 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: {
-    default: "LN SIM - Bitcoin eSIM for Global Connectivity",
+    default: "LN SIM - Bitcoin eSIM - No KYC - $0.99 Plans ",
     template: "%s | LNVPN",
   },
   description:
-    "Buy eSIM plans with Bitcoin at LN SIM by LNVPN. Stay connected worldwide with a privacy-first, global eSIM service. Plans starting at just 5 dollars.",
+    "Buy eSIM plans with Bitcoin at LN SIM by LNVPN. Stay connected worldwide with a privacy-first, global eSIM service. Plans starting at $0.99.",
   keywords: [
     "eSIM",
     "LN SIM",
@@ -32,12 +32,12 @@ export const metadata: Metadata = {
       "Buy global eSIMs with Bitcoin at LN SIM by LNVPN. Stay connected with a privacy-focused eSIM solution.",
     images: ["https://lnvpn.net/media/logoPNGLNVPN.png"],
     url: "https://lnvpn.net/esim",
-    title: "LN SIM - Bitcoin eSIM for Global Connectivity",
+    title: "LN SIM - Bitcoin eSIM - No KYC - $0.99 Plans",
   },
   metadataBase: new URL("https://lnvpn.net/"),
   twitter: {
     card: "summary_large_image",
-    title: "LN SIM - Bitcoin eSIM for Global Connectivity",
+    title: "LN SIM - Bitcoin eSIM - No KYC - $0.99 Plans",
     description:
       "Buy global eSIMs with Bitcoin at LN SIM by LNVPN. A privacy-first service for seamless global connectivity.",
     images: ["https://lnvpn.net/media/logoPNGLNVPN.png"],
