@@ -1,9 +1,15 @@
 import VPNCheckout from "@/components/app/VPN/VPNCheckout";
 
 import { FaInfoCircle } from "react-icons/fa";
-
+import type { Metadata } from "next";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: "https://lnvpn.net",
+  },
+};
 
 export default async function Home() {
   return (

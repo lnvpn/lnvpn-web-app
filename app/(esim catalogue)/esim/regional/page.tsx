@@ -7,7 +7,7 @@ import { Metadata } from "next";
 export const metadata: Metadata = {
   title: {
     default: "LN SIM - Bitcoin eSIM - No KYC - $0.99 Plans",
-    template: "%s | LNVPN",
+    template: "%s | Regional Plans",
   },
   description:
     "Buy eSIM plans with Bitcoin at LN SIM by LNVPN. Stay connected worldwide with a privacy-first, global eSIM service. Plans starting at just $0.99.",

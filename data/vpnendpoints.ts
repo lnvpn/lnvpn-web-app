@@ -18,11 +18,11 @@ export const vpnendpoints = [
     country: "🇮🇳 India",
     isoCode: "IN",
   },
-  {
-    cc: "7",
-    country: "🇳🇱 Netherlands",
-    isoCode: "NL",
-  },
+  // {
+  //   cc: "7",
+  //   country: "🇳🇱 Netherlands",
+  //   isoCode: "NL",
+  // },
   {
     cc: "8",
     country: "🇷🇺 Russia",
