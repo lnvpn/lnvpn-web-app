@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // app/actions/vpnActions.ts
-
 "use server";
 
 import {
@@ -8,61 +7,78 @@ import {
   mapCountryToServerUrl,
   getExpiryDate,
 } from "@/utils/vpnUtils";
-import sgMail from "@sendgrid/mail";
 import { getPrice } from "@/utils/lightning";
-import Order from "@/models/order";
 import { connectToDatabase } from "@/utils/mongodb";
+import sgMail from "@sendgrid/mail";
+import Order from "@/models/order";
+
+/**
+ * Ephemeral, in-memory store so we can return the same VPN server response
+ * if the user (or React) calls this function more than once for the same key/country.
+ * Key = `${publicKey}-${country}`
+ */
+const ephemeralStore = new Map<string, any>();
 
 interface VPNCredentials {
   config: string;
-  // Include other fields as needed
 }
 
 interface VPNCredentialsRequest {
   publicKey: string;
   presharedKey: string;
-  country: string; // This is the country code, e.g., "13"
+  country: string; // e.g. "13" or "4" etc.
   duration: number;
   priceDollar: number;
   refCode?: string | null;
 }
 
+/**
+ * Idempotent function that returns the VPN server's credentials for a given publicKey/country.
+ * If the same publicKey/country is requested again, returns the SAME data from ephemeral RAM.
+ */
 export async function fetchVPNCredentials(
   request: VPNCredentialsRequest
 ): Promise<VPNCredentials> {
   const { publicKey, presharedKey, country, duration, priceDollar, refCode } =
     request;
 
-  const authToken = process.env.VPN_API_AUTH;
-  if (!authToken) {
-    console.error("Authorization token is missing in environment variables.");
-    throw new Error("Server configuration error.");
+  // 1. Check if we already have data in ephemeralStore for (publicKey+country).
+  const cacheKey = `${publicKey}-${country}`;
+  if (ephemeralStore.has(cacheKey)) {
+    // Return the same data we stored last time (idempotent).
+    return ephemeralStore.get(cacheKey);
   }
 
-  // Validate required fields
+  // 2. Basic validations
   if (!publicKey || !presharedKey || !country || !duration) {
     throw new Error("Missing required fields in request.");
   }
-
-  // Map country code to server URL
   const serverUrl = mapCountryToServerUrl(country);
   if (!serverUrl) {
-    console.error(`Invalid country selected: ${country}`);
-    throw new Error("Invalid country selected.");
+    console.error(`Invalid country code: ${country}`);
+    throw new Error("Invalid country code.");
+  }
+  const authToken = process.env.VPN_API_AUTH;
+  if (!authToken) {
+    throw new Error("Server configuration error: missing VPN_API_AUTH");
   }
 
-  // Calculate expiry date
+  // 3. Calculate expiry date
   const expiryDateObj = getExpiryDate(duration);
-  const expiryDate = parseDate(expiryDateObj);
+  const expiryDate = parseDate(expiryDateObj); // returns a string for the date
+
+  // 4. Prepare the POST request body for the VPN server
 
   const requestBody = {
     publicKey,
     presharedKey,
-    bwLimit: 100000 * priceDollar, // Adjust the calculation as needed
     subExpiry: expiryDate,
+    bwLimit: 100000 * priceDollar, // 100GB per dollar
     ipIndex: 0,
   };
 
+  // 5. Send a POST to the VPN server to add the key
+  let data: VPNCredentials;
   try {
     const response = await fetch(serverUrl, {
       method: "POST",
@@ -75,50 +91,42 @@ export async function fetchVPNCredentials(
 
     if (!response.ok) {
       const errorText = await response.text();
-      // Log error details, including server URL and country code
       console.error(
-        `VPN server at ${serverUrl} responded with status ${response.status} for country ${country}: ${errorText}`
-      );
-      throw new Error(
         `VPN server at ${serverUrl} responded with status ${response.status}: ${errorText}`
       );
+      throw new Error(`VPN server error: ${errorText}`);
     }
 
-    const data = await response.json();
-
-    // If refCode exists, calculate `paidSatoshis` and save to database
-    if (refCode) {
-      await connectToDatabase();
-
-      const satsPerDollar = await getPrice();
-      if (satsPerDollar === null) {
-        throw new Error("Failed to fetch the Bitcoin price.");
-      }
-
-      const paidSatoshis = Math.round(priceDollar * satsPerDollar);
-
-      const newOrder = new Order({
-        partnerCode: refCode,
-        amount: paidSatoshis,
-      });
-
-      await newOrder.save();
-    }
-
-    return data as VPNCredentials;
+    data = await response.json();
   } catch (error: any) {
-    // Log error details, including server URL and country code
     console.error(
-      `Error fetching VPN credentials from ${serverUrl} for country ${country}: ${error.message}`
+      `Error adding key to VPN server at ${serverUrl}: ${error.message}`
     );
-
-    // Optionally, log the error code or other relevant error properties
-    if (error.code) {
-      console.error(`Error code: ${error.code}`);
-    }
-
-    throw new Error(error.message || "Internal Server Error");
+    throw new Error(error.message || "Failed to add key to VPN server");
   }
+
+  // 6. If we have a referral code, store the referral payment logic in DB (optional).
+  if (refCode) {
+    await connectToDatabase();
+
+    const satsPerDollar = await getPrice();
+    if (satsPerDollar === null) {
+      throw new Error("Failed to fetch the Bitcoin price.");
+    }
+    const paidSatoshis = Math.round(priceDollar * satsPerDollar);
+
+    const newOrder = new Order({
+      partnerCode: refCode,
+      amount: paidSatoshis,
+    });
+    await newOrder.save();
+  }
+
+  // 7. Store the *non-sensitive* server response in ephemeral memory
+  ephemeralStore.set(cacheKey, data);
+
+  // 8. Return the server's response
+  return data;
 }
 
 interface SendEmailRequest {

@@ -83,24 +83,17 @@ export default function VPNConfirmation({
   }
 
   useEffect(() => {
-    if (effectRan.current) {
-      return;
-    }
-    effectRan.current = true;
-
     if (!keys || !selectedCountry) {
       setError("Missing keys or selected country.");
       setIsLoading(false);
       return;
     }
 
-    startTransition(async () => {
+    (async () => {
       try {
         const priceDollar = selectedDuration;
-
         const expiryDateObj = getExpiryDate(selectedDuration);
         const formattedExpiryDate = formatExpiryDateForDisplay(expiryDateObj);
-
         setExpiryDateString(formattedExpiryDate);
 
         const vpnCredentials = await fetchVPNCredentials({
@@ -112,9 +105,6 @@ export default function VPNConfirmation({
           refCode: ref || "",
         });
 
-        // Calculate the expiry date based on the selected duration
-
-        // Build the config file here
         const configString = buildConfigFile(
           keys,
           vpnCredentials,
@@ -122,7 +112,6 @@ export default function VPNConfirmation({
           countryName || ""
         );
 
-        // Set the config and credentials
         setConfig(configString);
         setCredentials(vpnCredentials);
       } catch (error: any) {
@@ -131,8 +120,8 @@ export default function VPNConfirmation({
       } finally {
         setIsLoading(false);
       }
-    });
-  });
+    })();
+  }, []); // empty dependency array runs only on mount
 
   const handleNewPurchase = () => {
     setCurrentStep(1);
