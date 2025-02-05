@@ -10,7 +10,7 @@ import Link from "next/link";
 
 export const metadata: Metadata = {
   title: {
-    default: "LN-SMS - Bitcoin Disposable Phone Numbers",
+    default: "LN-SMS - Bitcoin Disposable Phone Numbers - $0.4",
     template: "%s | LNVPN",
   },
   description:

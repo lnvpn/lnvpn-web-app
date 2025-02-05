@@ -25,6 +25,7 @@ export const mapCountryToServerUrl = (countryCode: string): string | null => {
     "16": process.env.IP_PRT!, // Portugal
     "18": process.env.IP_ISL!, // Iceland
     "19": process.env.IP_AUS!, // Australia
+    "20": process.env.IP_CRI!, // Costa Rica
   };
 
   const serverUrl = countryServerMap[countryCode];

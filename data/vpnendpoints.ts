@@ -58,4 +58,9 @@ export const vpnendpoints = [
     country: "🇦🇺 Australia",
     isoCode: "AU",
   },
+  {
+    cc: "20",
+    country: "🇨🇷 Costa-Rica",
+    isoCode: "CR",
+  },
 ];
