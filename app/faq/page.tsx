@@ -6,6 +6,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import Link from "next/link";
 
 export interface IAppProps {}
 
@@ -224,6 +225,27 @@ export default function FAQ() {
                   connected, but no data will pass through.
                 </AccordionContent>
               </AccordionItem>
+              <AccordionItem
+                className="lg:w-[500px] max-w-full"
+                value="item-61"
+              >
+                <AccordionTrigger>
+                  Do you have an uptime dashboard?
+                </AccordionTrigger>
+                <AccordionContent>
+                  Yes we do! You can check the status of our VPN servers at any
+                  time on our{" "}
+                  <Link
+                    className="dark:text-main text-text underline"
+                    href="https://kuma.ln-tweetbot.com/status/lnvpn"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    status page
+                  </Link>
+                  .
+                </AccordionContent>
+              </AccordionItem>
 
               <AccordionItem className="lg:w-[500px] max-w-full" value="item-7">
                 <AccordionTrigger>
@@ -246,14 +268,14 @@ export default function FAQ() {
                 <AccordionContent>
                   Yes, we do! If you want to use LNVPN for your application to
                   provide VPN tunnels, please visit:{" "}
-                  <a
+                  <Link
                     className="dark:text-main text-text underline"
                     href="https://lnvpn.net/api/documentation"
                     target="_blank"
                     rel="noreferrer"
                   >
                     https://lnvpn.net/api/documentation
-                  </a>
+                  </Link>
                   .
                 </AccordionContent>
               </AccordionItem>

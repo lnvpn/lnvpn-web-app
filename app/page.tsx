@@ -52,6 +52,14 @@ export default async function Home() {
           </p>
         </AlertDescription>
       </Alert>
+      <Link
+        className="dark:text-main text-text underline"
+        href="https://kuma.ln-tweetbot.com/status/lnvpn"
+        target="_blank"
+        rel="noreferrer"
+      >
+        Server Status Page
+      </Link>
     </main>
   );
 }
