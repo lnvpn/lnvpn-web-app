@@ -4,6 +4,7 @@ import { FaInfoCircle } from "react-icons/fa";
 import type { Metadata } from "next";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 export const metadata: Metadata = {
   alternates: {
@@ -60,6 +61,24 @@ export default async function Home() {
       >
         Server Status Page
       </Link>
+      <div className="flex flex-wrap justify-evenly gap-4 my-4">
+        <Button
+          variant="default"
+          size={"lg"}
+          asChild
+          className="hidden m900:flex"
+        >
+          <Link href="/esim">eSIM</Link>
+        </Button>
+        <Button
+          variant="default"
+          size={"lg"}
+          asChild
+          className="hidden m900:flex"
+        >
+          <Link href="/phone-numbers">Phone Numbers</Link>
+        </Button>
+      </div>
     </main>
   );
 }

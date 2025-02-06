@@ -7,6 +7,7 @@ import { FaInfoCircle } from "react-icons/fa";
 
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 export const metadata: Metadata = {
   title: {
@@ -66,6 +67,24 @@ export default function PhoneNumbers() {
           if you have any questions.
         </AlertDescription>
       </Alert>
+      <div className="flex flex-wrap justify-evenly gap-4 my-4">
+        <Button
+          variant="default"
+          size={"lg"}
+          asChild
+          className="hidden m900:flex"
+        >
+          <Link href="/esim">eSIM</Link>
+        </Button>
+        <Button
+          variant="default"
+          size={"lg"}
+          asChild
+          className="hidden m900:flex"
+        >
+          <Link href="/">VPN</Link>
+        </Button>
+      </div>
     </main>
   );
 }
