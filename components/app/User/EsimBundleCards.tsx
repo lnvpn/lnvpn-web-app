@@ -31,8 +31,7 @@ interface EsimBundlesClientProps {
 export function EsimBundlesCards({ bundles }: EsimBundlesClientProps) {
   const [showInactive, setShowInactive] = useState(true);
 
-  // 1. Flatten so each assignment is now its own "bundle" for display
-  //    (i.e., one card per assignment).
+  // 1. Flatten so each assignment is now its own "bundle" for display.
   const allAssignments = useMemo(() => {
     return bundles.flatMap((b) =>
       b.assignments.map((assignment) => ({
@@ -163,6 +162,14 @@ function BundleCard({ bundle }: { bundle: EsimBundle }) {
             </strong>
           </li>
         </ul>
+
+        {/* Show this notice if the bundle is still inactive */}
+        {assignment.bundleState === "queued" && (
+          <p className="text-xs text-gray-500 mt-2">
+            This bundle will activate once you connect to the mobile service in
+            the assigned country.
+          </p>
+        )}
       </CardContent>
     </Card>
   );

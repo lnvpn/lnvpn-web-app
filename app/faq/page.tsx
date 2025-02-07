@@ -328,6 +328,82 @@ export default function FAQ() {
                   </p>
                 </AccordionContent>
               </AccordionItem>
+              {/* eSIM vs Data Bundles */}
+              <AccordionItem
+                className="lg:w-[500px] max-w-full"
+                value="item-510"
+              >
+                <AccordionTrigger>
+                  What is the difference between an eSIM and a data bundle?
+                </AccordionTrigger>
+                <AccordionContent>
+                  <p>
+                    An <strong>eSIM</strong> is a digital SIM profile that you
+                    can install on your phone, allowing you to switch between
+                    carriers without using a physical SIM card. However, an eSIM
+                    alone does not provide mobile data—you need a{" "}
+                    <strong>data bundle </strong>
+                    assigned to your eSIM to access the internet.
+                  </p>
+                  <p>
+                    You can <strong>install</strong> an eSIM anywhere in the
+                    world, but the <strong>data bundle </strong>
+                    will only <strong>activate</strong> once you connect to a
+                    supported mobile network in the designated country or
+                    region. For example, if you purchase an Australian data
+                    bundle while in Germany, you can install the eSIM
+                    immediately, but the data bundle will only start working
+                    once you reach Australia and connect to an Australian
+                    carrier.
+                  </p>
+                  <p>
+                    If you travel frequently, you may need multiple data bundles
+                    for different regions or choose a global plan that covers
+                    multiple countries.
+                  </p>
+                </AccordionContent>
+              </AccordionItem>
+
+              {/* Local vs. Regional vs. Global eSIMs */}
+              <AccordionItem
+                className="lg:w-[500px] max-w-full"
+                value="item-511"
+              >
+                <AccordionTrigger>Do eSIMs support roaming?</AccordionTrigger>
+                <AccordionContent>
+                  <p>
+                    Whether an eSIM supports roaming depends on the type of eSIM
+                    plan you purchase:
+                  </p>
+                  <ul className="list-disc list-inside space-y-2">
+                    <li>
+                      <strong>Local eSIMs:</strong> These are designed for use
+                      in a single country and{" "}
+                      <strong>do not support roaming</strong>. They only work
+                      when connected to a mobile network in their designated
+                      country.
+                    </li>
+                    <li>
+                      <strong>Regional eSIMs:</strong> These cover multiple
+                      countries within a specific region (e.g., Europe, Asia,
+                      North America). They allow you to use data in different
+                      countries within the region without needing a new eSIM or
+                      bundle.
+                    </li>
+                    <li>
+                      <strong>Global eSIMs:</strong> These work across multiple
+                      regions and often support data usage in dozens of
+                      countries worldwide. They are ideal for travelers visiting
+                      multiple countries in different regions.
+                    </li>
+                  </ul>
+                  <p>
+                    If you need coverage in multiple countries, check whether
+                    your eSIM plan supports roaming or if you need to switch
+                    between different regional bundles.
+                  </p>
+                </AccordionContent>
+              </AccordionItem>
 
               {/* 2. How to Set Up an eSIM */}
               <AccordionItem
@@ -339,12 +415,17 @@ export default function FAQ() {
                 </AccordionTrigger>
                 <AccordionContent>
                   <p>
-                    After purchasing an eSIM plan, you typically receive a QR
-                    code or an activation code. Go to your device’s cellular
-                    settings, select “Add Cellular Plan” (or similar), then scan
-                    the QR code or enter the activation code. Your device will
-                    download the eSIM profile and guide you through the final
-                    steps to get connected.
+                    After purchasing an eSIM plan, you will receive a QR code or
+                    activation code. Go to your device’s cellular settings,
+                    select <strong>“Add Cellular Plan”</strong> (or similar),
+                    then scan the QR code or enter the activation code.
+                  </p>
+                  <p>
+                    You can <strong>install</strong> the eSIM from anywhere, but
+                    your <strong>data bundle</strong>
+                    will only <strong>activate</strong> once you connect to a
+                    supported mobile network in the bundle’s designated country
+                    or region.
                   </p>
                 </AccordionContent>
               </AccordionItem>
