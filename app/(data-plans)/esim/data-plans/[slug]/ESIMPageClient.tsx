@@ -105,6 +105,8 @@ const ESIMPageClient: React.FC<ESIMPageClientProps> = ({ plans }) => {
     });
   };
 
+  const [transactionId] = useState(() => uuidv4());
+
   // 5. Called by PaymentModal after invoice is confirmed paid
   const handlePaymentSuccess = () => {
     if (purchaseStatus === "processing" || purchaseStatus === "success") {
@@ -116,7 +118,7 @@ const ESIMPageClient: React.FC<ESIMPageClientProps> = ({ plans }) => {
         if (!selectedPlan) {
           throw new Error("No selected plan found.");
         }
-        const transactionId = uuidv4();
+
         // After user pays, purchase the eSIM
         const purchaseResult = (await purchaseBundle(
           selectedPlan.name,
