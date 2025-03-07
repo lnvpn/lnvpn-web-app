@@ -218,7 +218,7 @@ export default function BundleCheckout({
         });
 
         // 3) Delay 2s
-        await new Promise((resolve) => setTimeout(resolve, 2000));
+        await new Promise((resolve) => setTimeout(resolve, 4000));
 
         // 4) Mark success & show final success alert
         setPurchaseStatus("success");
@@ -358,7 +358,7 @@ export default function BundleCheckout({
                   } catch (error) {
                     console.error("Refresh error:", error);
                   } finally {
-                    await new Promise((resolve) => setTimeout(resolve, 2000));
+                    await new Promise((resolve) => setTimeout(resolve, 4000));
                     setIsRefreshing(false);
                     setSuccessDialogOpen(false);
                     setOpen(false);

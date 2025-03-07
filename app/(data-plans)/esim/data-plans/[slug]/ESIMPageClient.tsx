@@ -157,7 +157,7 @@ const ESIMPageClient: React.FC<ESIMPageClientProps> = ({ plans }) => {
         });
 
         // 2. Wait 2s to ensure eSIM is fully created
-        await new Promise((resolve) => setTimeout(resolve, 2000));
+        await new Promise((resolve) => setTimeout(resolve, 4000));
 
         // 3. Mark success and store the iccid in state
         setIccid(purchaseIccid);
