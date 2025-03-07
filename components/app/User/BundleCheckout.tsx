@@ -181,6 +181,7 @@ export default function BundleCheckout({
   // -------------------------
   // PaymentModal: onPaymentSuccess
   // -------------------------
+  const [transactionId] = useState(() => uuidv4());
   const handlePaymentSuccess = () => {
     if (purchaseStatus === "processing" || purchaseStatus === "success") {
       return; // Skip if we’re already in flow or done
@@ -191,7 +192,7 @@ export default function BundleCheckout({
         if (!selectedPlan) {
           throw new Error("No selected plan found!");
         }
-        const transactionId: string = uuidv4();
+
         // 1) Finalize purchase
         const purchaseResult = await purchaseBundleForIccid(
           selectedPlan.name,

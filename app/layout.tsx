@@ -81,7 +81,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
 
   const vpnEndpoints = [
     {
-      country: " United-States",
+      country: "United-States",
       isoCode: "US",
     },
     {
@@ -89,6 +89,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
       isoCode: "GB",
     },
     { country: "India", isoCode: "IN" },
+    { country: "Canada", isoCode: "CA" },
     { country: "Netherlands", isoCode: "NL" },
     { country: "Russia", isoCode: "RU" },
     { country: "Ukraine", isoCode: "UA" },
@@ -97,6 +98,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
     { country: "Portugal", isoCode: "PT" },
     { country: "Iceland", isoCode: "IS" },
     { country: "Australia", isoCode: "AU" },
+    { country: "Cota Rica", isoCode: "CR" },
   ];
 
   const jsonLd = {

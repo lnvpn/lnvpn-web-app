@@ -80,8 +80,15 @@ export async function getEntityDataFromAPI(
     url = `${baseUrl}/${apiCountryParam}${isoCode}${apiBundleParam}`;
   } else if (isRegionSlug(slug)) {
     const regionName = getRegionNameFromSlug(slug)!;
-    const encodedRegionName = regionName.replace(/\s+/g, "+");
-    url = `${baseUrl}/${apiCountryParam}${encodedRegionName}${apiBundleParam}`;
+
+    // Special case for Europe
+    if (regionName.toLowerCase() === "europe") {
+      url = `${baseUrl}/catalogue?countries=Europe%2B${apiBundleParam}`;
+    } else {
+      // For any other region, just encode spaces and use the existing approach
+      const encodedRegionName = regionName.replace(/\s+/g, "+");
+      url = `${baseUrl}/${apiCountryParam}${encodedRegionName}${apiBundleParam}`;
+    }
   } else {
     console.error(`Invalid slug: ${slug} is neither a country nor a region.`);
     return null;

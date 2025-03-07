@@ -9,20 +9,21 @@ export const vpnendpoints = [
     country: "🇬🇧 United-Kingdom",
     isoCode: "GB",
   },
-  // {
-  //   cc: "5",
-  //   country: "🇨🇦 Canada",
-  // },
+  {
+    cc: "5",
+    country: "🇨🇦 Canada",
+    isoCode: "CA",
+  },
   {
     cc: "6",
     country: "🇮🇳 India",
     isoCode: "IN",
   },
-  // {
-  //   cc: "7",
-  //   country: "🇳🇱 Netherlands",
-  //   isoCode: "NL",
-  // },
+  {
+    cc: "7",
+    country: "🇳🇱 Netherlands",
+    isoCode: "NL",
+  },
   {
     cc: "8",
     country: "🇷🇺 Russia",

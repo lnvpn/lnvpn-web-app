@@ -252,7 +252,7 @@ export const countryNameMap: Record<string, string> = {
 export const regionsMap = [
   { name: "Africa", slug: "africa" },
   { name: "Asia", slug: "asia" },
-  { name: "Europa", slug: "europa" },
+  { name: "Europe", slug: "europe" },
   { name: "Global", slug: "global" },
   { name: "Middle East", slug: "middle-east" },
   { name: "Balkans", slug: "balkans" },
