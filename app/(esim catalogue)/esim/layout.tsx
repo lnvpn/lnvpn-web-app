@@ -7,6 +7,13 @@ import { NetworksResponse } from "@/lib/types";
 import { buildCountriesAndRegions } from "@/utils/esimUtils";
 import { Suspense } from "react";
 import SIMProfilButton from "@/components/app/eSIM/SIMProfileButton";
+import { Alert } from "@/components/ui/alert";
+import {
+  FaBolt,
+  FaEnvelopeOpenText,
+  FaUserShield,
+  FaUserSlash,
+} from "react-icons/fa6";
 
 interface EsimLayoutProps {
   children: React.ReactNode;
@@ -39,10 +46,29 @@ export default async function EsimLayout({ children }: EsimLayoutProps) {
         LN SIM
       </h1>
       <SIMProfilButton />
-      <h2 className="text-center mt-6">
-        Buy eSIM plans for global connectivity using Bitcoin. Privacy-focused,
-        secure, and reliable.
-      </h2>
+      <Alert
+        variant={"destructive"}
+        className="w-full mx-auto mt-2 mb-10 max-w-screen-md"
+      >
+        <div className="flex justify-center items-center flex-wrap gap-3 ">
+          <div className="flex items-center gap-2">
+            <FaUserShield />
+            <p>No KYC</p>
+          </div>
+          <div className="flex items-center gap-2">
+            <FaEnvelopeOpenText />
+            <p>No Email</p>
+          </div>
+          <div className="flex items-center gap-2">
+            <FaUserSlash />
+            <p>No Account</p>
+          </div>
+          <div className="flex items-center gap-2">
+            <FaBolt />
+            <p>Instant delivery</p>
+          </div>
+        </div>
+      </Alert>
       <div className="flex justify-center items-center my-4">
         <Suspense fallback={<div>Loading search...</div>}>
           <SearchCommand

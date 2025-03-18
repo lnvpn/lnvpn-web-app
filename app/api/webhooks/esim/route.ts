@@ -1,15 +1,14 @@
-// File: app/api/webhooks/esim/route.ts
 import { sendSMS } from "@/utils/esim-api/sms";
 import { isError } from "@/utils/isError";
 import crypto from "crypto";
 
 export async function POST(request: Request): Promise<Response> {
-  try {
-    // Read the raw body as text (do not parse it yet!)
-    const rawBody = await request.text();
+  // Read the raw body once and log it.
+  const rawBody = await request.text();
 
-    // Retrieve the signature header (adjust the header name if necessary)
-    const signatureHeader = request.headers.get("x-signature");
+  try {
+    // Retrieve the signature header (using the provider's header name)
+    const signatureHeader = request.headers.get("x-signature-sha256");
     if (!signatureHeader) {
       return new Response(
         JSON.stringify({ error: "Missing signature header" }),
@@ -40,7 +39,7 @@ export async function POST(request: Request): Promise<Response> {
       });
     }
 
-    // Now that the signature is validated, parse the JSON payload
+    // Now parse the JSON payload using the stored rawBody
     let body;
     try {
       body = JSON.parse(rawBody);
@@ -61,7 +60,8 @@ export async function POST(request: Request): Promise<Response> {
 
     // Case 1: Handle FirstAttachment (welcome SMS)
     if (alertType === "FirstAttachment") {
-      const smsMessage = `Welcome to LNVPN. Your eSIM is installed and ready. Your profile page: https://lnvpn.net/user/${iccid}`;
+      const smsMessage = `Welcome to LNVPN. Your eSIM is installed and ready, please enable roaming. Your eSIM profile page: https://lnvpn.net/user/${iccid}`;
+      console.log(`Sending welcome SMS to ${iccid}`);
       const smsResult = await sendSMS(iccid, smsMessage);
 
       if (!smsResult) {
@@ -107,6 +107,7 @@ export async function POST(request: Request): Promise<Response> {
       // Determine whether the usage is 80% or 100% (or more)
       const usageMessage = usagePercent >= 100 ? "100%" : "80%";
       const smsMessage = `Hey, you have used ${usageMessage} of your data. You can top up your esim at https://lnvpn.net/user/${iccid}`;
+      console.log(smsMessage);
       const smsResult = await sendSMS(iccid, smsMessage);
 
       if (!smsResult) {
