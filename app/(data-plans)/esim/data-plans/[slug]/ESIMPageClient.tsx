@@ -4,7 +4,6 @@ import React, { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 
 import PaymentModal from "@/components/app/PaymentModal";
-import { v4 as uuidv4 } from "uuid";
 import {
   AlertDialog,
   AlertDialogContent,
@@ -105,10 +104,8 @@ const ESIMPageClient: React.FC<ESIMPageClientProps> = ({ plans }) => {
     });
   };
 
-  const [transactionId] = useState(() => uuidv4());
-
-  // 5. Called by PaymentModal after invoice is confirmed paid
-  const handlePaymentSuccess = () => {
+  const handlePaymentSuccess = (paymentHash: string) => {
+    console.log("handlePaymentSuccess called with:", paymentHash);
     if (purchaseStatus === "processing" || purchaseStatus === "success") {
       return; // Skip if we’re already in flow or done
     }
@@ -122,7 +119,7 @@ const ESIMPageClient: React.FC<ESIMPageClientProps> = ({ plans }) => {
         // After user pays, purchase the eSIM
         const purchaseResult = (await purchaseBundle(
           selectedPlan.name,
-          transactionId
+          paymentHash
         )) ?? {
           success: false,
           message: "Failed to purchase eSIM.",
@@ -188,6 +185,33 @@ const ESIMPageClient: React.FC<ESIMPageClientProps> = ({ plans }) => {
       }
     });
   };
+
+  async function retryNavigation(
+    router: ReturnType<typeof useRouter>,
+    iccid: string,
+    maxRetries = 3
+  ) {
+    let attempt = 0;
+    while (attempt < maxRetries) {
+      try {
+        router.push(`/user/${iccid}`);
+        return;
+      } catch (err) {
+        attempt++;
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+      }
+    }
+    // If all retries fail, you can show an error or toast
+    console.error("Navigation retries exhausted.");
+    toast({
+      title: "Navigation Error",
+      description:
+        "Failed to navigate to the user page. Your eSIM number is:" +
+        iccid +
+        ". Go to the user page manually.",
+      action: <ToastAction altText="Close">Close</ToastAction>,
+    });
+  }
 
   return (
     <>
@@ -257,13 +281,8 @@ const ESIMPageClient: React.FC<ESIMPageClientProps> = ({ plans }) => {
               <Button
                 onClick={async () => {
                   setIsRedirecting(true);
-                  try {
-                    if (iccid) {
-                      await router.push(`/user/${iccid}`);
-                    }
-                  } catch (error) {
-                    console.error("Navigation error:", error);
-                  } finally {
+                  if (iccid) {
+                    await retryNavigation(router, iccid);
                   }
                 }}
                 disabled={isRedirecting}

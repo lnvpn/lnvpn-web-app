@@ -13,8 +13,6 @@ import {
 
 import { Country, Region, ProcessedBundle } from "@/lib/types";
 
-import { v4 as uuidv4 } from "uuid";
-
 // Payment Modal
 import PaymentModal from "@/components/app/PaymentModal";
 
@@ -181,8 +179,7 @@ export default function BundleCheckout({
   // -------------------------
   // PaymentModal: onPaymentSuccess
   // -------------------------
-  const [transactionId] = useState(() => uuidv4());
-  const handlePaymentSuccess = () => {
+  const handlePaymentSuccess = (paymentHash: string) => {
     if (purchaseStatus === "processing" || purchaseStatus === "success") {
       return; // Skip if we’re already in flow or done
     }
@@ -197,7 +194,7 @@ export default function BundleCheckout({
         const purchaseResult = await purchaseBundleForIccid(
           selectedPlan.name,
           iccid,
-          transactionId
+          paymentHash
         );
         if (!purchaseResult.success) {
           setPurchaseStatus("error");
@@ -214,7 +211,7 @@ export default function BundleCheckout({
         setPurchaseStatus("processing");
         toast({
           title: "Purchase Successful",
-          description: "Creating your eSIM, please wait...",
+          description: "Adding your bundle, please wait...",
         });
 
         // 3) Delay 2s
@@ -222,7 +219,9 @@ export default function BundleCheckout({
 
         // 4) Mark success & show final success alert
         setPurchaseStatus("success");
-        setSuccessMessage("Your eSIM is ready. Tap OK to refresh.");
+        setSuccessMessage(
+          "Your new bundle is ready. It can take up to 5 minutes until it is activated. Tap OK to refresh."
+        );
         setSuccessDialogOpen(true);
       } catch (error: unknown) {
         setPurchaseStatus("error");
@@ -331,7 +330,7 @@ export default function BundleCheckout({
           active={isPaymentModalActive}
           setActive={setIsPaymentModalActive}
           amount={selectedPlan.price}
-          memo={`Buying eSIM: ${selectedPlan.name} for ${iccid}`}
+          memo={`Adding ${selectedPlan.name} to eSIM ${iccid}`}
           onPaymentSuccess={handlePaymentSuccess}
         />
       )}

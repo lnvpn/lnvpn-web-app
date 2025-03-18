@@ -7,7 +7,7 @@ import { regionsMap } from "@/data/countryNames";
 
 export default function RegionsTab() {
   return (
-    <div className="space-y-4 mt-4">
+    <div className="space-y-4 my-4">
       <h2 className="text-2xl font-semibold text-center">Regional eSIMs</h2>
       <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {regionsMap.map((region) => (

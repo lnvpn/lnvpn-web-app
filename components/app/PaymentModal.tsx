@@ -22,7 +22,7 @@ interface PaymentModalProps {
   amount: number;
   memo: string;
 
-  onPaymentSuccess?: () => void;
+  onPaymentSuccess?: (paymentHash?: string) => void;
 }
 
 interface InvoiceResponse {
@@ -82,7 +82,7 @@ export default function PaymentModal({
         if (invoiceData && invoiceData.settled) {
           clearInterval(intervalId);
           setIsPaid(true);
-          onPaymentSuccess?.();
+          onPaymentSuccess?.(invoice.payment_hash);
         }
       } catch (err) {
         console.error("Error checking payment status:", err);

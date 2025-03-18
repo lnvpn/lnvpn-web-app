@@ -79,7 +79,7 @@ export default async function Page({
     }
 
     return (
-      <div className="flex flex-col  justify-center items-center h-screen">
+      <div className="flex flex-col gap-3  justify-center items-center h-screen">
         <h1 className="text-xl font-bold">No eSIM found, try to refresh.</h1>
         <p>Your eSIM number: {iccid}</p>
         <p>{errorMessage}</p>
