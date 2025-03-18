@@ -22,7 +22,7 @@ interface PaymentModalProps {
   amount: number;
   memo: string;
 
-  onPaymentSuccess?: (paymentHash?: string) => void;
+  onPaymentSuccess?: (paymentHash: string) => void;
 }
 
 interface InvoiceResponse {
