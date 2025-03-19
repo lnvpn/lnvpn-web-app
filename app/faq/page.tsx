@@ -509,22 +509,99 @@ export default function FAQ() {
               {/* 7. Troubleshooting */}
               <AccordionItem
                 className="lg:w-[500px] max-w-full"
-                value="item-507"
+                value="item-50808"
               >
                 <AccordionTrigger>
-                  What if I experience connectivity issues with my eSIM?
+                  Can’t connect my eSIM on Android
                 </AccordionTrigger>
                 <AccordionContent>
                   <p>
-                    First, check your network settings and ensure the eSIM
-                    profile is active. Restarting your device can also resolve
-                    minor issues. If problems persist, contact your carrier’s
-                    support team for assistance with troubleshooting or
-                    re-provisioning your eSIM profile. You can also got to your
-                    eSIM profile page and try the &quot;Refresh&quot; button.
+                    If you’re having issues with your internet connection, check
+                    if all your settings are set up correctly.
+                  </p>
+                  <p>
+                    Make sure that Data Roaming is turned on under settings.
+                  </p>
+                  <p>To update the Access Point Name (APN):</p>
+                  <ol className="list-decimal pl-5">
+                    <li>
+                      Go to Settings &gt; Network &amp; Internet section &gt;
+                      Mobile Networks &gt; Access Point Names
+                    </li>
+                    <li>Click “+” or “ADD”</li>
+                    <li>Enter the new APN settings</li>
+                    <li>Hit “Save”</li>
+                  </ol>
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem
+                className="lg:w-[500px] max-w-full"
+                value="item-50909"
+              >
+                <AccordionTrigger>
+                  Can’t connect my eSIM on iOS/iPhone
+                </AccordionTrigger>
+                <AccordionContent>
+                  <p>
+                    If you’re having connectivity issues with your eSIM on iOS,
+                    make sure you have completed all the steps to access data as
+                    per the instructions given on your eSIM app/website.
+                  </p>
+                  <p>
+                    Check the supported network on your eSIM app/website and
+                    follow these steps to connect:
+                  </p>
+                  <ol className="list-decimal pl-5">
+                    <li>Go to Settings &gt; Cellular/Mobile</li>
+                    <li>Click on your eSIM under Cellular Plans</li>
+                    <li>Navigate to Network Selection and disable Automatic</li>
+                    <li>Select the correct network</li>
+                  </ol>
+                  <p>
+                    Alternatively, try updating your APN settings and check if
+                    your data roaming is turned on.
                   </p>
                 </AccordionContent>
               </AccordionItem>
+
+              <AccordionItem
+                className="lg:w-[500px] max-w-full"
+                value="item-51010"
+              >
+                <AccordionTrigger>How do I set up my APN?</AccordionTrigger>
+                <AccordionContent>
+                  <p>
+                    All of our eSIMs have an automatic Access Point Name (APN)
+                    and so manual programming is not necessary.
+                  </p>
+                  <p>
+                    However, if you want to check or manually configure the APN,
+                    follow these steps:
+                  </p>
+                  <strong>iOS:</strong>
+                  <ol className="list-decimal pl-5">
+                    <li>Go to Settings</li>
+                    <li>Select Mobile/Cellular Data</li>
+                    <li>Under Mobile/Cellular Data plans, select your eSIM</li>
+                    <li>Go to Mobile/Cellular Data Network</li>
+                    <li>
+                      In the APN field, type <code>data.esim</code>
+                    </li>
+                  </ol>
+                  <strong>Android:</strong>
+                  <ol className="list-decimal pl-5">
+                    <li>Go to Settings</li>
+                    <li>Select Network &amp; Internet section</li>
+                    <li>Choose Mobile Networks</li>
+                    <li>Go to Access Point Names</li>
+                    <li>
+                      Enter the new APN settings: <code>data.esim</code>
+                    </li>
+                  </ol>
+                </AccordionContent>
+              </AccordionItem>
+
               <AccordionItem
                 className="lg:w-[500px] max-w-full"
                 value="item-508"

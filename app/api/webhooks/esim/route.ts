@@ -3,7 +3,7 @@ import { isError } from "@/utils/isError";
 import crypto from "crypto";
 
 export async function POST(request: Request): Promise<Response> {
-  // Read the raw body once and log it.
+  // Read the raw body once
   const rawBody = await request.text();
 
   try {
