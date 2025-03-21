@@ -14,7 +14,6 @@ import {
 
 import BackButton from "@/components/app/BackButton";
 import { countryCodeToEmoji } from "@/utils/esimUtils";
-import { Skeleton } from "@/components/ui/skeleton";
 
 import {
   isCountrySlug,
@@ -204,23 +203,15 @@ export default async function Page({
       </Alert>
       <div className="flex justify-center items-start w-full lg:max-w-4xl md:gap-4 flex-wrap sm:flex-nowrap ">
         <div className="w-1/2 flex-grow  h-full aspect-square flex flex-col justify-center items-center bg-white rounded-base shadow-light dark:shadow-dark border-2 border-border dark:border-darkBorder p-4 m-8">
-          <Suspense
-            fallback={
-              <div className="flex items-center justify-center h-full">
-                <Skeleton className="h-4 sm:w-[250px] w-[100px]" />
-              </div>
-            }
-          >
-            <Image
-              src="/esim-icon.svg"
-              width={200}
-              height={200}
-              alt="ESim Picture"
-              placeholder="empty"
-              className="w-1/2 h-1/2"
-              priority
-            />
-          </Suspense>
+          <Image
+            src="/esim-icon.svg"
+            width={200}
+            height={200}
+            alt="ESim Picture"
+            placeholder="empty"
+            className="w-1/2 h-1/2"
+            priority
+          />
         </div>
         <div className="w-1/2 flex flex-grow flex-col justify-center items-center gap-3 my-8">
           <h3 className="text-xl font-semibold">Available Data Plans</h3>
