@@ -28,17 +28,15 @@ export async function validateBundleAvailability(bundleName: string) {
 }
 
 export async function purchaseBundle(bundleName: string, paymentHash: string) {
-  console.log("purchaseBundle invoked with transactionId:", paymentHash);
   const existing = getCompletedOrder(paymentHash);
   if (existing) {
-    console.log("Transaction already completed for:", paymentHash);
     return {
       success: true,
       iccid: existing.iccid,
       message: "Order already completed. No additional purchase made.",
     };
   }
-  console.log("Creating new eSIM for transactionId:", paymentHash);
+
   const result = await handleEsimOrderApi(bundleName, "transaction", true);
   if (!result.success) {
     return {

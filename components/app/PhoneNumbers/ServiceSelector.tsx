@@ -56,7 +56,7 @@ export default function ServiceSelector({
             throw new Error(`Error fetching services: ${response.statusText}`);
           }
           const data = await response.json();
-          console.log("API response:", data);
+
           // Since data is an array, set services directly to data
           setServices(data);
         } catch (error) {

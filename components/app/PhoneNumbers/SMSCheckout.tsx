@@ -80,7 +80,7 @@ export default function SMSCheckout() {
       }
 
       const data = await response.json();
-      console.log("Order created:", data);
+
       setOrder(data); // Set orderId and payreq
     } catch (error: any) {
       console.error("Error creating order:", error);
@@ -110,7 +110,7 @@ export default function SMSCheckout() {
             );
           }
           const data = await response.json();
-          console.log("Order status:", data);
+
           setOrderStatus(data);
 
           // Stop polling if the activation code is received or an error occurs

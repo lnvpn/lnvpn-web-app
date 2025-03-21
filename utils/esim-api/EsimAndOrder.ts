@@ -56,7 +56,7 @@ export async function handleEsimOrderApi(
     }
 
     const data = await response.json();
-    console.log("data", data);
+
     if (!data?.order || !Array.isArray(data.order) || data.order.length === 0) {
       throw new Error(data?.message || "No order info returned from server");
     }

@@ -105,7 +105,6 @@ const ESIMPageClient: React.FC<ESIMPageClientProps> = ({ plans }) => {
   };
 
   const handlePaymentSuccess = (paymentHash: string) => {
-    console.log("handlePaymentSuccess called with:", paymentHash);
     if (purchaseStatus === "processing" || purchaseStatus === "success") {
       return; // Skip if we’re already in flow or done
     }
