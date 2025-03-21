@@ -209,7 +209,8 @@ export default async function Page({
             height={200}
             alt="ESim Picture"
             placeholder="empty"
-            className="w-1/2 h-1/2 "
+            className="w-1/2 h-1/2"
+            priority
           />
         </div>
         <div className="w-1/2 flex flex-grow flex-col justify-center items-center gap-3 my-8">
