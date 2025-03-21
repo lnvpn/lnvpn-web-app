@@ -29,7 +29,7 @@ export default async function Home() {
         <AlertDescription>
           <ul className="list-disc ml-4 mt-2">
             <li>
-              <strong>Step 1:</strong> Download and install the VPN app.
+              <strong>Step 1:</strong> Download and install the VPN client.
             </li>
             <li>
               <strong>Step 2:</strong> Select your VPN exit country.

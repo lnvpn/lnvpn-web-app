@@ -239,7 +239,7 @@ export const countryNameMap: Record<string, string> = {
   AE: "United Arab Emirates",
   GB: "United Kingdom",
   US: "United States",
-
+  "US-HI": "Hawaii",
   UM: "United States Outlying Islands",
   UY: "Uruguay",
   UZ: "Uzbekistan",
