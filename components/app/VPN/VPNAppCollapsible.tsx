@@ -22,7 +22,7 @@ export default function VPNAppCollapsible() {
       <Collapsible open={isOpen} onOpenChange={setIsOpen} className="">
         <div className="flex w-full items-center  gap-2">
           <div className="rounded-base w-full  flex items-center justify-between space-x-4 border-2 border-border dark:border-darkBorder text-text bg-main px-4 py-2">
-            <h4 className=" font-bold">1. Install the VPN app</h4>
+            <h4 className=" font-bold">Step 1: Install client</h4>
             <CollapsibleTrigger asChild>
               <Button
                 variant="noShadow"

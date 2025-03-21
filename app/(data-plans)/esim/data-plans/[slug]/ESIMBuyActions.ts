@@ -16,7 +16,7 @@ export async function validateBundleAvailability(bundleName: string) {
     // Bundle is available
     return {
       success: true,
-      subTotal: result.subTotal, // if you want to store/inspect subTotal
+      subTotal: result.subTotal,
     };
   } catch (error: unknown) {
     if (isError(error)) {

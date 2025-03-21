@@ -50,7 +50,7 @@ export default function VPNCheckoutForm({
       </div>
 
       <div className="flex flex-col gap-3 w-full">
-        <p className="px-3">3. Select duration</p>
+        <p className="px-3">Step 3: Select duration</p>
         <DurationSelector
           selectedDuration={selectedDuration}
           setSelectedDuration={setSelectedDuration}

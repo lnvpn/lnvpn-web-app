@@ -24,7 +24,7 @@ export default function CountrySelector({
     <div className="flex w-full justify-between">
       <Select value={selectedCountry} onValueChange={setSelectedCountry}>
         <SelectTrigger className="w-full">
-          <SelectValue placeholder="2. Select country" />
+          <SelectValue placeholder="Step 2: Select country" />
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>
