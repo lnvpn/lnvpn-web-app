@@ -148,18 +148,129 @@ export default async function Page({
             "@type": "Brand",
             name: "LN SIM",
           },
-          offers: entityData.map((plan) => ({
-            "@type": "Offer",
+          aggregateRating:
+            entityData.length > 0
+              ? {
+                  "@type": "AggregateRating",
+                  ratingValue: "4.8",
+                  reviewCount: "45",
+                  bestRating: "5",
+                }
+              : undefined,
+          category: "eSIM Data Plans",
+          slogan: "Affordable eSIMs with Bitcoin payments and no KYC",
+          offers: {
+            "@type": "AggregateOffer",
             priceCurrency: "USD",
-            description: plan.description,
-            name: plan.name,
-            price: plan.price.toFixed(2),
-            acceptedPaymentMethod: "Bitcoin",
-            availability: "https://schema.org/InStock",
-            url: `https://lnvpn.net/esim/data-plans/${slug}`,
-          })),
+            lowPrice: Math.min(...entityData.map((plan) => plan.price)).toFixed(
+              2
+            ),
+            highPrice: Math.max(
+              ...entityData.map((plan) => plan.price)
+            ).toFixed(2),
+            offerCount: entityData.length,
+            offers: entityData.map((plan) => ({
+              "@type": "Offer",
+              priceCurrency: "USD",
+              description: plan.description,
+              name: plan.name,
+              price: plan.price.toFixed(2),
+              acceptedPaymentMethod: {
+                "@type": "PaymentMethod",
+                name: "Bitcoin Lightning Network",
+              },
+              availability: "https://schema.org/InStock",
+              url: `https://lnvpn.net/esim/data-plans/${slug}`,
+              validFrom: new Date().toISOString(),
+              additionalProperty: [
+                {
+                  "@type": "PropertyValue",
+                  name: "No KYC Required",
+                  value: "True",
+                },
+                {
+                  "@type": "PropertyValue",
+                  name: "Instant Delivery",
+                  value: "True",
+                },
+              ],
+            })),
+          },
         }
       : null;
+
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+      {
+        "@type": "Question",
+        name: "How do I activate my eSIM for " + title + "?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Activation is simple: After purchase, you'll receive a QR code. Scan it with your device, follow the on-screen instructions, and you'll be connected within minutes.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Why are LN SIM eSIMs more affordable?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "We keep costs low by eliminating unnecessary overhead, accepting Bitcoin payments, and negotiating directly with carriers. This allows us to offer competitive pricing without compromising on quality or coverage.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Do I need to provide ID or create an account to buy an eSIM?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "No. LN SIM requires no KYC (Know Your Customer), no email, and no account creation. Simply select your plan, pay with Bitcoin, and receive your eSIM instantly.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Which networks does the " + title + " eSIM use?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text:
+            "Our eSIMs connect to premium local networks to ensure reliable coverage. Check the Networks section on this page for specific carrier information in " +
+            title +
+            ".",
+        },
+      },
+    ],
+  };
+
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: "https://lnvpn.net",
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "eSIM",
+        item: "https://lnvpn.net/esim",
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: "Data Plans",
+        item: "https://lnvpn.net/esim/data-plans",
+      },
+      {
+        "@type": "ListItem",
+        position: 4,
+        name: title,
+        item: `https://lnvpn.net/esim/data-plans/${slug}`,
+      },
+    ],
+  };
 
   return (
     <main className="relative flex w-full flex-col gap-4 items-center bg-bg dark:bg-darkBg px-5 flex-grow font-bold">
@@ -169,6 +280,16 @@ export default async function Page({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       )}
+      {faqJsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+        />
+      )}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       <h1 className="my-10 text-shadow-neo scroll-m-20 font-Space_Grotesk text-5xl font-extrabold tracking-wide text-main lg:text-6xl">
         LN SIM
       </h1>

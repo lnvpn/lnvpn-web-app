@@ -70,6 +70,20 @@ export const metadata: Metadata = {
   },
 };
 
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "LNVPN - VPN & eSIM",
+  url: "https://lnvpn.net",
+  logo: "https://lnvpn.net/media/logoPNGLNVPN.png",
+  sameAs: ["https://twitter.com/ln_vpn"],
+  contactPoint: {
+    "@type": "ContactPoint",
+    contactType: "customer support",
+    email: "info@lnvpn.com",
+  },
+};
+
 export default function RootLayout({ children }: RootLayoutProps) {
   const vpnPrices = {
     hour: 0.1,
@@ -134,6 +148,12 @@ export default function RootLayout({ children }: RootLayoutProps) {
           <script
             type="application/ld+json"
             dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          />
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify(organizationJsonLd),
+            }}
           />
         </head>
         <body className="flex flex-col min-h-screen ">

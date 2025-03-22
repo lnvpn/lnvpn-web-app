@@ -31,7 +31,7 @@ export default function CountrySelector({
             <SelectLabel>
               <strong>
                 Choose the country you want <br className="sm:hidden" /> to
-                appear to be browsing from.
+                appear to be browsing from:
               </strong>
             </SelectLabel>
 
