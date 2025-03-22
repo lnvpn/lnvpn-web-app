@@ -141,7 +141,7 @@ export default async function Page({
       ? {
           "@context": "https://schema.org",
           "@type": "Product",
-          name: `${title} eSIM Plan`,
+          name: `${title} eSIM Data Plan`,
           description: `Explore ${title} eSIM plans with Bitcoin payments. Instant delivery and privacy-focused connectivity.`,
           image: ["https://lnvpn.net/esim-icon.svg"],
           brand: {
@@ -172,8 +172,14 @@ export default async function Page({
             offers: entityData.map((plan) => ({
               "@type": "Offer",
               priceCurrency: "USD",
-              description: plan.description,
-              name: plan.name,
+              description:
+                plan.description ||
+                `${extractDataAmount(
+                  plan.name
+                )} data valid for ${extractDuration(
+                  plan.name
+                )} days in ${title}`,
+              name: formatPlanName(plan.name, title),
               price: plan.price.toFixed(2),
               acceptedPaymentMethod: {
                 "@type": "PaymentMethod",
@@ -192,6 +198,16 @@ export default async function Page({
                   "@type": "PropertyValue",
                   name: "Instant Delivery",
                   value: "True",
+                },
+                {
+                  "@type": "PropertyValue",
+                  name: "Data Amount",
+                  value: extractDataAmount(plan.name),
+                },
+                {
+                  "@type": "PropertyValue",
+                  name: "Validity Period",
+                  value: `${extractDuration(plan.name)} days`,
                 },
               ],
             })),
@@ -379,4 +395,26 @@ export default async function Page({
       {/* Replace the commented-out card section with the RadioGroup */}
     </main>
   );
+}
+
+function extractDataAmount(planName: string): string {
+  const match = planName.match(/(\d+)GB/i);
+  if (match) return `${match[1]}GB`;
+
+  const matchMB = planName.match(/(\d+)MB/i);
+  if (matchMB) return `${matchMB[1]}MB`;
+
+  return "Data";
+}
+
+function extractDuration(planName: string): string {
+  const match = planName.match(/(\d+)D/i);
+  return match ? match[1] : "30";
+}
+
+function formatPlanName(planName: string, countryName: string): string {
+  const dataAmount = extractDataAmount(planName);
+  const duration = extractDuration(planName);
+
+  return `${dataAmount} ${countryName} eSIM (${duration} days)`;
 }
