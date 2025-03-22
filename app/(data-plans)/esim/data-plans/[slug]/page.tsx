@@ -188,6 +188,29 @@ export default async function Page({
               availability: "https://schema.org/InStock",
               url: `https://lnvpn.net/esim/data-plans/${slug}`,
               validFrom: new Date().toISOString(),
+              shippingDetails: {
+                "@type": "OfferShippingDetails",
+                shippingRate: {
+                  "@type": "MonetaryAmount",
+                  value: "0",
+                  currency: "USD",
+                },
+                deliveryTime: {
+                  "@type": "ShippingDeliveryTime",
+                  handlingTime: {
+                    "@type": "QuantitativeValue",
+                    minValue: "0",
+                    maxValue: "1",
+                    unitCode: "MIN",
+                  },
+                  transitTime: {
+                    "@type": "QuantitativeValue",
+                    minValue: "0",
+                    maxValue: "1",
+                    unitCode: "MIN",
+                  },
+                },
+              },
               additionalProperty: [
                 {
                   "@type": "PropertyValue",
