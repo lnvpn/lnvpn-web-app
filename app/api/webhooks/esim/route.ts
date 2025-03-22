@@ -83,7 +83,8 @@ export async function POST(request: Request): Promise<Response> {
       if (
         !bundle ||
         bundle.initialQuantity === undefined ||
-        bundle.remainingQuantity === undefined
+        bundle.remainingQuantity === undefined ||
+        bundle.name === undefined
       ) {
         return new Response(
           JSON.stringify({ message: "Invalid bundle data" }),
@@ -91,7 +92,7 @@ export async function POST(request: Request): Promise<Response> {
         );
       }
 
-      const { initialQuantity, remainingQuantity } = bundle;
+      const { name, initialQuantity, remainingQuantity } = bundle;
       // Calculate usage percentage
       const usagePercent =
         ((initialQuantity - remainingQuantity) / initialQuantity) * 100;
@@ -106,7 +107,8 @@ export async function POST(request: Request): Promise<Response> {
 
       // Determine whether the usage is 80% or 100% (or more)
       const usageMessage = usagePercent >= 100 ? "100%" : "80%";
-      const smsMessage = `Hey, you have used ${usageMessage} of your data. You can top up your esim at https://lnvpn.net/user/${iccid}`;
+      // Updated SMS message including the bundle name
+      const smsMessage = `Hey, you have used ${usageMessage} of your ${name} data. You can top up your esim at https://lnvpn.net/user/${iccid}`;
       console.log(smsMessage);
       const smsResult = await sendSMS(iccid, smsMessage);
 

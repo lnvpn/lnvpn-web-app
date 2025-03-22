@@ -62,7 +62,7 @@ const ESIMPageClient: React.FC<ESIMPageClientProps> = ({ plans }) => {
   const handleBuyNow = () => {
     if (!selectedPlan) return;
     if (purchaseStatus === "processing" || purchaseStatus === "success") {
-      return; // Skip if we’re already in flow or done
+      return; // Skip if we're already in flow or done
     }
 
     startTransition(async () => {
@@ -106,7 +106,7 @@ const ESIMPageClient: React.FC<ESIMPageClientProps> = ({ plans }) => {
 
   const handlePaymentSuccess = (paymentHash: string) => {
     if (purchaseStatus === "processing" || purchaseStatus === "success") {
-      return; // Skip if we’re already in flow or done
+      return; // Skip if we're already in flow or done
     }
 
     startTransition(async () => {
@@ -143,7 +143,7 @@ const ESIMPageClient: React.FC<ESIMPageClientProps> = ({ plans }) => {
           throw new Error("No ICCID returned from purchase API.");
         }
 
-        // 1. We got a successful purchase, so let’s show "processing"
+        // 1. We got a successful purchase, so let's show "processing"
         setPurchaseStatus("processing");
 
         // Give the user a short toast that the eSIM is being created
@@ -185,31 +185,31 @@ const ESIMPageClient: React.FC<ESIMPageClientProps> = ({ plans }) => {
     });
   };
 
-  async function retryNavigation(
-    router: ReturnType<typeof useRouter>,
-    iccid: string,
-    maxRetries = 3
-  ) {
-    let attempt = 0;
-    while (attempt < maxRetries) {
+  async function navigateToEsim(iccid: string) {
+    // Give the backend a moment to finish processing
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+
+    try {
+      // Try router.push first (client-side navigation)
+      await router.push(`/user/${iccid}`);
+    } catch (error) {
+      console.error("Router navigation failed:", error);
+
+      // If client-side navigation fails, try a hard redirect
       try {
-        router.push(`/user/${iccid}`);
-        return;
-      } catch (err) {
-        attempt++;
-        await new Promise((resolve) => setTimeout(resolve, 2000));
+        window.location.href = `/user/${iccid}`;
+      } catch (fallbackError) {
+        console.error("Hard redirect also failed:", fallbackError);
+        toast({
+          title: "Navigation Error",
+          description:
+            "Failed to navigate to your eSIM page. Your eSIM number is: " +
+            iccid +
+            ". Please go to the user page manually.",
+          action: <ToastAction altText="Close">Close</ToastAction>,
+        });
       }
     }
-    // If all retries fail, you can show an error or toast
-    console.error("Navigation retries exhausted.");
-    toast({
-      title: "Navigation Error",
-      description:
-        "Failed to navigate to the user page. Your eSIM number is:" +
-        iccid +
-        ". Go to the user page manually.",
-      action: <ToastAction altText="Close">Close</ToastAction>,
-    });
   }
 
   return (
@@ -281,7 +281,7 @@ const ESIMPageClient: React.FC<ESIMPageClientProps> = ({ plans }) => {
                 onClick={async () => {
                   setIsRedirecting(true);
                   if (iccid) {
-                    await retryNavigation(router, iccid);
+                    await navigateToEsim(iccid);
                   }
                 }}
                 disabled={isRedirecting}
