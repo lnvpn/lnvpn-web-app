@@ -143,7 +143,7 @@ export default async function Page({
           "@type": "Product",
           name: `${title} eSIM Plan`,
           description: `Explore ${title} eSIM plans with Bitcoin payments. Instant delivery and privacy-focused connectivity.`,
-          image: ["https://lnvpn.net/media/logoPNGLNVPN.png"],
+          image: ["https://lnvpn.net/esim-icon.svg"],
           brand: {
             "@type": "Brand",
             name: "LN SIM",
