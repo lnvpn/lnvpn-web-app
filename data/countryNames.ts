@@ -172,7 +172,7 @@ export const countryNameMap: Record<string, string> = {
   OM: "Oman",
   PK: "Pakistan",
   PW: "Palau",
-  PS: "Palestinian Territory, Occupied",
+  PS: "Palestinian Territory",
   PA: "Panama",
   PG: "Papua New Guinea",
   PY: "Paraguay",
