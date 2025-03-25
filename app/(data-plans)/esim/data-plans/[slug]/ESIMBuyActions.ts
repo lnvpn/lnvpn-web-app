@@ -1,4 +1,3 @@
-"use server";
 import { handleEsimOrderApi } from "@/utils/esim-api/EsimAndOrder";
 
 import { isError } from "@/utils/isError";
@@ -103,7 +102,7 @@ export async function purchaseBundle(
         console.error("Error processing affiliate commission:", error);
         // Errors here won't affect the main purchase flow
       }
-    }, 100); // Very short timeout to make it asynchronous
+    }, 1000); // Very short timeout to make it asynchronous
   }
 
   // Return success response immediately regardless of affiliate processing
