@@ -8,8 +8,6 @@ import {
 } from "@/components/ui/accordion";
 import Link from "next/link";
 
-export interface IAppProps {}
-
 export default function FAQ() {
   return (
     <div className="text-text dark:text-darkText">

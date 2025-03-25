@@ -2,7 +2,6 @@ import SMSCheckout from "@/components/app/PhoneNumbers/SMSCheckout";
 import { Metadata } from "next";
 import * as React from "react";
 
-export interface IAppProps {}
 import { FaInfoCircle } from "react-icons/fa";
 
 import { Alert, AlertDescription } from "@/components/ui/alert";

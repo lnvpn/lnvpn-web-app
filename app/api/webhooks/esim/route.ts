@@ -43,11 +43,17 @@ export async function POST(request: Request): Promise<Response> {
     let body;
     try {
       body = JSON.parse(rawBody);
-    } catch (error) {
-      return new Response(JSON.stringify({ error: "Invalid JSON" }), {
-        status: 400,
-        headers: { "Content-Type": "application/json" },
-      });
+    } catch (error: unknown) {
+      if (isError(error)) {
+        return new Response(JSON.stringify({ error: "Invalid JSON payload" }), {
+          status: 400,
+          headers: { "Content-Type": "application/json" },
+        });
+      }
+      return new Response(
+        JSON.stringify({ error: "Unknown error parsing JSON" }),
+        { status: 400, headers: { "Content-Type": "application/json" } }
+      );
     }
 
     const { alertType, iccid } = body;

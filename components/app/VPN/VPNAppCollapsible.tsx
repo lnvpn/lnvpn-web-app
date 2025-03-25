@@ -13,8 +13,6 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 
-export interface IAppProps {}
-
 export default function VPNAppCollapsible() {
   const [isOpen, setIsOpen] = useState(true);
   return (
