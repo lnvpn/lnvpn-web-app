@@ -98,6 +98,10 @@ export async function fetchVPNCredentials(
     }
 
     data = await response.json();
+
+    // Store the successful response immediately in ephemeral memory
+    // so it's available even if affiliate tracking fails
+    ephemeralStore.set(cacheKey, data);
   } catch (error: any) {
     console.error(
       `Error adding key to VPN server at ${serverUrl}: ${error.message}`
@@ -105,27 +109,42 @@ export async function fetchVPNCredentials(
     throw new Error(error.message || "Failed to add key to VPN server");
   }
 
-  // 6. If we have a referral code, store the referral payment logic in DB (optional).
+  // 6. If we have a referral code, process affiliate tracking asynchronously
   if (refCode) {
-    await connectToDatabase();
+    // Use setTimeout to process affiliate tracking asynchronously
+    // This ensures that even if it fails, the VPN service will continue working
+    setTimeout(async () => {
+      try {
+        await connectToDatabase();
 
-    const satsPerDollar = await getPrice();
-    if (satsPerDollar === null) {
-      throw new Error("Failed to fetch the Bitcoin price.");
-    }
-    const paidSatoshis = Math.round(priceDollar * satsPerDollar);
+        const satsPerDollar = await getPrice();
+        if (satsPerDollar === null) {
+          console.error(
+            "Failed to fetch the Bitcoin price for affiliate commission."
+          );
+          return; // Early return if we can't get the price
+        }
 
-    const newOrder = new Order({
-      partnerCode: refCode,
-      amount: paidSatoshis,
-    });
-    await newOrder.save();
+        const paidSatoshis = Math.round(priceDollar * satsPerDollar);
+
+        const newOrder = new Order({
+          partnerCode: refCode,
+          amount: paidSatoshis,
+          orderType: "vpn",
+        });
+
+        await newOrder.save();
+        console.log(
+          `Successfully recorded VPN affiliate commission for partner: ${refCode}`
+        );
+      } catch (error) {
+        // Log the error but don't let it affect the core VPN service
+        console.error("Error processing VPN affiliate commission:", error);
+      }
+    }, 1000); // Increased from 100ms to 1000ms to give more time for database operations
   }
 
-  // 7. Store the *non-sensitive* server response in ephemeral memory
-  ephemeralStore.set(cacheKey, data);
-
-  // 8. Return the server's response
+  // 7. Return the server's response
   return data;
 }
 

@@ -771,9 +771,10 @@ export default function FAQ() {
                 <AccordionContent>
                   The LNVPN Affiliate Program allows you to earn Bitcoin by
                   referring new customers to our services. When someone signs up
-                  using your unique referral link and makes a VPN (eSIM
-                  following soon) purchase , you earn a 15% commission in
-                  Bitcoin.
+                  using your unique referral link and makes a VPN purchase , you
+                  earn a 15% commission. For eSIM purchases, you earn a 5%
+                  commission. It&rsquo;s a great way to earn Bitcoin by sharing
+                  LNVPN with your friends, family, and followers.
                 </AccordionContent>
               </AccordionItem>
 

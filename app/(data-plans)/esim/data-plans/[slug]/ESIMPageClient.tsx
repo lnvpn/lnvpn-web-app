@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useTransition } from "react";
+import React, { useState, useTransition, useContext } from "react";
 import { useRouter } from "next/navigation";
 
 import PaymentModal from "@/components/app/PaymentModal";
@@ -22,6 +22,7 @@ import { validateBundleAvailability, purchaseBundle } from "./ESIMBuyActions";
 import { ProcessedBundle } from "@/lib/types";
 import { Checkbox } from "@/components/ui/checkbox";
 import { isError } from "@/utils/isError";
+import { RefContext } from "@/app/context/RefProvider";
 
 // --- Toast
 import { useToast } from "@/hooks/use-toast";
@@ -34,6 +35,7 @@ interface ESIMPageClientProps {
 const ESIMPageClient: React.FC<ESIMPageClientProps> = ({ plans }) => {
   const router = useRouter();
   const { toast } = useToast();
+  const { ref } = useContext(RefContext) ?? { ref: null };
 
   // 1. Default to the *first* plan if available
   const [selectedPlan, setSelectedPlan] = useState<ProcessedBundle | null>(
@@ -118,7 +120,9 @@ const ESIMPageClient: React.FC<ESIMPageClientProps> = ({ plans }) => {
         // After user pays, purchase the eSIM
         const purchaseResult = (await purchaseBundle(
           selectedPlan.name,
-          paymentHash
+          paymentHash,
+          selectedPlan.price,
+          ref
         )) ?? {
           success: false,
           message: "Failed to purchase eSIM.",
@@ -127,7 +131,7 @@ const ESIMPageClient: React.FC<ESIMPageClientProps> = ({ plans }) => {
         if (!purchaseResult.success) {
           toast({
             title: "Purchase Error",
-            description: purchaseResult.message ?? "Failed to purchase eSIM.",
+            description: "Failed to purchase eSIM.",
             action: <ToastAction altText="Close">Close</ToastAction>,
           });
           return;
@@ -137,7 +141,7 @@ const ESIMPageClient: React.FC<ESIMPageClientProps> = ({ plans }) => {
         if (!purchaseIccid) {
           toast({
             title: "Purchase Error",
-            description: purchaseResult.message ?? "No ICCID returned.",
+            description: "No ICCID returned.",
             action: <ToastAction altText="Close">Close</ToastAction>,
           });
           throw new Error("No ICCID returned from purchase API.");

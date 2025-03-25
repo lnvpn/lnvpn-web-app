@@ -37,7 +37,7 @@ function Navbar() {
             FAQ
           </Link>
           <Link className="text-xl font-base" href="/partners">
-            Partners
+            Affiliate
           </Link>
         </div>
 

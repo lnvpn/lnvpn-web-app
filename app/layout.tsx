@@ -27,7 +27,7 @@ import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
   title: {
-    default: "LNVPN - Bitcoin VPN & eSIM Service | $0.10 VPN | $0.99 eSIM",
+    default: "LNVPN - VPN & eSIM | $0.10 VPN | $0.99 eSIM",
     template: "%s | LNVPN",
   },
   description:
@@ -54,7 +54,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     url: "https://lnvpn.net/",
-    title: "LNVPN - Bitcoin VPN & eSIM | $0.10 VPN | $0.99 eSIM",
+    title: "LNVPN - VPN & eSIM | $0.10 VPN | $0.99 eSIM",
     description:
       "Protect your privacy with LNVPN's no-log VPN, Bitcoin eSIM, and disposable phone numbers. Pay with Bitcoin for ultimate anonymity. Plans start at just 10 cents! Get protected today.",
     images: [{ url: "https://lnvpn.net/media/logoPNGLNVPN.png" }],
@@ -63,7 +63,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     creator: "@ln_vpn",
-    title: "LNVPN - Bitcoin VPN & eSIM | $0.10 VPN | $0.99 eSIM",
+    title: "LNVPN - VPN & eSIM | $0.10 VPN | $0.99 eSIM",
     description:
       "Protect your privacy with LNVPN's no-log VPN, Bitcoin eSIM, and disposable phone numbers. Pay with Bitcoin for ultimate anonymity. Plans start at just 10 cents! Get protected today.",
     images: ["https://lnvpn.net/media/logoPNGLNVPN.png"],

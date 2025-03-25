@@ -79,17 +79,29 @@ export async function fetchEarningsFromDB(
       { $match: { partnerCode: partnerData.custom_code } },
       {
         $group: {
-          _id: null,
-          totalEarnings: { $sum: "$amount" },
+          _id: { orderType: { $ifNull: ["$orderType", "vpn"] } }, // Default to 'vpn' for backward compatibility
+          totalAmount: { $sum: "$amount" },
         },
       },
     ]);
 
-    const totalSatoshisPaid = result.length ? result[0].totalEarnings : 0;
-    const totalEarnings = new Decimal(totalSatoshisPaid)
-      .times(0.15)
-      .floor()
-      .toNumber();
+    // Calculate total earnings with different commission rates
+    let totalEarnings = 0;
+    if (result.length) {
+      for (const group of result) {
+        const orderType = group._id.orderType;
+        const amount = group.totalAmount;
+
+        // Apply different commission rates based on order type
+        if (orderType === "esim") {
+          // 5% commission for eSIM orders
+          totalEarnings += new Decimal(amount).times(0.05).floor().toNumber();
+        } else {
+          // 15% commission for VPN orders (default)
+          totalEarnings += new Decimal(amount).times(0.15).floor().toNumber();
+        }
+      }
+    }
 
     return { earnings: totalEarnings, partnerNotFound: false };
   } catch (error: any) {
