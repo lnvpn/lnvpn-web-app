@@ -1,3 +1,4 @@
+"use server";
 import { handleEsimOrderApi } from "@/utils/esim-api/EsimAndOrder";
 
 import { isError } from "@/utils/isError";
