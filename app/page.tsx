@@ -66,7 +66,7 @@ export default async function Home() {
           variant="default"
           size={"lg"}
           asChild
-          className="hidden m900:flex"
+          className="hidden m900:flex text-black"
         >
           <Link href="/esim">eSIM</Link>
         </Button>
@@ -74,7 +74,7 @@ export default async function Home() {
           variant="default"
           size={"lg"}
           asChild
-          className="hidden m900:flex"
+          className="hidden m900:flex text-black"
         >
           <Link href="/phone-numbers">Phone Numbers</Link>
         </Button>

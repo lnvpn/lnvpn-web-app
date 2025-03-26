@@ -71,7 +71,7 @@ export default function PhoneNumbers() {
           variant="default"
           size={"lg"}
           asChild
-          className="hidden m900:flex"
+          className="hidden m900:flex text-black"
         >
           <Link href="/esim">eSIM</Link>
         </Button>
@@ -79,7 +79,7 @@ export default function PhoneNumbers() {
           variant="default"
           size={"lg"}
           asChild
-          className="hidden m900:flex"
+          className="hidden m900:flex text-black"
         >
           <Link href="/">VPN</Link>
         </Button>

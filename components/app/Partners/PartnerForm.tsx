@@ -161,7 +161,7 @@ export default function PartnerForm() {
                 name="payoutAddress"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Enter your BTC address:</FormLabel>
+                    <FormLabel>2. Enter your BTC address:</FormLabel>
                     <FormControl>
                       <Input placeholder="Your Bitcoin Address" {...field} />
                     </FormControl>
@@ -267,7 +267,7 @@ export default function PartnerForm() {
                 name="payoutAddress"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Enter your BTC address:</FormLabel>
+                    <FormLabel>2. Enter your BTC address:</FormLabel>
                     <FormControl>
                       <Input placeholder="Receiver Address" {...field} />
                     </FormControl>
