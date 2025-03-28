@@ -115,7 +115,7 @@ export default async function Page({
   return (
     <main className="flex flex-col items-center gap-4 px-4 mx-auto mt-10 max-w-screen-md">
       <h1 className="my-10 text-shadow-neo scroll-m-20 font-Space_Grotesk text-5xl font-extrabold tracking-wide text-main lg:text-6xl">
-        LN SIM
+        eSIM
       </h1>
 
       <h2 className="text-xl font-mono font-bold">eSIM - {slug}</h2>
