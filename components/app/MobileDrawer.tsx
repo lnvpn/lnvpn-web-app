@@ -11,7 +11,8 @@ export default function MobileDrawer() {
   const pathname = usePathname();
 
   const NAVIGATION_LINKS = [
-    { href: "/", text: "VPN" },
+    { href: "/", text: "Home" },
+    { href: "/vpn", text: "VPN" },
     { href: "/esim", text: "eSIM" },
     { href: "/phone-numbers", text: "Phone Numbers" },
     { href: "/faq", text: "FAQ" },
