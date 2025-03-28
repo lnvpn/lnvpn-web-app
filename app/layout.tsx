@@ -160,11 +160,11 @@ export default function RootLayout({ children }: RootLayoutProps) {
           <ThemeProvider
             attribute="class"
             defaultTheme="light"
-            enableSystem
+            forcedTheme="light"
             disableTransitionOnChange
           >
             <Header />
-            <main className="flex-grow bg-bg dark:bg-darkBg">
+            <main className="flex-grow bg-bg">
               <RefProviderWrapper>{children}</RefProviderWrapper>
             </main>
             <div id="drawer"></div>

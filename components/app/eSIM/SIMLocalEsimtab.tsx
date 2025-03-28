@@ -56,11 +56,11 @@ export default function LocalEsimsTab({
           </Link>
         ))}
       </div>
-      <div className="text-center ">
+      <div className="text-center">
         <Button
           variant="neutral"
           size={"lg"}
-          className=" bg-white dark:text-white dark:bg-secondaryBlack my-4"
+          className=" bg-white dark:text-white dark:bg-secondaryBlack my-10"
           onClick={() => setShowAll(!showAll)}
         >
           {buttonText}
