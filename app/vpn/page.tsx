@@ -55,7 +55,7 @@ export default async function VPN() {
       >
         Server Status Page
       </Link>
-      <div className="flex flex-wrap justify-evenly gap-4 my-4">
+      <div className="flex flex-wrap justify-evenly gap-4 my-10">
         <Button
           variant="default"
           size={"lg"}

@@ -66,7 +66,7 @@ export default function PhoneNumbers() {
           if you have any questions.
         </AlertDescription>
       </Alert>
-      <div className="flex flex-wrap justify-evenly gap-4 my-4">
+      <div className="flex flex-wrap justify-evenly gap-4 my-10">
         <Button
           variant="default"
           size={"lg"}
@@ -81,7 +81,7 @@ export default function PhoneNumbers() {
           asChild
           className="hidden m900:flex text-black"
         >
-          <Link href="/">VPN</Link>
+          <Link href="/vpn">VPN</Link>
         </Button>
       </div>
     </main>

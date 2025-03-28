@@ -353,7 +353,7 @@ export default function Home() {
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Button variant="default" size="lg" asChild className="text-black">
-              <Link href="/affiliate">Affiliate Program</Link>
+              <Link href="/partners">Affiliate Program</Link>
             </Button>
             <Button variant="neutral" size="lg" asChild className="text-black">
               <Link href="/faq">Our FAQ</Link>

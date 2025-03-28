@@ -20,7 +20,7 @@ export default function Partners() {
       <PartnerForm />
       <Alert
         variant={"destructive"}
-        className="w-full mx-auto  max-w-screen-md"
+        className="w-full mx-auto mb-10  max-w-screen-md"
       >
         <FaInfoCircle className="h-5 w-5 " />
         <AlertDescription>
