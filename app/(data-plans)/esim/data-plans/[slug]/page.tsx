@@ -55,46 +55,63 @@ export async function generateMetadata({
   const entityData = await getEntityData(slug);
   const hasPlans = entityData && entityData.length > 0;
 
-  const fallbackTitle = `eSIM Plans for ${entityName} | LN SIM - $0.99 Plans`;
-  const fallbackDescription = `Discover eSIM plans for ${entityName} with Bitcoin payments. Stay connected with LN SIM by LNVPN. Plans starting at just $0.99.`;
+  const fallbackTitle = `$0.99 eSIM Plans for ${entityName} | LNVPN`;
+  const fallbackDescription = `Discover eSIM plans for ${entityName} with Bitcoin payments. Stay connected with LNVPN. Plans starting at just $0.99.`;
 
   return {
-    title: hasPlans
-      ? `${entityName} eSIM Plans | LN SIM - $0.99 Plans`
-      : fallbackTitle,
+    title: hasPlans ? `$0.99 ${entityName} eSIM Plans | LNVPN` : fallbackTitle,
     description: hasPlans
-      ? `Buy eSIM plans for ${entityName}. Enjoy reliable and privacy-focused connectivity with LN SIM and pay using Bitcoin Lightning Network.`
+      ? `Buy affordable eSIM plans for ${entityName} starting at $0.99. Enjoy reliable and privacy-focused connectivity with LNVPN and pay using Bitcoin Lightning Network.`
       : fallbackDescription,
     keywords: [
       "eSIM",
       `${entityName} eSIM`,
       "Bitcoin eSIM",
-      "LN SIM",
+      "LNVPN",
       "Lightning Network eSIM",
       "global eSIM",
       "travel eSIM",
-      "LNVPN",
+      "cheap eSIM",
+      `${entityName} data plan`,
+      "no KYC eSIM",
+      "private eSIM",
     ],
+    alternates: {
+      canonical: `https://lnvpn.net/esim/data-plans/${slug}`,
+    },
     openGraph: {
       title: hasPlans
-        ? `${entityName} eSIM Plans | LN SIM - $0.99 Plans`
+        ? `$0.99 ${entityName} eSIM Plans | LNVPN`
         : fallbackTitle,
       description: hasPlans
-        ? `Buy eSIM plans for ${entityName} with Bitcoin. Reliable and private connectivity worldwide.`
+        ? `Buy affordable eSIM plans for ${entityName} starting at $0.99. Private and secure connectivity with Bitcoin payments.`
         : fallbackDescription,
       url: `https://lnvpn.net/esim/data-plans/${slug}`,
-      images: ["https://lnvpn.net/media/logoPNGLNVPN.png"],
+      images: [
+        {
+          url: "https://lnvpn.net/media/logoPNGLNVPN.png",
+          width: 1200,
+          height: 630,
+          alt: `${entityName} eSIM Plans - LNVPN`,
+        },
+      ],
       type: "website",
+      locale: "en_US",
     },
     twitter: {
       card: "summary_large_image",
       title: hasPlans
-        ? `${entityName} eSIM Plans | LN SIM - $0.99 Plans`
+        ? `$0.99 ${entityName} eSIM Plans | LNVPN`
         : fallbackTitle,
       description: hasPlans
         ? `Get the best eSIM plans for ${entityName}. Pay securely with Bitcoin Lightning Network.`
         : fallbackDescription,
-      images: ["https://lnvpn.net/media/logoPNGLNVPN.png"],
+      images: [
+        {
+          url: "https://lnvpn.net/media/logoPNGLNVPN.png",
+          alt: `${entityName} eSIM Plans - LNVPN`,
+        },
+      ],
       creator: "@ln_vpn",
     },
   };
@@ -142,11 +159,11 @@ export default async function Page({
           "@context": "https://schema.org",
           "@type": "Product",
           name: `${title} eSIM Data Plan`,
-          description: `Explore ${title} eSIM plans with Bitcoin payments. Instant delivery and privacy-focused connectivity.`,
+          description: `Affordable ${title} eSIM plans with Bitcoin payments. Instant delivery and privacy-focused connectivity starting at $0.99.`,
           image: ["https://lnvpn.net/esim-icon.svg"],
           brand: {
             "@type": "Brand",
-            name: "LN SIM",
+            name: "LNVPN",
           },
           aggregateRating:
             entityData.length > 0
@@ -252,7 +269,7 @@ export default async function Page({
       },
       {
         "@type": "Question",
-        name: "Why are LN SIM eSIMs more affordable?",
+        name: "Why are LNVPN eSIMs more affordable?",
         acceptedAnswer: {
           "@type": "Answer",
           text: "We keep costs low by eliminating unnecessary overhead, accepting Bitcoin payments, and negotiating directly with carriers. This allows us to offer competitive pricing without compromising on quality or coverage.",
@@ -263,7 +280,7 @@ export default async function Page({
         name: "Do I need to provide ID or create an account to buy an eSIM?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "No. LN SIM requires no KYC (Know Your Customer), no email, and no account creation. Simply select your plan, pay with Bitcoin, and receive your eSIM instantly.",
+          text: "No. LNVPN requires no KYC (Know Your Customer), no email, and no account creation. Simply select your plan, pay with Bitcoin, and receive your eSIM instantly.",
         },
       },
       {
@@ -275,6 +292,25 @@ export default async function Page({
             "Our eSIMs connect to premium local networks to ensure reliable coverage. Check the Networks section on this page for specific carrier information in " +
             title +
             ".",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "How long does it take to receive my " + title + " eSIM?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Delivery is instant. Once your Bitcoin payment is confirmed on the Lightning Network, you'll immediately receive your eSIM QR code to activate on your device.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Are $0.99 eSIM plans available for " + title + "?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text:
+            "We offer various affordable plans for " +
+            title +
+            ", with prices starting as low as $0.99 depending on data needs and duration. Check the available data plans section for current pricing.",
         },
       },
     ],
@@ -329,15 +365,15 @@ export default async function Page({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
-      <h1 className="my-10 text-shadow-neo scroll-m-20 font-Space_Grotesk text-5xl font-extrabold tracking-wide text-main lg:text-6xl">
+      <h2 className="my-10 text-shadow-neo scroll-m-20 font-Space_Grotesk text-5xl font-extrabold tracking-wide text-main lg:text-6xl">
         eSIM
-      </h1>
+      </h2>
       <div className="flex w-full max-w-4xl justify-start">
         <BackButton />
       </div>
-      <h2 className="text-xl md:text-4xl my-8">
+      <h1 className="text-xl md:text-4xl my-8">
         {flagEmoji ? `${flagEmoji} ${title}` : title} - eSIM Data Plans
-      </h2>
+      </h1>
       <Alert
         variant={"destructive"}
         className="w-full mx-auto mt-10 max-w-screen-md"
@@ -367,7 +403,7 @@ export default async function Page({
             src="/esim-icon.svg"
             width={200}
             height={200}
-            alt="ESim Picture"
+            alt={`${title} eSIM Data Plan - LNVPN`}
             placeholder="empty"
             className="w-1/2 h-1/2"
             priority
