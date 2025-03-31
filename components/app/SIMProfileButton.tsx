@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation"; // For client-side navigation
+import { useState, useEffect } from "react";
+import { useRouter, usePathname } from "next/navigation"; // For client-side navigation
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -17,27 +17,35 @@ export default function SIMProfileButton() {
   const [isOpen, setIsOpen] = useState(false); // Modal open state
   const [isLoading, setIsLoading] = useState(false); // Loading state
   const router = useRouter(); // Next.js router
+  const pathname = usePathname(); // Track current path
+
+  // Close modal when navigation completes
+  useEffect(() => {
+    if (isLoading && pathname.startsWith("/user/")) {
+      setIsLoading(false);
+      setIsOpen(false);
+      setIccid("");
+    }
+  }, [pathname, isLoading]);
 
   // Open the modal
   const handleOpenModal = () => {
     setIsOpen(true);
-    router.prefetch(`/user/${iccid}`);
   };
-
-  // Close the modal
-  const handleCloseModal = () => setIsOpen(false);
 
   // Handle form submission
   const handleSubmit = async () => {
     if (iccid.trim()) {
       setIsLoading(true);
-      try {
-        await router.push(`/user/${iccid}`);
-      } finally {
-        setIsLoading(false);
-        setIsOpen(false);
-      }
+      router.push(`/user/${iccid}`);
     }
+  };
+
+  // Reset states when modal closes
+  const handleCloseModal = () => {
+    setIsOpen(false);
+    setIsLoading(false);
+    setIccid("");
   };
 
   return (
@@ -49,7 +57,7 @@ export default function SIMProfileButton() {
         <FaUser className="h-6 w-6 m500:h-4 m500:w-4 fill-text dark:fill-darkText" />
       </button>
 
-      <Dialog open={isOpen} onOpenChange={setIsOpen}>
+      <Dialog open={isOpen} onOpenChange={handleCloseModal}>
         <DialogContent
           onEscapeKeyDown={handleCloseModal}
           onPointerDownOutside={handleCloseModal}

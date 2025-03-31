@@ -4,6 +4,7 @@ import { fetchEsimBundles, fetchEsimData } from "./userPageActions";
 import { Metadata } from "next";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { CopyUrlButton } from "@/components/app/User/CopyUrlButton";
+import { CopyIccidButton } from "@/components/app/User/CopyIccidButton";
 import { FaInfoCircle } from "react-icons/fa";
 import { EsimBundlesCards } from "@/components/app/User/EsimBundleCards";
 import Link from "next/link";
@@ -119,7 +120,10 @@ export default async function Page({
         eSIM
       </h1>
 
-      <h2 className="text-xl font-mono font-bold">eSIM - {slug}</h2>
+      <div className="flex items-center gap-4">
+        <h2 className="text-xl font-mono font-bold">eSIM - {slug}</h2>
+        <CopyIccidButton iccid={slug} />
+      </div>
       {/* Alert with info & copy button */}
       <Alert variant={"destructive"} className="w-full mx-auto max-w-screen-md">
         <FaInfoCircle className="h-5 w-5 mr-2" aria-hidden="true" />
