@@ -121,7 +121,7 @@ export default async function Page({
       </h1>
 
       <div className="flex items-center gap-4">
-        <h2 className="text-xl font-mono font-bold">eSIM - {slug}</h2>
+        <h2 className="text-xl font-mono font-bold">{slug}</h2>
         <CopyIccidButton iccid={slug} />
       </div>
       {/* Alert with info & copy button */}
