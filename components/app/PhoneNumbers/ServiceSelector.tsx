@@ -92,7 +92,7 @@ export default function ServiceSelector({
           <PopoverContent className="w-full p-0">
             <Command>
               <CommandInput placeholder="Search for a service..." />
-              <CommandList className="max-h-60 overflow-hidden">
+              <CommandList>
                 {loading ? (
                   <div className="p-4">Loading services...</div>
                 ) : services.length > 0 ? (
