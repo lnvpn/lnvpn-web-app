@@ -10,17 +10,21 @@ import { Button } from "@/components/ui/button";
 
 export const metadata: Metadata = {
   title: {
-    default: "LN-SMS - Bitcoin Disposable Phone Numbers - $0.4",
+    default: "LNVPN - Disposable Phone Numbers - $0.4",
     template: "%s | LNVPN",
   },
   description:
-    "Get disposable phone numbers for SMS verification. Pay with Bitcoin. 1 Dollar per number.",
+    "Get instant disposable phone numbers for SMS verification. Pay with Bitcoin, no KYC required. 20-minute access to receive activation codes.",
   keywords: [
     "disposable phone numbers",
     "SMS verification",
     "Bitcoin payments",
     "privacy",
-    "VPN",
+    "no KYC SMS",
+    "anonymous SMS",
+    "privacy SMS",
+    "instant SMS",
+    "temporary phone numbers",
     "Bitcoin",
     "lightning network",
   ],
@@ -28,16 +32,17 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     description:
-      "Get disposable phone numbers for SMS verification. Pay with Bitcoin",
+      "Get instant disposable phone numbers for SMS verification. Pay with Bitcoin, no KYC required.",
     images: ["https://lnvpn.net/media/logoPNGLNVPN.png"],
     url: "https://lnvpn.net/",
-    title: "LNVPN - Disposable Phone Numbers",
+    title: "LNVPN - Disposable Phone Numbers for SMS Verification",
   },
   metadataBase: new URL("https://lnvpn.net/"),
   twitter: {
     card: "summary_large_image",
-    title: "LNVPN - Disposable Phone Numbers",
-    description: "A privacy-focused VPN service.",
+    title: "LNVPN - Disposable Phone Numbers for SMS Verification",
+    description:
+      "Get instant disposable phone numbers for SMS verification. Pay with Bitcoin, no KYC required.",
     images: ["https://lnvpn.net/media/logoPNGLNVPN.png"],
     creator: "@ln_vpn",
   },
