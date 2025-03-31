@@ -31,7 +31,12 @@ export default function SIMProfileButton() {
   const handleSubmit = async () => {
     if (iccid.trim()) {
       setIsLoading(true);
-      await router.push(`/user/${iccid}`);
+      try {
+        await router.push(`/user/${iccid}`);
+      } finally {
+        setIsLoading(false);
+        setIsOpen(false);
+      }
     }
   };
 
