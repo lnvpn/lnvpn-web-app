@@ -60,10 +60,17 @@ export default function PhoneNumbers() {
           This is a service that gives you 20 minutes access to a disposable
           phone number to receive activation codes. Select the country and
           service you need, and pay with Bitcoin. Check out our{" "}
-          <Link className="text-main" href={"/faq"}>
+          <Link className="text-main underline" href={"/faq"}>
             FAQ
           </Link>{" "}
           if you have any questions.
+          <br />
+          <br />
+          Pro Tip: Use{" "}
+          <span className="font-bold">
+            &quot;Any other call forwarding&quot;
+          </span>{" "}
+          as service if anything else fails.
         </AlertDescription>
       </Alert>
       <div className="flex flex-wrap justify-evenly gap-4 my-10">
