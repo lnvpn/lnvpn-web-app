@@ -426,7 +426,6 @@ export default async function Page({
               height={200}
               alt={`${title} eSIM Data Plan - LNVPN`}
               placeholder="empty"
-              className="w-1/2 h-1/2"
               priority
             />
           </div>
