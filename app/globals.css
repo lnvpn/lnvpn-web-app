@@ -2,17 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-html {
-  -webkit-text-size-adjust: 100%;
-  font-size: 16px;
-}
-
-@media screen and (max-width: 768px) {
-  html {
-    font-size: 14px;
-  }
-}
-
 :root {
   --main: #88aaee;
   --main50: #88aaeeb3;
