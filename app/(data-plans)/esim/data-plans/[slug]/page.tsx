@@ -391,7 +391,7 @@ export default async function Page({
       <div className="flex w-full max-w-4xl justify-start">
         <BackButton />
       </div>
-      <h1 className="text-xl md:text-4xl my-8">
+      <h1 className="text-xl md:text-4xl my-8 text-center">
         {flagEmoji ? `${flagEmoji} ${title}` : title} - eSIM Data Plans
       </h1>
       <Alert
