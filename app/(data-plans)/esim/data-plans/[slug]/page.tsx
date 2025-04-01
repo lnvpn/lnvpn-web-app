@@ -6,6 +6,13 @@ import {
   FaBolt,
   FaEnvelopeOpenText,
   FaUserSlash,
+  FaNetworkWired,
+  FaGlobe,
+  FaDatabase,
+  FaClock,
+  FaArrowUp,
+  FaQrcode,
+  FaTachometerAlt,
 } from "react-icons/fa";
 import {
   getCountryNetworkData,
@@ -54,14 +61,25 @@ export async function generateMetadata({
 
   const entityData = await getEntityData(slug);
   const hasPlans = entityData && entityData.length > 0;
+  const cheapestPrice: number = hasPlans
+    ? Math.min(...entityData.map((plan) => plan.price))
+    : 0.99;
 
-  const fallbackTitle = `LNVPN - $0.99 eSIM Plans for ${entityName}`;
-  const fallbackDescription = `Discover eSIM plans for ${entityName} with Bitcoin payments. Stay connected with LNVPN. Plans starting at just $0.99.`;
+  const fallbackTitle = `LNVPN - $${cheapestPrice.toFixed(
+    2
+  )} eSIM Plans for ${entityName}`;
+  const fallbackDescription = `Discover eSIM plans for ${entityName} with Bitcoin payments. Stay connected with LNVPN. Plans starting at just $${cheapestPrice.toFixed(
+    2
+  )}.`;
 
   return {
-    title: hasPlans ? `LNVPN - $0.99 ${entityName} eSIM Plans` : fallbackTitle,
+    title: hasPlans
+      ? `LNVPN - $${cheapestPrice.toFixed(2)} ${entityName} eSIM Plans`
+      : fallbackTitle,
     description: hasPlans
-      ? `Buy affordable eSIM plans for ${entityName} starting at $0.99. Enjoy reliable and privacy-focused connectivity with LNVPN and pay using Bitcoin Lightning Network.`
+      ? `Buy affordable eSIM plans for ${entityName} starting at $${cheapestPrice.toFixed(
+          2
+        )}. Enjoy reliable and privacy-focused connectivity with LNVPN and pay using Bitcoin Lightning Network.`
       : fallbackDescription,
     keywords: [
       "eSIM",
@@ -81,10 +99,12 @@ export async function generateMetadata({
     },
     openGraph: {
       title: hasPlans
-        ? `LNVPN - $0.99 ${entityName} eSIM Plans`
+        ? `LNVPN - $${cheapestPrice.toFixed(2)} ${entityName} eSIM Plans`
         : fallbackTitle,
       description: hasPlans
-        ? `Buy affordable eSIM plans for ${entityName} starting at $0.99. Private and secure connectivity with Bitcoin payments.`
+        ? `Buy affordable eSIM plans for ${entityName} starting at $${cheapestPrice.toFixed(
+            2
+          )}. Private and secure connectivity with Bitcoin payments.`
         : fallbackDescription,
       url: `https://lnvpn.net/esim/data-plans/${slug}`,
       images: [
@@ -101,7 +121,7 @@ export async function generateMetadata({
     twitter: {
       card: "summary_large_image",
       title: hasPlans
-        ? `LNVPN - $0.99 ${entityName} eSIM Plans`
+        ? `LNVPN - $${cheapestPrice.toFixed(2)} ${entityName} eSIM Plans`
         : fallbackTitle,
       description: hasPlans
         ? `Get the best eSIM plans for ${entityName}. Pay securely with Bitcoin Lightning Network.`
@@ -397,19 +417,64 @@ export default async function Page({
           </div>
         </div>
       </Alert>
-      <div className="flex justify-center items-start w-full lg:max-w-4xl md:gap-4 flex-wrap sm:flex-nowrap ">
-        <div className="w-1/2 flex-grow  h-full aspect-square flex flex-col justify-center items-center bg-white rounded-base shadow-light dark:shadow-dark border-2 border-border dark:border-darkBorder p-4 m-8">
-          <Image
-            src="/esim-icon.svg"
-            width={200}
-            height={200}
-            alt={`${title} eSIM Data Plan - LNVPN`}
-            placeholder="empty"
-            className="w-1/2 h-1/2"
-            priority
-          />
+      <div className="flex justify-center items-start w-full lg:max-w-4xl md:gap-4 flex-col lg:flex-row">
+        <div className="w-full lg:w-1/2 flex-grow flex flex-col gap-4">
+          <div className="h-full aspect-square flex flex-col justify-center items-center bg-white rounded-base shadow-light dark:shadow-dark border-2 border-border dark:border-darkBorder p-4 m-4 lg:m-8">
+            <Image
+              src="/esim-icon.svg"
+              width={200}
+              height={200}
+              alt={`${title} eSIM Data Plan - LNVPN`}
+              placeholder="empty"
+              className="w-1/2 h-1/2"
+              priority
+            />
+          </div>
+
+          {/* Product Information Section */}
+          <div className="bg-white text-black rounded-base shadow-light dark:shadow-dark border-2 border-border p-6 mx-4 lg:mx-8 mb-8">
+            <ul className="space-y-2">
+              {isoCode && countryNetworkData.length > 0 && (
+                <li className="flex items-start gap-4">
+                  <FaNetworkWired className="mt-1 flex-shrink-0" />
+                  <span>{countryNetworkData.length} network(s) supported</span>
+                </li>
+              )}
+              {isRegionSlug(slug) && entityData && entityData.length > 0 && (
+                <li className="flex items-start gap-4">
+                  <FaGlobe className="mt-1 flex-shrink-0" />
+                  <span>
+                    {entityData[0].roamingEnabled.length} countries included
+                  </span>
+                </li>
+              )}
+              <li className="flex items-start gap-4">
+                <FaDatabase className="mt-1 flex-shrink-0" />
+                <span>Data-only service with hotspot functionality</span>
+              </li>
+              <li className="flex items-start gap-4">
+                <FaClock className="mt-1 flex-shrink-0" />
+                <span>
+                  Validity period starts when used in supported location
+                </span>
+              </li>
+              <li className="flex items-start gap-4">
+                <FaArrowUp className="mt-1 flex-shrink-0" />
+                <span>Top-up available to extend your data</span>
+              </li>
+              <li className="flex items-start gap-4">
+                <FaQrcode className="mt-1 flex-shrink-0" />
+                <span>Instant activation with QR code</span>
+              </li>
+              <li className="flex items-start gap-4">
+                <FaTachometerAlt className="mt-1 flex-shrink-0" />
+                <span>High-speed connectivity</span>
+              </li>
+            </ul>
+          </div>
         </div>
-        <div className="w-1/2 flex flex-grow flex-col justify-center items-center gap-3 my-8">
+
+        <div className="w-full lg:w-1/2 flex flex-grow flex-col justify-center items-center gap-3 my-8">
           <h3 className="text-xl font-semibold">Available Data Plans</h3>
           <Suspense
             fallback={

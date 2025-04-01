@@ -30,7 +30,7 @@ export default async function TechnicalSpecsAccordion() {
               functionality.
             </li>
             <li>
-              <strong>Top-up Option:</strong> Currently unavailable.
+              <strong>Top-up Option:</strong> Available.
             </li>
             <li>
               <strong>Phone Number:</strong> Not included in the package.
