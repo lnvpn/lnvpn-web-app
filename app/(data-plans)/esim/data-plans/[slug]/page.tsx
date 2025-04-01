@@ -6,11 +6,11 @@ import {
   FaBolt,
   FaEnvelopeOpenText,
   FaUserSlash,
-  FaNetworkWired,
+  FaWifi,
   FaGlobe,
   FaDatabase,
-  FaClock,
-  FaArrowUp,
+  FaCalendarAlt,
+  FaMoneyBillWave,
   FaQrcode,
   FaTachometerAlt,
 } from "react-icons/fa";
@@ -434,7 +434,7 @@ export default async function Page({
             <ul className="space-y-4">
               {isoCode && countryNetworkData.length > 0 && (
                 <li className="flex items-start gap-4">
-                  <FaNetworkWired className="mt-1 flex-shrink-0" />
+                  <FaWifi className="mt-1 flex-shrink-0" />
                   <span>{countryNetworkData.length} network(s) supported</span>
                 </li>
               )}
@@ -451,13 +451,13 @@ export default async function Page({
                 <span>Data-only service with hotspot functionality</span>
               </li>
               <li className="flex items-start gap-4">
-                <FaClock className="mt-1 flex-shrink-0" />
+                <FaCalendarAlt className="mt-1 flex-shrink-0" />
                 <span>
                   Validity period starts when used in supported location
                 </span>
               </li>
               <li className="flex items-start gap-4">
-                <FaArrowUp className="mt-1 flex-shrink-0" />
+                <FaMoneyBillWave className="mt-1 flex-shrink-0" />
                 <span>Top-up available to extend your data</span>
               </li>
               <li className="flex items-start gap-4">
