@@ -2,7 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  -webkit-text-size-adjust: 100%;
+  font-size: 16px;
+}
 
+@media screen and (max-width: 768px) {
+  html {
+    font-size: 14px;
+  }
+}
 
 :root {
   --main: #88aaee;
@@ -77,7 +86,7 @@ body::-webkit-scrollbar-thumb,
 }
 
 .text-shadow-neo {
-    text-shadow: 3px 3px #0f172a;
-    -webkit-text-stroke-width: 1px;
-    -webkit-text-stroke-color: #0f172a;
-  }
+  text-shadow: 3px 3px #0f172a;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: #0f172a;
+}
