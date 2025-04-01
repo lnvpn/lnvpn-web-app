@@ -396,7 +396,7 @@ export default async function Page({
       </h1>
       <Alert
         variant={"destructive"}
-        className="w-full mx-auto mt-10 max-w-screen-md"
+        className="w-full mx-auto my-10 max-w-screen-md"
       >
         <div className="flex justify-center items-center flex-wrap gap-3 ">
           <div className="flex items-center gap-2">
@@ -417,9 +417,9 @@ export default async function Page({
           </div>
         </div>
       </Alert>
-      <div className="flex justify-center items-start w-full lg:max-w-4xl md:gap-4 flex-col lg:flex-row">
-        <div className="w-full lg:w-1/2 flex-grow flex flex-col gap-4">
-          <div className="h-full aspect-square flex flex-col justify-center items-center bg-white rounded-base shadow-light dark:shadow-dark border-2 border-border dark:border-darkBorder p-4 mx-4 lg:mx-8">
+      <div className="flex justify-center items-start w-full lg:max-w-4xl md:gap-4 flex-wrap sm:flex-nowrap gap-2">
+        <div className="w-1/2 flex-grow h-full flex flex-col justify-center items-center bg-white rounded-base shadow-light dark:shadow-dark border-2 border-border p-4 lg:m-8">
+          <div className="flex flex-col items-center m-4 p-4">
             <Image
               src="/esim-icon.svg"
               width={200}
@@ -430,10 +430,9 @@ export default async function Page({
               priority
             />
           </div>
-
-          {/* Product Information Section */}
-          <div className="bg-white text-black rounded-base shadow-light dark:shadow-dark border-2 border-border p-6 mx-4 lg:mx-8 mb-8">
-            <ul className="space-y-2">
+          <hr className="w-full border-border  mb-8" />
+          <div className="font-semibold text-lg mb-4">
+            <ul className="space-y-4">
               {isoCode && countryNetworkData.length > 0 && (
                 <li className="flex items-start gap-4">
                   <FaNetworkWired className="mt-1 flex-shrink-0" />
@@ -474,7 +473,7 @@ export default async function Page({
           </div>
         </div>
 
-        <div className="w-full lg:w-1/2 flex flex-grow flex-col justify-center items-center gap-3 my-8">
+        <div className="w-1/2 flex flex-grow flex-col justify-center items-center gap-3 my-8">
           <h3 className="text-xl font-semibold">Available Data Plans</h3>
           <Suspense
             fallback={
