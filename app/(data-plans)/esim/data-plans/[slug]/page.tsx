@@ -453,7 +453,7 @@ export default async function Page({
               <li className="flex items-start gap-4">
                 <FaCalendarAlt className="mt-1 flex-shrink-0" />
                 <span>
-                  Validity period starts when used in supported location
+                  Validity period starts only when used in assigned location
                 </span>
               </li>
               <li className="flex items-start gap-4">

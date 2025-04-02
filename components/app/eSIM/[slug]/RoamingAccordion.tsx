@@ -41,19 +41,22 @@ export default async function RoamingAccordion(props: {
             <div className="space-y-6">
               {networkData.map((item, index) => (
                 <div key={index}>
-                  <h3 className="text-lg font-semibold mb-2 flex items-center">
+                  <h3 className="text-lg font-bold mb-2 flex items-center">
                     <span className="mr-2">
                       {countryCodeToEmoji(item.countryIso)}
                     </span>
                     {item.countryName}
                   </h3>
-                  <ul className="list-disc list-inside space-y-1 pl-5">
+                  <ul className="space-y-1">
                     {item.networkData.map((network, idx) => (
-                      <li key={idx}>
-                        <span className="font-medium">{network.name}</span>
-                        {network.speed?.length > 0 && (
-                          <span>: {network.speed.join(" / ")}</span>
-                        )}
+                      <li key={idx} className="flex items-start">
+                        <span className="mr-2 mt-1">-</span>
+                        <span>
+                          <span className="font-medium">{network.name}</span>
+                          {network.speed?.length > 0 && (
+                            <span>: {network.speed.join(" / ")}</span>
+                          )}
+                        </span>
                       </li>
                     ))}
                   </ul>
