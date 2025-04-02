@@ -458,11 +458,11 @@ export default async function Page({
               </li>
               <li className="flex items-start gap-4">
                 <FaMoneyBillWave className="mt-1 flex-shrink-0" />
-                <span>Top-up available to extend your data</span>
+                <span>Top-up available </span>
               </li>
               <li className="flex items-start gap-4">
                 <FaQrcode className="mt-1 flex-shrink-0" />
-                <span>Instant activation with QR code</span>
+                <span>One click installation</span>
               </li>
               <li className="flex items-start gap-4">
                 <FaTachometerAlt className="mt-1 flex-shrink-0" />

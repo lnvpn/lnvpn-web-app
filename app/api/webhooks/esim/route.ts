@@ -114,7 +114,7 @@ export async function POST(request: Request): Promise<Response> {
       // Determine whether the usage is 80% or 100% (or more)
       const usageMessage = usagePercent >= 100 ? "100%" : "80%";
       // Updated SMS message including the bundle name
-      const smsMessage = `Hey, you have used ${usageMessage} of your ${name} data. You can top up your esim at https://lnvpn.net/user/${iccid}`;
+      const smsMessage = `Hey, you have used ${usageMessage} of your ${name} data. You can top-up your esim at https://lnvpn.net/user/${iccid}`;
       console.log(smsMessage);
       const smsResult = await sendSMS(iccid, smsMessage);
 
