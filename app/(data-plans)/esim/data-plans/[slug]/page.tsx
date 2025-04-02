@@ -39,6 +39,7 @@ import TechnicalSpecAccordion from "@/components/app/eSIM/[slug]/TechnicalSpecAc
 import RedeemInstructionsAccordion from "@/components/app/eSIM/[slug]/RedeemInstructionsAccordion";
 import { NetworkInfo } from "@/lib/types";
 import { FaSpinner } from "react-icons/fa6";
+import RegionalBadges from "@/components/app/eSIM/[slug]/RegionalBadges";
 
 export const revalidate = 360000;
 
@@ -429,7 +430,9 @@ export default async function Page({
               priority
             />
           </div>
+          {isCountrySlug(slug) && <RegionalBadges slug={slug} />}
           <hr className="w-full border-border  mb-8" />
+
           <div className="font-semibold text-lg mb-4">
             <ul className="space-y-4">
               {isoCode && countryNetworkData.length > 0 && (
