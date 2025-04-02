@@ -433,6 +433,10 @@ export default async function Page({
           {isCountrySlug(slug) && <RegionalBadges slug={slug} />}
           <hr className="w-full border-border  mb-8" />
 
+          <h2 className="text-2xl font-bold text-center mb-6">
+            {flagEmoji ? `${flagEmoji} ${title}` : title} - eSIM
+          </h2>
+
           <div className="font-semibold text-lg mb-4">
             <ul className="space-y-4">
               {isoCode && countryNetworkData.length > 0 && (

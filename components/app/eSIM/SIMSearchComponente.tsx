@@ -16,7 +16,6 @@ import {
 import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
 import { DialogDescription, DialogTitle } from "@radix-ui/react-dialog";
 import { Country, Region } from "@/lib/types";
-import { countryRegionMap } from "@/data/countryNames";
 
 interface SearchProps {
   countries: Country[];
@@ -71,39 +70,6 @@ export default function Search({ countries, regions }: SearchProps) {
     [router]
   );
 
-  // Create a map of countries by region for display
-  const countriesByRegion = React.useMemo(() => {
-    const map = new Map<string, Country[]>();
-    filteredCountries.forEach((country) => {
-      // Get all regions for this country from the map
-      const countryRegions = countryRegionMap[country.code] || [];
-      // Add the country to each of its regions
-      countryRegions.forEach((region) => {
-        if (!map.has(region)) {
-          map.set(region, []);
-        }
-        // Only add the country if it's not already in this region's list
-        const regionCountries = map.get(region) || [];
-        if (!regionCountries.some((c) => c.code === country.code)) {
-          regionCountries.push(country);
-          map.set(region, regionCountries);
-        }
-      });
-    });
-    return map;
-  }, [filteredCountries]);
-
-  // Show all regions, including Global
-  const displayRegions = React.useMemo(() => {
-    const regions = Array.from(countriesByRegion.entries());
-    // Sort regions to show specific regions first, then Global
-    return regions.sort(([a], [b]) => {
-      if (a === "Global") return 1;
-      if (b === "Global") return -1;
-      return a.localeCompare(b);
-    });
-  }, [countriesByRegion]);
-
   return (
     <>
       <Button
@@ -123,6 +89,7 @@ export default function Search({ countries, regions }: SearchProps) {
 
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="overflow-hidden rounded-none border-0 p-0">
+          {/* Hidden Dialog Header */}
           <DialogHeader className="hidden">
             <DialogTitle>Search for country or region</DialogTitle>
             <DialogDescription>
@@ -141,49 +108,6 @@ export default function Search({ countries, regions }: SearchProps) {
                   <CommandEmpty>No results found.</CommandEmpty>
                 )}
 
-              {/* Show individual country matches first */}
-              {filteredCountries.length > 0 && (
-                <CommandGroup heading="Countries">
-                  {filteredCountries.map((c) => (
-                    <CommandItem
-                      key={c.code}
-                      value={c.name}
-                      onSelect={() => onSelectCountry(c)}
-                    >
-                      <div className="flex items-center">
-                        <span className="mr-2">{c.flag}</span>
-                        {c.name}
-                      </div>
-                    </CommandItem>
-                  ))}
-                </CommandGroup>
-              )}
-
-              {/* Show countries within their regions */}
-              {displayRegions.length > 0 && (
-                <CommandGroup heading="Available in Regions">
-                  {displayRegions.map(([region, countries]) =>
-                    countries.map((country) => (
-                      <CommandItem
-                        key={`${region}-${country.code}`}
-                        value={`${region} (${country.name})`}
-                        onSelect={() =>
-                          onSelectRegion({
-                            name: region,
-                            slug: region.toLowerCase().replace(/\s+/g, "-"),
-                          })
-                        }
-                      >
-                        <div className="flex items-center">
-                          {region} ({country.flag} {country.name} included)
-                        </div>
-                      </CommandItem>
-                    ))
-                  )}
-                </CommandGroup>
-              )}
-
-              {/* Show matching regions */}
               {filteredRegions.length > 0 && (
                 <CommandGroup heading="Regions">
                   {filteredRegions.map((r) => (
@@ -192,12 +116,29 @@ export default function Search({ countries, regions }: SearchProps) {
                       value={r.name}
                       onSelect={() => onSelectRegion(r)}
                     >
+                      {/* Optionally, add an icon or any representation for regions */}
                       {r.name}
                     </CommandItem>
                   ))}
                 </CommandGroup>
               )}
 
+              {filteredCountries.length > 0 && (
+                <CommandGroup heading="Countries">
+                  {filteredCountries.map((c) => (
+                    <CommandItem
+                      key={c.code}
+                      value={c.name}
+                      onSelect={() => onSelectCountry(c)}
+                    >
+                      <span className="mr-2">{c.flag}</span>
+                      {c.name}
+                    </CommandItem>
+                  ))}
+                </CommandGroup>
+              )}
+
+              {/* If you need a separator or more groups, you can add them here */}
               {filteredCountries.length > 0 && filteredRegions.length > 0 && (
                 <CommandSeparator />
               )}
