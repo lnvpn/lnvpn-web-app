@@ -269,14 +269,13 @@ export const regionsMap = [
   { name: "LATAM", slug: "latam" },
 ];
 
-// Map of country codes to their regions
 export const countryRegionMap: Record<string, string[]> = {
-  // Africa
-  EG: ["Africa", "Middle East", "Global"],
-  MA: ["Africa", "Middle East", "Global"],
+  // Africa (Excel row order)
+  EG: ["Africa", "Global", "Middle East"],
+  MA: ["Africa", "Global", "Middle East"],
   TZ: ["Africa", "Global"],
   UG: ["Africa", "Global"],
-  TN: ["Africa", "Middle East", "Global"],
+  TN: ["Africa", "Global"],
   ZA: ["Africa", "Global"],
   ZM: ["Africa", "Global"],
   MG: ["Africa", "Global"],
@@ -284,24 +283,20 @@ export const countryRegionMap: Record<string, string[]> = {
   KE: ["Africa", "Global"],
   MU: ["Africa", "Global"],
 
-  // Americas/LATAM
+  // LATAM (Excel row order)
   AR: ["LATAM", "Global"],
   BR: ["LATAM", "Global"],
   CL: ["LATAM", "Global"],
   CO: ["LATAM", "Global"],
-  CR: ["LATAM", "Caribbean", "Global"],
+  CR: ["LATAM", "Global"],
   EC: ["LATAM", "Global"],
   SV: ["LATAM", "Caribbean", "Global"],
-  GF: ["LATAM", "Caribbean"],
   PE: ["LATAM", "Global"],
   UY: ["LATAM", "Global"],
-  MX: ["LATAM", "North America", "Global"],
-  PA: ["LATAM", "Global"],
-  PY: ["LATAM", "Global"],
-  BO: ["LATAM", "Global"],
+  GF: ["LATAM", "Caribbean"],
 
-  // Asia
-  AU: ["Asia", "Oceania", "Global"],
+  // Asia (Excel row order)
+  AU: ["Asia", "Global", "Oceania"],
   HK: ["Asia", "Global"],
   ID: ["Asia", "Global"],
   KR: ["Asia", "Global"],
@@ -309,13 +304,13 @@ export const countryRegionMap: Record<string, string[]> = {
   MY: ["Asia", "Global"],
   PK: ["Asia", "Global"],
   SG: ["Asia", "Global"],
+  LK: ["Asia", "Global"],
   TW: ["Asia", "Global"],
   TH: ["Asia", "Global"],
   UZ: ["Asia", "Global"],
   VN: ["Asia", "Global"],
-  LK: ["Global"],
 
-  // Balkans
+  // Balkans (Excel row order)
   AL: ["Balkans", "Global"],
   BA: ["Balkans", "Global"],
   BG: ["Balkans", "Europe", "Global"],
@@ -327,19 +322,27 @@ export const countryRegionMap: Record<string, string[]> = {
   RS: ["Balkans", "Global"],
   SI: ["Balkans", "Europe", "Global"],
 
-  // Europe
+  // Europe (Excel row order)
   AT: ["Europe", "Global"],
   DK: ["Europe", "Global"],
   IE: ["Europe", "Global"],
   IT: ["Europe", "Global"],
   SE: ["Europe", "Global"],
   FR: ["Europe", "Global"],
-  DE: ["Europe", "Global"],
+  CY: ["Europe", "Global"],
+  EE: ["Europe", "Global"],
+  FI: ["Europe", "Global"],
+  HU: ["Europe", "Global"],
+  LV: ["Europe", "Global"],
+  LT: ["Europe", "Global"],
   NL: ["Europe", "Global"],
   NO: ["Europe", "Global"],
   PL: ["Europe", "Global"],
   SK: ["Europe", "Global"],
   ES: ["Europe", "Global"],
+  GB: ["Europe", "Global"],
+  DE: ["Europe", "Global"],
+  MT: ["Europe", "Global"],
   CH: ["Europe", "Global"],
   BE: ["Europe", "Global"],
   CZ: ["Europe", "Global"],
@@ -347,35 +350,37 @@ export const countryRegionMap: Record<string, string[]> = {
   LU: ["Europe", "Global"],
   PT: ["Europe", "Global"],
   IS: ["Europe", "Global"],
-  VA: ["Europe", "Global"],
-  CYP: ["Europe", "Global"],
+  IC: ["Europe"], // Canary Islands (if desired)
+  VA: ["Europe"], // Vatican
+  CYP: ["Europe"], // If separate from CY in Excel
 
-  // Middle East
-  IL: ["Middle East", "Global"],
-  JO: ["Middle East", "Global"],
-  KW: ["Middle East", "Global"],
-  OM: ["Middle East", "Global"],
-  TR: ["Middle East"],
-  AE: ["Middle East", "Global"],
+  // Middle East (Excel row order)
+  IL: ["Global", "Middle East"],
+  JO: ["Global", "Middle East"],
+  KW: ["Global", "Middle East"],
+  OM: ["Global", "Middle East"],
+  TR: ["Europe", "Global", "Middle East"],
+  AE: ["Global", "Middle East"],
 
-  // North America
-  CA: ["North America", "Global"],
-  US: ["North America", "Global"],
+  // North America (Excel row order)
+  CA: ["Global", "North America"],
+  MX: ["LATAM", "Global", "North America"], // Already encountered in "LATAM"
+  US: ["Global", "North America"],
   PR: ["North America"],
 
-  // Oceania
-  NZ: ["Oceania", "Global"],
+  // Oceania (Excel row order)
+  NZ: ["Global", "Oceania"],
 
-  // Caribbean
+  // Caribbean (Excel row order)
   AI: ["Caribbean"],
   AG: ["Caribbean"],
   BS: ["Caribbean"],
   BB: ["Caribbean"],
   KY: ["Caribbean"],
   GD: ["Caribbean"],
-  GP: ["Caribbean"],
   JM: ["Caribbean"],
   MS: ["Caribbean"],
+  AN: ["Caribbean"],
   KN: ["Caribbean"],
   LC: ["Caribbean"],
   VC: ["Caribbean"],
@@ -386,11 +391,15 @@ export const countryRegionMap: Record<string, string[]> = {
   BQ: ["Caribbean"],
   CW: ["Caribbean"],
   DM: ["Caribbean"],
+  GP: ["Caribbean"],
   GY: ["Caribbean"],
   HT: ["Caribbean"],
   BM: ["Caribbean"],
 
-  // Other Global countries
+  // Global (Excel row order)
+  IM: ["Global"],
+  UA: ["Global"],
+  JE: ["Global"],
   AX: ["Global"],
   RU: ["Global"],
   KZ: ["Global"],
@@ -402,6 +411,7 @@ export const countryRegionMap: Record<string, string[]> = {
   NI: ["Global"],
   IN: ["Global"],
   CN: ["Global"],
+  PA: ["Global"],
   RE: ["Global"],
   AD: ["Global"],
   IQ: ["Global"],
@@ -410,4 +420,6 @@ export const countryRegionMap: Record<string, string[]> = {
   GT: ["Global"],
   CM: ["Global"],
   SA: ["Global"],
+  PY: ["Global"],
+  BO: ["Global"],
 };
