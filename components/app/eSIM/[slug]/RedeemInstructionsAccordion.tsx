@@ -34,6 +34,16 @@ export default async function RedeemInstructionsAccordion() {
             installed once, and its validity period begins when it connects to a
             supported network.
           </p>
+          <p className="mt-4 font-bold">
+            Please activate your data bundle within 6 weeks of purchase. After
+            this period, the data bundle will expire and you will need to
+            purchase a new one. The eSIM is valid for 12 months after its last
+            connection to a supported network. If you do not connect to a
+            supported network within this period, the eSIM will expire and you
+            will need to purchase a new one. Everytime you connect to a mobile
+            network, the eSIM will be valid for another 12 months from that
+            date.
+          </p>
         </AccordionContent>
       </AccordionItem>
     </Accordion>

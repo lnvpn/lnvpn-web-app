@@ -637,16 +637,39 @@ export default function FAQ() {
                   <p></p>
                 </AccordionContent>
               </AccordionItem>
+
               <AccordionItem
                 className="lg:w-[500px] max-w-full"
-                value="item-509"
+                value="item-51011123123"
               >
-                <AccordionTrigger>Who is your eSIM provider?</AccordionTrigger>
+                <AccordionTrigger>
+                  How long do I have to activate a data bundle?
+                </AccordionTrigger>
                 <AccordionContent>
                   <p>
-                    Our eSIM provider is eSIM Go Limited, 8 North Bar Street,
-                    Banbury, Oxfordshire, England, OX16 0TB, United Kingdom. ICO
-                    registration number is ZB002633.
+                    You must activate your data bundle within 6 weeks of
+                    purchase. After this period, the data bundle will expire and
+                    you will need to purchase a new one. Your eSIM will expire
+                    after 12 months of no connection to a supported network.
+                  </p>
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem
+                className="lg:w-[500px] max-w-full"
+                value="item-51111123"
+              >
+                <AccordionTrigger>
+                  How long is my eSIM valid for?
+                </AccordionTrigger>
+                <AccordionContent>
+                  <p>
+                    The eSIM is valid for 12 months after its last connection to
+                    a supported network. If you do not connect to a supported
+                    network within this period, the eSIM will expire and you
+                    will need to purchase a new one. Every time you connect to a
+                    mobile network, the eSIM will be valid for another 12 months
+                    from that date. You can top-up your eSIM at any time.
                   </p>
                 </AccordionContent>
               </AccordionItem>
