@@ -41,7 +41,7 @@ import { NetworkInfo } from "@/lib/types";
 import { FaSpinner } from "react-icons/fa6";
 import RegionalBadges from "@/components/app/eSIM/[slug]/RegionalBadges";
 
-export const revalidate = 3600000;
+export const dynamic = "force-static";
 
 export async function generateMetadata({
   params,

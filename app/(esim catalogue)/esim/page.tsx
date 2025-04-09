@@ -83,7 +83,7 @@ export const metadata: Metadata = {
   },
 };
 
-export const revalidate = 360000;
+export const dynamic = "force-static";
 
 export default async function LocalPage() {
   const networksData: NetworksResponse | null = await getNetworks();
