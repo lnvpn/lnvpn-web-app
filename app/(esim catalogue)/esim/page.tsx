@@ -30,11 +30,11 @@ const topSellers = [
 
 export const metadata: Metadata = {
   title: {
-    default: "LNVPN -  eSIM - No KYC - $0.99 Plans",
+    default: "LNVPN - Global eSIM - No KYC - $0.99 Plans",
     template: "%s | LNVPN",
   },
   description:
-    "Buy eSIM plans with Bitcoin at LNVPN. Stay connected worldwide with a privacy-first, global eSIM service. Plans starting at just $0.99.",
+    "Buy eSIM data plans for 200+ countries with Bitcoin at LNVPN. Get instant activation, no KYC required, and stay connected worldwide. Plans starting at just $0.99. Perfect for travelers and digital nomads.",
   keywords: [
     "eSIM",
     "LNVPN",
@@ -47,6 +47,21 @@ export const metadata: Metadata = {
     "travel eSIM",
     "prepaid eSIM",
     "LNVPN eSIM",
+    "African eSIM",
+    "European eSIM",
+    "Asian eSIM",
+    "American eSIM",
+    "international eSIM",
+    "data plans",
+    "mobile data",
+    "roaming free",
+    "digital nomad eSIM",
+    "travel internet",
+    "global data plans",
+    "country specific eSIM",
+    "regional eSIM",
+    "local eSIM",
+    "international data plans",
   ],
   authors: [{ name: "LNVPN", url: "https://github.com/lnvpn" }],
   openGraph: {

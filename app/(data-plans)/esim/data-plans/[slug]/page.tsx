@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { countryNameMap } from "@/data/countryNames";
+import { countryNameMap, regionsMap } from "@/data/countryNames";
 import { getCountryCodeFromSlug } from "@/utils/esimUtils";
 import {
   FaUserShield,
@@ -18,6 +18,7 @@ import {
   getCountryNetworkData,
   getEntityData,
 } from "@/components/app/eSIM/[slug]/SIMDetailPageActions";
+import { slugify } from "@/utils/esimUtils";
 
 import BackButton from "@/components/app/BackButton";
 import { countryCodeToEmoji } from "@/utils/esimUtils";
@@ -41,7 +42,21 @@ import { NetworkInfo } from "@/lib/types";
 import { FaSpinner } from "react-icons/fa6";
 import RegionalBadges from "@/components/app/eSIM/[slug]/RegionalBadges";
 
-export const revalidate = 360000;
+export const revalidate = 360000; // 100 hours
+
+export async function generateStaticParams() {
+  // Generate slugs from countryNameMap
+  const countrySlugs = Object.values(countryNameMap).map((countryName) => ({
+    slug: slugify(countryName),
+  }));
+
+  // Add region slugs
+  const regionSlugs = regionsMap.map((region) => ({
+    slug: region.slug,
+  }));
+
+  return [...countrySlugs, ...regionSlugs];
+}
 
 export async function generateMetadata({
   params,
@@ -94,6 +109,28 @@ export async function generateMetadata({
       `${entityName} data plan`,
       "no KYC eSIM",
       "private eSIM",
+      "eSIM",
+      `${entityName} eSIM`,
+      "Bitcoin eSIM",
+      "LNVPN",
+      "Lightning Network eSIM",
+      "global eSIM",
+      "travel eSIM",
+      "cheap eSIM",
+      `${entityName} data plan`,
+      "no KYC eSIM",
+      "private eSIM",
+      `${entityName} mobile data`,
+      `${entityName} internet`,
+      `${entityName} travel SIM`,
+      `${entityName} prepaid SIM`,
+      `${entityName} roaming`,
+      "digital nomad eSIM",
+      "travel internet",
+      "international data plans",
+      "local eSIM",
+      "regional eSIM",
+      "country specific eSIM",
     ],
     alternates: {
       canonical: `https://lnvpn.net/esim/data-plans/${slug}`,
