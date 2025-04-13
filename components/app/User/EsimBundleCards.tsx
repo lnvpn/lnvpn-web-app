@@ -35,14 +35,14 @@ export function EsimBundlesCards({ bundles }: EsimBundlesClientProps) {
   const allAssignments = useMemo(() => {
     return bundles.flatMap((b) =>
       b.assignments.map((assignment) => ({
-        // “clone” the bundle fields but store only this single assignment
+        // "clone" the bundle fields but store only this single assignment
         ...b,
         assignments: [assignment],
       }))
     );
   }, [bundles]);
 
-  // 2. Filter out if user doesn’t want inactive assignments
+  // 2. Filter out if user doesn't want inactive assignments
   const filtered = useMemo(() => {
     if (showInactive) {
       return allAssignments;
@@ -118,8 +118,8 @@ function BundleCard({ bundle }: { bundle: EsimBundle }) {
 
   // Calculate data usage
   const isUnlimited = assignment.unlimited;
-  const initialMB = assignment.initialQuantity / (1024 * 1024);
-  const remainingMB = assignment.remainingQuantity / (1024 * 1024);
+  const initialMB = assignment.initialQuantity / (1000 * 1000);
+  const remainingMB = assignment.remainingQuantity / (1000 * 1000);
   const progress = initialMB > 0 ? (remainingMB / initialMB) * 100 : 0;
 
   // Calculate days left
