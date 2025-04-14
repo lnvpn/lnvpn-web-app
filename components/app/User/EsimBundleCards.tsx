@@ -116,6 +116,15 @@ function BundleCard({ bundle }: { bundle: EsimBundle }) {
     return `${year}-${month}-${day} ${hours}:${minutes} UTC`;
   }
 
+  // Helper to format bundle description
+  function formatBundleDescription(desc: string): string {
+    const parts = desc.split(", ");
+    if (parts.length < 4) return desc; // Return original if format is unexpected
+
+    const [, data, duration, region] = parts;
+    return `${data} - ${duration} - ${region}`;
+  }
+
   // Calculate data usage
   const isUnlimited = assignment.unlimited;
   const initialMB = assignment.initialQuantity / (1000 * 1000);
@@ -134,7 +143,7 @@ function BundleCard({ bundle }: { bundle: EsimBundle }) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{description}</CardTitle>
+        <CardTitle>{formatBundleDescription(description)}</CardTitle>
       </CardHeader>
       <CardContent>
         <ul className="text-sm space-y-1">
