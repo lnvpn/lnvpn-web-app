@@ -29,7 +29,7 @@ interface EsimBundlesClientProps {
 }
 
 export function EsimBundlesCards({ bundles }: EsimBundlesClientProps) {
-  const [showInactive, setShowInactive] = useState(true);
+  const [showInactive, setShowInactive] = useState(false);
 
   // 1. Flatten so each assignment is now its own "bundle" for display.
   const allAssignments = useMemo(() => {
