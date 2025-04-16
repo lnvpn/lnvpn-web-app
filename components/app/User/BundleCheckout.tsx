@@ -40,7 +40,6 @@ import {
 } from "./UserComponenteActions";
 
 // UI components
-import { Checkbox } from "@/components/ui/checkbox";
 import { isError } from "@/utils/isError";
 
 // Import your toast utilities
@@ -86,9 +85,6 @@ export default function BundleCheckout({
 
   // For transitions / spinners
   const [isPending, startTransition] = useTransition();
-
-  // For user checking "I have eSIM ready" box
-  const [isChecked, setIsChecked] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
 
   // -------------------------
@@ -253,7 +249,7 @@ export default function BundleCheckout({
           </Button>
         </DialogTrigger>
 
-        <DialogContent className="overflow-hidden rounded-none border-0 p-0">
+        <DialogContent className="rounded-none border-0 p-0">
           <DialogHeader className="hidden">
             <DialogTitle className="text-xl font-bold">
               {step === 1 ? "Select Region or Country" : "Select a Bundle"}
@@ -281,21 +277,6 @@ export default function BundleCheckout({
                     selectedPlanName={selectedPlan?.name ?? ""}
                     onSelect={handleSelectPlan}
                   />
-                  <div className="flex items-center justify-center gap-2 my-4">
-                    <Checkbox
-                      id="esim-ready-checkbox"
-                      checked={isChecked}
-                      onCheckedChange={(checked) =>
-                        setIsChecked(checked === true)
-                      }
-                    />
-                    <label
-                      htmlFor="esim-ready-checkbox"
-                      className="text-black dark:text-white"
-                    >
-                      I have checked if my phone is eSIM ready.
-                    </label>
-                  </div>
 
                   <div className="flex justify-center flex-row-reverse items-center gap-2 my-3">
                     <Button
@@ -303,7 +284,7 @@ export default function BundleCheckout({
                       variant="default"
                       onClick={handleConfirmBundle}
                       size="lg"
-                      disabled={!isChecked || isPending}
+                      disabled={isPending}
                     >
                       {isPending ? "Processing..." : "Buy Now"}
                     </Button>

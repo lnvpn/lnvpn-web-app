@@ -295,18 +295,6 @@ export default function FAQ() {
               type="single"
               collapsible
             >
-              <AccordionItem
-                className="lg:w-[500px] max-w-full"
-                value="item-500"
-              >
-                <AccordionTrigger>What is an eSIM?</AccordionTrigger>
-                <AccordionContent>
-                  <p>
-                    An eSIM is a digital SIM that allows you to activate a
-                    mobile data plan without using a physical SIM card.
-                  </p>
-                </AccordionContent>
-              </AccordionItem>
               {/* 1. Compatibility */}
               <AccordionItem
                 className="lg:w-[500px] max-w-full"
@@ -336,69 +324,16 @@ export default function FAQ() {
                 </AccordionTrigger>
                 <AccordionContent>
                   <p>
-                    An <strong>eSIM</strong> is a digital SIM profile that you
-                    can install on your phone, allowing you to switch between
-                    carriers without using a physical SIM card. However, an eSIM
-                    alone does not provide mobile data—you need a{" "}
-                    <strong>data bundle </strong>
-                    assigned to your eSIM to access the internet.
+                    An <strong>eSIM</strong> is a digital SIM you install on
+                    your phone. It needs a <strong>data bundle</strong> to work.
                   </p>
                   <p>
-                    You can <strong>install</strong> an eSIM anywhere in the
-                    world, but the <strong>data bundle </strong>
-                    will only <strong>activate</strong> once you connect to a
-                    supported mobile network in the designated country or
-                    region. For example, if you purchase an Australian data
-                    bundle while in Germany, you can install the eSIM
-                    immediately, but the data bundle will only start working
-                    once you reach Australia and connect to an Australian
-                    carrier.
+                    You can install it anywhere, but the data only activates
+                    once you&apos;re in the supported region and connect to a
+                    local network.
                   </p>
                   <p>
-                    If you travel frequently, you may need multiple data bundles
-                    for different regions or choose a global plan that covers
-                    multiple countries.
-                  </p>
-                </AccordionContent>
-              </AccordionItem>
-
-              {/* Local vs. Regional vs. Global eSIMs */}
-              <AccordionItem
-                className="lg:w-[500px] max-w-full"
-                value="item-511"
-              >
-                <AccordionTrigger>Do eSIMs support roaming?</AccordionTrigger>
-                <AccordionContent>
-                  <p>
-                    Whether an eSIM supports roaming depends on the type of eSIM
-                    plan you purchase:
-                  </p>
-                  <ul className="list-disc list-inside space-y-2">
-                    <li>
-                      <strong>Local eSIMs:</strong> These are designed for use
-                      in a single country and{" "}
-                      <strong>do not support roaming</strong>. They only work
-                      when connected to a mobile network in their designated
-                      country.
-                    </li>
-                    <li>
-                      <strong>Regional eSIMs:</strong> These cover multiple
-                      countries within a specific region (e.g., Europe, Asia,
-                      North America). They allow you to use data in different
-                      countries within the region without needing a new eSIM or
-                      bundle.
-                    </li>
-                    <li>
-                      <strong>Global eSIMs:</strong> These work across multiple
-                      regions and often support data usage in dozens of
-                      countries worldwide. They are ideal for travelers visiting
-                      multiple countries in different regions.
-                    </li>
-                  </ul>
-                  <p>
-                    If you need coverage in multiple countries, check whether
-                    your eSIM plan supports roaming or if you need to switch
-                    between different regional bundles.
+                    Frequent traveler? Use multiple bundles or a global plan.
                   </p>
                 </AccordionContent>
               </AccordionItem>
@@ -420,7 +355,7 @@ export default function FAQ() {
                   </p>
                   <p>
                     You can <strong>install</strong> the eSIM from anywhere, but
-                    your <strong>data bundle</strong>
+                    your <strong>data bundle </strong>
                     will only <strong>activate</strong> once you connect to a
                     supported mobile network in the bundle’s designated country
                     or region.
@@ -447,25 +382,6 @@ export default function FAQ() {
                 </AccordionContent>
               </AccordionItem>
 
-              {/* 4. Coverage and Network Quality */}
-              <AccordionItem
-                className="lg:w-[500px] max-w-full"
-                value="item-504"
-              >
-                <AccordionTrigger>
-                  Does an eSIM have the same coverage and speeds as a physical
-                  SIM?
-                </AccordionTrigger>
-                <AccordionContent>
-                  <p>
-                    Yes. eSIM service is provided over the same network
-                    infrastructure as a traditional physical SIM. Your coverage,
-                    data speeds, and call quality depend on the carrier you
-                    choose and their network strength in your location.
-                  </p>
-                </AccordionContent>
-              </AccordionItem>
-              {/* 4. Coverage and Network Quality */}
               <AccordionItem
                 className="lg:w-[500px] max-w-full"
                 value="item-505"
@@ -488,22 +404,6 @@ export default function FAQ() {
                 </AccordionContent>
               </AccordionItem>
 
-              {/* 6. Security and Privacy */}
-              <AccordionItem
-                className="lg:w-[500px] max-w-full"
-                value="item-506"
-              >
-                <AccordionTrigger>Is eSIM secure to use?</AccordionTrigger>
-                <AccordionContent>
-                  <p>
-                    Yes. eSIM profiles are securely encrypted and stored on a
-                    dedicated chip within your device. Activation usually
-                    requires secure credentials, such as a QR code or activation
-                    code, which helps ensure your information remains protected.
-                  </p>
-                </AccordionContent>
-              </AccordionItem>
-
               {/* 7. Troubleshooting */}
               <AccordionItem
                 className="lg:w-[500px] max-w-full"
@@ -518,7 +418,8 @@ export default function FAQ() {
                     if all your settings are set up correctly.
                   </p>
                   <p>
-                    Make sure that Data Roaming is turned on under settings.
+                    Make sure that <strong> Data Roaming</strong> is turned on
+                    under settings.
                   </p>
                   <p>To update the Access Point Name (APN):</p>
                   <ol className="list-decimal pl-5">
@@ -628,7 +529,7 @@ export default function FAQ() {
                       to it, look at your Lightning invoice for the eSIM number:
                       <br />
                       <code className="bg-gray-100 p-1 rounded">
-                        Buying eSIM: esim_1GB_7D_ROC_V2 for 8932042000006857011
+                        Adding esim_2GB_15D_SR_V2 to eSIM 8932042023001111162
                       </code>
                       <br />
                       The last part is your eSIM number.

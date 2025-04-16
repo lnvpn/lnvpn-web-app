@@ -3,32 +3,15 @@ import React, { useState, useMemo } from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Progress } from "@/components/ui/progress";
-
-interface EsimBundleAssignment {
-  id: string;
-  callTypeGroup: string;
-  initialQuantity: number;
-  remainingQuantity: number;
-  startTime?: string;
-  endTime?: string;
-  assignmentDateTime: string;
-  assignmentReference: string;
-  bundleState: "active" | "inactive" | string;
-  unlimited: boolean;
-}
-
-interface EsimBundle {
-  name: string;
-  description: string;
-  assignments: EsimBundleAssignment[];
-}
+import TopUpButton from "./TopUpButton";
+import { EsimBundle } from "@/lib/types";
 
 interface EsimBundlesClientProps {
   bundles: EsimBundle[];
   iccid: string;
 }
 
-export function EsimBundlesCards({ bundles }: EsimBundlesClientProps) {
+export function EsimBundlesCards({ bundles, iccid }: EsimBundlesClientProps) {
   const [showInactive, setShowInactive] = useState(false);
 
   // 1. Flatten so each assignment is now its own "bundle" for display.
@@ -88,6 +71,7 @@ export function EsimBundlesCards({ bundles }: EsimBundlesClientProps) {
             <BundleCard
               key={b.assignments[0].id} // each flattened item has exactly 1 assignment
               bundle={b}
+              iccid={iccid}
             />
           ))}
         </div>
@@ -97,7 +81,7 @@ export function EsimBundlesCards({ bundles }: EsimBundlesClientProps) {
 }
 
 // Each card now displays exactly one assignment
-function BundleCard({ bundle }: { bundle: EsimBundle }) {
+function BundleCard({ bundle, iccid }: { bundle: EsimBundle; iccid: string }) {
   const { description, assignments } = bundle;
   const assignment = assignments[0];
 
@@ -179,6 +163,11 @@ function BundleCard({ bundle }: { bundle: EsimBundle }) {
             the assigned country.
           </p>
         )}
+
+        {/* Top Up Button - displayed on all bundle cards */}
+        <div className="flex justify-end mt-3">
+          <TopUpButton bundle={bundle} iccid={iccid} />
+        </div>
       </CardContent>
     </Card>
   );
