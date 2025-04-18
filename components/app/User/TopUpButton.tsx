@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
@@ -67,10 +68,34 @@ function getIsoCodeFromCountryName(countryName: string): string | null {
 }
 
 /**
- * Create a slug from country name to use as fallback if ISO lookup fails
+ * Create a slug from a name (country, region, etc.)
  */
-function slugify(text: string): string {
-  return text.toLowerCase().replace(/\s+/g, "-");
+function slugify(name: string): string {
+  // Convert to lowercase
+  let slug = name.toLowerCase();
+
+  // Normalize and remove diacritics (accents, umlauts, etc.)
+  slug = slug.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+  // Replace any character that is not a letter, number, or space with a space
+  slug = slug.replace(/[^a-z0-9\s]/g, "");
+
+  // Replace one or more spaces with a single dash
+  slug = slug.trim().replace(/\s+/g, "-");
+
+  return slug;
+}
+
+/**
+ * Get the slugified country name from an ISO 3166-1 alpha-2 code.
+ */
+function getSlugFromIsoCode(isoCode: string): string | null {
+  const upperCode = isoCode.toUpperCase();
+  if (upperCode in countryNameMap) {
+    const countryName = countryNameMap[upperCode];
+    return slugify(countryName);
+  }
+  return null;
 }
 
 /**
@@ -168,15 +193,27 @@ export default function TopUpButton({ bundle, iccid }: TopUpButtonProps) {
       }
       // Handle country (not a region) using ISO code
       else if (isoCode) {
-        // ISO code is available, use it directly
-        const data = await getAvailableBundles(isoCode.toLowerCase());
+        // ISO code is available, convert it to a slug
+        const countrySlug = getSlugFromIsoCode(isoCode);
 
-        if (data && data.length > 0) {
-          setBundles(data);
-          setSelectedPlan(data[0]);
-          setOpen(true);
-          setIsLoading(false);
-          return;
+        if (countrySlug) {
+          console.log(
+            "Calling getAvailableBundles with country slug derived from ISO code:",
+            countrySlug
+          ); // Log country slug
+          const data = await getAvailableBundles(countrySlug);
+
+          if (data && data.length > 0) {
+            setBundles(data);
+            setSelectedPlan(data[0]);
+            setOpen(true);
+            setIsLoading(false);
+            return;
+          }
+        } else {
+          // Handle case where ISO code couldn't be converted (should be rare)
+          // console.warn(`Could not convert ISO code ${isoCode} to slug.`); // Removed this log
+          // Continue to fallback...
         }
       }
 
@@ -350,8 +387,11 @@ export default function TopUpButton({ bundle, iccid }: TopUpButtonProps) {
         <DialogContent className="border-0 p-4">
           <DialogHeader>
             <DialogTitle className="text-xl font-bold text-center">
-              {regionOrCountry} Bundle Top Up
+              {regionOrCountry}
             </DialogTitle>
+            <DialogDescription className="text-center font-bold">
+              Bundle Top Up
+            </DialogDescription>
           </DialogHeader>
 
           <div className="space-y-4 p-4">
